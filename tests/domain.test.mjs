@@ -5,7 +5,7 @@ import {
   canDownloadEvidence, canReadEngagement, demoEngagement, demoUsers, runSyntheticAssessment,
   transitionRemediation, transitionReview, validateAssessmentRequest, validateRun,
 } from '../server/domain.mjs';
-import { resolveResourceDownload } from '../server/resources.mjs';
+import { resourceDownloads, resolveResourceDownload } from '../server/resources.mjs';
 
 test('service catalog keeps all approved offers and visible recurring terms', () => {
   assert.equal(services.length, 10);
@@ -62,10 +62,15 @@ test('intake validates and records notification separately from storage', () => 
 });
 
 test('resource downloads use an allowlist and fixed filenames', () => {
+  assert.equal(Object.keys(resourceDownloads).length, 8);
   const pdf = resolveResourceDownload('/srv/site/dist', 'penetration-test-scoping-workbook', 'pdf');
   assert.equal(pdf.type, 'application/pdf');
   assert.equal(pdf.file, 'Penetration-Test-Scoping-Workbook.pdf');
   assert.equal(pdf.filePath, '/srv/site/dist/resources/penetration-test-scoping-workbook/Penetration-Test-Scoping-Workbook.pdf');
+  const aiGuide = resolveResourceDownload('/srv/site/dist', 'ai-security-customer-support-agents', 'epub');
+  assert.equal(aiGuide.type, 'application/epub+zip');
+  assert.equal(aiGuide.file, 'AI-Security-for-Customer-Support-Agents.epub');
+  assert.equal(aiGuide.filePath, '/srv/site/dist/resources/ai-security-customer-support-agents/AI-Security-for-Customer-Support-Agents.epub');
   assert.equal(resolveResourceDownload('/srv/site/dist', 'penetration-test-scoping-workbook', '../../secret'), null);
   assert.equal(resolveResourceDownload('/srv/site/dist', 'unknown-resource', 'pdf'), null);
 });

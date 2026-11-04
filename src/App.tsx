@@ -20,6 +20,23 @@ const workbookFormats = [
   { format: 'md', label: 'Download Markdown', detail: 'Plain source · 60 KB', file: 'Penetration-Test-Scoping-Workbook.md' },
 ];
 
+const resourceGuides = [
+  { slug: 'saas-founders-enterprise-security-reviews', file: 'The-SaaS-Founders-Guide-to-Passing-Enterprise-Security-Reviews', category: 'Enterprise security', title: 'The SaaS Founder’s Guide to Passing Enterprise Security Reviews', description: 'Build one truthful evidence system for questionnaires, customer calls, audits, renewals, and enterprise deals.', words: '12,403' },
+  { slug: 'scope-web-app-api-penetration-test', file: 'How-to-Scope-a-Web-Application-and-API-Penetration-Test', category: 'Penetration testing', title: 'How to Scope a Web Application and API Penetration Test', description: 'Define targets, roles, tenants, workflows, safety rules, evidence, reporting, and retesting before testing begins.', words: '10,322' },
+  { slug: 'first-90-days-startup-security-program', file: 'The-First-90-Days-of-a-Startup-Security-Program', category: 'Security program', title: 'The First 90 Days of a Startup Security Program', description: 'A sequenced operating plan for ownership, inventory, access, engineering, incidents, recovery, and customer proof.', words: '12,560' },
+  { slug: 'preparing-first-customer-security-audit', file: 'Preparing-for-Your-First-Customer-Security-Audit', category: 'Customer assurance', title: 'Preparing for Your First Customer Security Audit', description: 'Scope the review, inspect evidence, rehearse interviews, control disclosure, and close findings without contradiction.', words: '12,462' },
+  { slug: 'repeatable-security-testing-program', file: 'Building-a-Repeatable-Security-Testing-Program', category: 'Security testing', title: 'Building a Repeatable Security Testing Program', description: 'Choose tests from risk, run them safely, remediate findings, verify results, and measure coverage across releases.', words: '12,454' },
+  { slug: 'ai-security-customer-support-agents', file: 'AI-Security-for-Customer-Support-Agents', category: 'AI security', title: 'AI Security for Customer-Support Agents', description: 'Protect customer data, constrain tools, verify identity, require approval, and test agent failure paths.', words: '12,526' },
+  { slug: 'security-proof-enterprise-deals', file: 'Security-Proof-That-Helps-Close-Enterprise-Deals', category: 'Security sales proof', title: 'Security Proof That Helps Close Enterprise Deals', description: 'Package accurate claims, current evidence, independent assurance, and controlled disclosure into buyer-ready proof.', words: '12,499' },
+];
+
+const guideFormats = [
+  { format: 'pdf', label: 'PDF', detail: 'Print-ready' },
+  { format: 'docx', label: 'DOCX', detail: 'Editable' },
+  { format: 'epub', label: 'EPUB', detail: 'E-reader' },
+  { format: 'md', label: 'Markdown', detail: 'Source' },
+];
+
 function useDocumentMeta() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -313,12 +330,11 @@ function ResourcesPage() {
     script.type = 'application/ld+json';
     script.id = 'resource-structured-data';
     script.text = JSON.stringify({
-      '@context': 'https://schema.org', '@type': 'DigitalDocument',
-      name: 'Penetration Test Scoping Workbook',
-      description: 'A practical workbook for defining penetration test targets, roles, rules of engagement, evidence requirements, reporting, and retesting.',
-      author: { '@type': 'Organization', name: 'Sthuthi Securities' },
-      publisher: { '@type': 'Organization', name: 'Sthuthi Technologies, LLC' },
-      datePublished: '2026-11-04', inLanguage: 'en', isAccessibleForFree: true,
+      '@context': 'https://schema.org', '@type': 'ItemList', name: 'Sthuthi Securities resource library',
+      itemListElement: [
+        { '@type': 'DigitalDocument', position: 1, name: 'Penetration Test Scoping Workbook' },
+        ...resourceGuides.map((guide, index) => ({ '@type': 'DigitalDocument', position: index + 2, name: guide.title, description: guide.description })),
+      ].map(item => ({ ...item, author: { '@type': 'Organization', name: 'Sthuthi Securities' }, publisher: { '@type': 'Organization', name: 'Sthuthi Technologies, LLC' }, datePublished: '2026-11-04', inLanguage: 'en', isAccessibleForFree: true })),
     });
     document.head.querySelector('#resource-structured-data')?.remove();
     document.head.appendChild(script);
@@ -345,6 +361,24 @@ function ResourcesPage() {
         </div>
         <p className="resource-download-note"><ShieldCheck /> Files are served directly from Sthuthi Securities with fixed filenames and file-type checks.</p>
       </div>
+    </section>
+    <section className="section-shell resource-library" aria-labelledby="guide-library-title">
+      <div className="resource-library-heading"><div><p className="kicker">Seven complete field guides</p><h2 id="guide-library-title">Long-form guidance for security work that affects revenue and risk.</h2></div><p>Each guide contains a source ledger, operating model, worksheets, a worked case, technical field modules, and direct links to primary references. Download any format without an email gate.</p></div>
+      <div className="resource-library-grid">
+        {resourceGuides.map(guide => <article className="resource-guide-card" key={guide.slug}>
+          <img src={`/resources/${guide.slug}/assets/cover.png`} alt={`Cover of ${guide.title}`} loading="lazy" />
+          <div className="resource-guide-copy">
+            <p className="kicker">{guide.category} · Field guide</p>
+            <h3>{guide.title}</h3>
+            <p>{guide.description}</p>
+            <span className="resource-word-count">{guide.words} words · 4 formats</span>
+            <div className="resource-guide-downloads" aria-label={`Download ${guide.title}`}>
+              {guideFormats.map(item => <a className={item.format === 'pdf' ? 'primary' : ''} href={`/api/resources/${guide.slug}/download?format=${item.format}`} download={`${guide.file}.${item.format}`} key={item.format}><Download /><span><strong>{item.label}</strong><small>{item.detail}</small></span></a>)}
+            </div>
+          </div>
+        </article>)}
+      </div>
+      <p className="resource-download-note"><ShieldCheck /> Every link uses an allowlisted resource slug, fixed filename, and file-specific content type.</p>
     </section>
     <section className="resource-details">
       <div className="section-shell resource-detail-grid">

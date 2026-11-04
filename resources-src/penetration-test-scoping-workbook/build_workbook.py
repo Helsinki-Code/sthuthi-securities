@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import html
+import os
 import re
 import shutil
 import zipfile
@@ -20,12 +21,17 @@ from docx.oxml.ns import qn
 from docx.shared import Inches, Pt, RGBColor
 
 
-ROOT = Path(__file__).resolve().parent
+DEFAULT_ROOT = Path(__file__).resolve().parent
+ROOT = Path(os.environ.get("GUIDE_ROOT", DEFAULT_ROOT)).resolve()
+TITLE = os.environ.get("GUIDE_TITLE", "Penetration Test Scoping Workbook")
+BASENAME = os.environ.get("GUIDE_BASENAME", "Penetration-Test-Scoping-Workbook")
+HEADER_TITLE = os.environ.get("GUIDE_HEADER", TITLE).upper()
+BOOK_ID = os.environ.get("GUIDE_BOOK_ID", "sthuthi-" + re.sub(r"[^a-z0-9]+", "-", TITLE.lower()).strip("-") + "-v1")
 SOURCE = ROOT / "manuscript.md"
 ASSETS = ROOT / "assets"
-DOCX_DRAFT = ROOT / "Penetration-Test-Scoping-Workbook-draft.docx"
-DOCX_FINAL = ROOT / "Penetration-Test-Scoping-Workbook.docx"
-EPUB_FINAL = ROOT / "Penetration-Test-Scoping-Workbook.epub"
+DOCX_DRAFT = ROOT / f"{BASENAME}-draft.docx"
+DOCX_FINAL = ROOT / f"{BASENAME}.docx"
+EPUB_FINAL = ROOT / f"{BASENAME}.epub"
 LOGO = ROOT.parents[1] / "brand" / "logo-mark-round.png"
 
 NAVY = "173651"
@@ -178,7 +184,7 @@ def heading_inventory(lines: list[str]) -> list[tuple[int, str, str]]:
             continue
         title = match.group(2).strip()
         if title in {
-            "Penetration Test Scoping Workbook",
+            TITLE,
             "Define the targets roles test rules evidence and retesting before an authorized assessment",
             "Table of contents",
         }:
@@ -238,7 +244,7 @@ def configure_body_section(section) -> None:
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     if LOGO.exists():
         p.add_run().add_picture(str(LOGO), width=Inches(0.28))
-    run = p.add_run("   STHUTHI SECURITIES  /  PENETRATION TEST SCOPING WORKBOOK")
+    run = p.add_run(f"   STHUTHI SECURITIES  /  {HEADER_TITLE}")
     run.font.name = "Aptos"
     run.font.size = Pt(7.5)
     run.font.bold = True
@@ -318,10 +324,10 @@ def build_docx() -> None:
             table_rows = []
 
     for line in lines:
-        if skip_cover_image and line.startswith("![Penetration Test Scoping Workbook cover]"):
+        if skip_cover_image and line.startswith("![") and "cover" in line.lower():
             skip_cover_image = False
             continue
-        if line == "# Penetration Test Scoping Workbook":
+        if line == f"# {TITLE}":
             continue
         if line.startswith("## Define the targets roles test rules"):
             continue
@@ -415,8 +421,8 @@ def build_docx() -> None:
         previous_was_title = False
 
     flush_table()
-    doc.core_properties.title = "Penetration Test Scoping Workbook"
-    doc.core_properties.subject = "Scoping and rules-of-engagement workbook for authorized penetration tests"
+    doc.core_properties.title = TITLE
+    doc.core_properties.subject = "Sthuthi Securities field guide"
     doc.core_properties.author = "Sthuthi Securities, Sthuthi Technologies, LLC"
     doc.core_properties.keywords = "penetration testing, scoping, rules of engagement, cybersecurity, workbook"
     doc.save(DOCX_DRAFT)
@@ -581,7 +587,7 @@ code {{ color: #{NAVY}; background: #{PALE}; padding: .1em .2em; }}
         manifest.append('<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>')
 
         opf = f'''<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="book-id"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="book-id">urn:uuid:sthuthi-penetration-test-scoping-workbook-v1</dc:identifier><dc:title>Penetration Test Scoping Workbook</dc:title><dc:creator>Sthuthi Securities, Sthuthi Technologies, LLC</dc:creator><dc:language>en</dc:language><dc:date>2026-11-04</dc:date><meta property="dcterms:modified">2026-11-04T00:00:00Z</meta></metadata><manifest>{''.join(manifest)}</manifest><spine>{''.join(spine)}</spine></package>'''
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="book-id"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="book-id">urn:uuid:{BOOK_ID}</dc:identifier><dc:title>{html.escape(TITLE)}</dc:title><dc:creator>Sthuthi Securities, Sthuthi Technologies, LLC</dc:creator><dc:language>en</dc:language><dc:date>2026-11-04</dc:date><meta property="dcterms:modified">2026-11-04T00:00:00Z</meta></metadata><manifest>{''.join(manifest)}</manifest><spine>{''.join(spine)}</spine></package>'''
         zf.writestr("OEBPS/content.opf", opf)
 
 
