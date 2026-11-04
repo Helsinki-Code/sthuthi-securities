@@ -3,13 +3,23 @@
   <url><loc>/</loc></url>
   <url><loc>/services</loc></url>
   <url><loc>/pricing</loc></url>
-  <url><loc>/process</loc></url>
+  <url><loc>/how-it-works</loc></url>
   <url><loc>/sample-report</loc></url>
   <url><loc>/security</loc></url>
   <url><loc>/about</loc></url>
   <url><loc>/request</loc></url>
   <url><loc>/blog</loc></url>
   <url><loc>/resources</loc></url>
+  <url><loc>/services/penetration-testing</loc></url>
+  <url><loc>/services/ai-security-assessment</loc></url>
+  <url><loc>/services/saas-cloud-security</loc></url>
+  <url><loc>/services/supply-chain-security</loc></url>
+  <url><loc>/services/phishing-resilience</loc></url>
+  <url><loc>/services/compliance-readiness</loc></url>
+  <url><loc>/services/security-fixes-retesting</loc></url>
+  <url><loc>/services/ongoing-security-testing</loc></url>
+  <url><loc>/services/incident-response-planning</loc></url>
+  <url><loc>/services/fractional-security-lead</loc></url>
   <url><loc>/blog/does-soc-2-require-a-penetration-test</loc></url>
   <url><loc>/blog/how-to-scope-web-application-penetration-test</loc></url>
   <url><loc>/blog/api-pentest-vs-web-application-pentest</loc></url>

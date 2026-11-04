@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
 import { services } from '../src/catalog.mjs';
 import {
   canDownloadEvidence, canReadEngagement, demoEngagement, demoUsers, runSyntheticAssessment,
@@ -73,4 +74,12 @@ test('resource downloads use an allowlist and fixed filenames', () => {
   assert.equal(aiGuide.filePath, '/srv/site/dist/resources/ai-security-customer-support-agents/AI-Security-for-Customer-Support-Agents.epub');
   assert.equal(resolveResourceDownload('/srv/site/dist', 'penetration-test-scoping-workbook', '../../secret'), null);
   assert.equal(resolveResourceDownload('/srv/site/dist', 'unknown-resource', 'pdf'), null);
+});
+
+test('every resource edition is present at its static download path', () => {
+  for (const [slug, formats] of Object.entries(resourceDownloads)) {
+    for (const record of Object.values(formats)) {
+      assert.equal(existsSync(new URL(`../public/resources/${slug}/${record.file}`, import.meta.url)), true, `${slug}/${record.file}`);
+    }
+  }
 });
