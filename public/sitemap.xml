@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>/</loc></url>
+  <url><loc>/services</loc></url>
+  <url><loc>/pricing</loc></url>
+  <url><loc>/process</loc></url>
+  <url><loc>/sample-report</loc></url>
+  <url><loc>/security</loc></url>
+  <url><loc>/about</loc></url>
+  <url><loc>/request</loc></url>
+  <url><loc>/blog</loc></url>
+  <url><loc>/blog/does-soc-2-require-a-penetration-test</loc></url>
+  <url><loc>/blog/how-to-scope-web-application-penetration-test</loc></url>
+  <url><loc>/blog/api-pentest-vs-web-application-pentest</loc></url>
+  <url><loc>/blog/ai-security-assessment-vs-web-application-pentest</loc></url>
+  <url><loc>/blog/security-questionnaire-evidence-checklist</loc></url>
+  <url><loc>/blog/ai-jailbreak-vs-security-finding</loc></url>
+  <url><loc>/blog/test-ai-agent-tool-permissions</loc></url>
+  <url><loc>/blog/what-a-penetration-test-report-should-contain</loc></url>
+</urlset>

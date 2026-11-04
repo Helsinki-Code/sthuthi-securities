@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /workspace
+Disallow: /internal
+Disallow: /invite
+
+Sitemap: /sitemap.xml

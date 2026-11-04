@@ -1,0 +1,14 @@
+# Sthuthi Securities
+
+Sthuthi Securities is a cybersecurity testing and remediation service from Sthuthi Technologies, LLC.
+Primary pages: /services, /pricing, /process, /sample-report, /security, /request, /blog
+Security field notes:
+- /blog/does-soc-2-require-a-penetration-test
+- /blog/how-to-scope-web-application-penetration-test
+- /blog/api-pentest-vs-web-application-pentest
+- /blog/ai-security-assessment-vs-web-application-pentest
+- /blog/security-questionnaire-evidence-checklist
+- /blog/ai-jailbreak-vs-security-finding
+- /blog/test-ai-agent-tool-permissions
+- /blog/what-a-penetration-test-report-should-contain
+Authenticated and demo workspace routes are not public reference material.
