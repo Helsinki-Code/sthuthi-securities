@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
 import { Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom';
-import { ArrowRight, Check, ClipboardText, CloudCheck, FileLock, Flask, List, Moon, ShieldCheck, Sun, X, Warning } from './icons';
+import { ArrowRight, Check, ClipboardText, CloudCheck, Download, FileLock, Flask, List, Moon, ShieldCheck, Sun, X, Warning } from './icons';
 import { services, stages } from './catalog.mjs';
 import { articleBySlug, articles, type Article } from './articles';
 
@@ -13,6 +13,13 @@ const situations = [
   'A security questionnaire is holding up a deal.', 'You need to get SOC 2 ready.',
 ];
 
+const workbookFormats = [
+  { format: 'pdf', label: 'Download PDF', detail: 'Print-ready · 1.6 MB', file: 'Penetration-Test-Scoping-Workbook.pdf', primary: true },
+  { format: 'docx', label: 'Download DOCX', detail: 'Editable · 3.8 MB', file: 'Penetration-Test-Scoping-Workbook.docx' },
+  { format: 'epub', label: 'Download EPUB', detail: 'E-reader · 2.9 MB', file: 'Penetration-Test-Scoping-Workbook.epub' },
+  { format: 'md', label: 'Download Markdown', detail: 'Plain source · 60 KB', file: 'Penetration-Test-Scoping-Workbook.md' },
+];
+
 function useDocumentMeta() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -22,7 +29,7 @@ function useDocumentMeta() {
       '/pricing': 'Security assessment pricing', '/process': 'How a security assessment works',
       '/sample-report': 'Sample security assessment report', '/security': 'Security and data handling',
       '/about': 'About Sthuthi Securities', '/request': 'Discuss your security project',
-      '/blog': 'Security testing field notes',
+      '/blog': 'Security testing field notes', '/resources': 'Free security resources and workbooks',
       '/workspace': 'Demo client workspace', '/internal': 'Demo delivery console',
     };
     const title = article?.title || names[pathname] || 'Sthuthi Securities';
@@ -55,7 +62,7 @@ function Header() {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState(() => localStorage.getItem('ss-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
   useEffect(() => { document.documentElement.dataset.theme = theme; localStorage.setItem('ss-theme', theme); }, [theme]);
-  const links = [['/services', 'Services'], ['/pricing', 'Pricing'], ['/process', 'How it works'], ['/sample-report', 'Sample report'], ['/blog', 'Field notes'], ['/security', 'Security']];
+  const links = [['/services', 'Services'], ['/pricing', 'Pricing'], ['/process', 'How it works'], ['/resources', 'Resources'], ['/blog', 'Field notes'], ['/security', 'Security']];
   return <header className="site-header">
     <div className="nav-shell">
       <Brand />
@@ -78,7 +85,7 @@ function Footer() {
   return <footer>
     <div className="footer-grid">
       <div><Brand /><p>Clear, authorized security testing for software, cloud systems, and AI agents.</p></div>
-      <div><h3>Work</h3><Link to="/services">Services</Link><Link to="/pricing">Pricing</Link><Link to="/sample-report">Sample report</Link><Link to="/blog">Field notes</Link></div>
+      <div><h3>Work</h3><Link to="/services">Services</Link><Link to="/pricing">Pricing</Link><Link to="/sample-report">Sample report</Link><Link to="/resources">Resources</Link><Link to="/blog">Field notes</Link></div>
       <div><h3>Company</h3><Link to="/about">About</Link><Link to="/security">Security</Link><a href="https://sthuthi-tech.com">Sthuthi Technologies</a></div>
       <div><h3>Legal</h3><Link to="/privacy">Privacy draft</Link><Link to="/terms">Terms draft</Link><Link to="/sign-in">Sign in</Link></div>
     </div>
@@ -300,6 +307,58 @@ function BlogIndex() {
   </Layout>;
 }
 
+function ResourcesPage() {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'resource-structured-data';
+    script.text = JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'DigitalDocument',
+      name: 'Penetration Test Scoping Workbook',
+      description: 'A practical workbook for defining penetration test targets, roles, rules of engagement, evidence requirements, reporting, and retesting.',
+      author: { '@type': 'Organization', name: 'Sthuthi Securities' },
+      publisher: { '@type': 'Organization', name: 'Sthuthi Technologies, LLC' },
+      datePublished: '2026-11-04', inLanguage: 'en', isAccessibleForFree: true,
+    });
+    document.head.querySelector('#resource-structured-data')?.remove();
+    document.head.appendChild(script);
+    return () => script.remove();
+  }, []);
+  return <Layout>
+    <PageHero kicker="Free security resources" title="Workbooks built for decisions, evidence, and authorized testing." body="Download practical material your product, engineering, legal, and security teams can complete together. No email gate and no placeholder files." aside={<img className="mascot page-mascot" src="/art/sthuthi-guide-planning.png" alt="Sthuthi guide planning a security assessment" />} />
+    <section className="resource-feature section-shell" aria-labelledby="scoping-workbook-title">
+      <div className="resource-cover-wrap">
+        <img className="resource-cover" src="/resources/penetration-test-scoping-workbook/assets/cover.png" alt="Cover of the Penetration Test Scoping Workbook" />
+        <span className="resource-free">Free download</span>
+      </div>
+      <div className="resource-copy">
+        <p className="kicker">Penetration testing · Workbook</p>
+        <h2 id="scoping-workbook-title">Penetration Test Scoping Workbook</h2>
+        <p className="resource-intro">Define the targets, roles, test rules, evidence, reporting, and retesting before an authorized assessment. The workbook turns a loose request into a reviewable scope and rules-of-engagement record.</p>
+        <div className="resource-facts" aria-label="Workbook details">
+          <span><strong>44</strong> rendered pages</span><span><strong>31</strong> editable tables</span><span><strong>14</strong> chapters</span><span><strong>4</strong> file formats</span>
+        </div>
+        <div className="download-grid" aria-label="Download the workbook">
+          {workbookFormats.map(item => <a className={`download-option${item.primary ? ' primary' : ''}`} href={`/api/resources/penetration-test-scoping-workbook/download?format=${item.format}`} download={item.file} key={item.format}>
+            <Download /><span><strong>{item.label}</strong><small>{item.detail}</small></span>
+          </a>)}
+        </div>
+        <p className="resource-download-note"><ShieldCheck /> Files are served directly from Sthuthi Securities with fixed filenames and file-type checks.</p>
+      </div>
+    </section>
+    <section className="resource-details">
+      <div className="section-shell resource-detail-grid">
+        <div><p className="kicker">What is inside</p><h2>A usable scope, not a blank asset list.</h2><p>The workbook covers application, API, mobile, cloud, SaaS, AI, third-party, data, and environment boundaries. It includes role and tenant matrices, authorization checks, stop conditions, evidence requirements, a vendor scorecard, and a completed multi-tenant SaaS example.</p></div>
+        <ul className="resource-checks">
+          {['Assessment decision brief', 'Asset and authority register', 'Role, tenant, and workflow matrices', 'Rules of engagement and stop conditions', 'Evidence and report acceptance criteria', 'Remediation and retest agreement', 'One-page scope brief', 'Complete SaaS worked example'].map(item => <li key={item}><Check />{item}</li>)}
+        </ul>
+      </div>
+    </section>
+    <section className="section-shell resource-use"><div><p className="kicker">Use it safely</p><h2>The workbook supports planning. It does not grant authority.</h2></div><p>Confirm ownership, third-party permissions, cloud-provider rules, privacy obligations, and applicable law before testing. Written authorization must identify the actual targets, allowed actions, test window, contacts, and stop conditions.</p><Link className="text-link" to="/process">See the assessment process <ArrowRight /></Link></section>
+    <RequestPanel service="penetration-testing" />
+  </Layout>;
+}
+
 function ArticlePage() {
   const { slug } = useParams();
   const article = slug ? articleBySlug.get(slug) : undefined;
@@ -352,7 +411,7 @@ export default function App() {
     <Route path="/" element={<Home />} /><Route path="/services" element={<ServicesPage />} /><Route path="/services/:slug" element={<ServiceDetail />} />
     <Route path="/pricing" element={<PricingPage />} /><Route path="/process" element={<ProcessPage />} /><Route path="/sample-report" element={<SampleReport />} />
     <Route path="/security" element={<SecurityPage />} /><Route path="/about" element={<AboutPage />} /><Route path="/request" element={<RequestPage />} />
-    <Route path="/blog" element={<BlogIndex />} /><Route path="/blog/:slug" element={<ArticlePage />} />
+    <Route path="/resources" element={<ResourcesPage />} /><Route path="/blog" element={<BlogIndex />} /><Route path="/blog/:slug" element={<ArticlePage />} />
     <Route path="/workspace" element={<Workspace />} /><Route path="/internal" element={<InternalConsole />} /><Route path="/sign-in" element={<AuthPage />} /><Route path="/invite" element={<AuthPage invite />} />
     <Route path="/privacy" element={<LegalDraft kind="Privacy" />} /><Route path="/terms" element={<LegalDraft kind="Terms" />} /><Route path="*" element={<NotFound />} />
   </Routes>;

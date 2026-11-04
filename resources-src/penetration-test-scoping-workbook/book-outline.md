@@ -1,6 +1,6 @@
 # Penetration Test Scoping Workbook Outline
 
-Target: 12,000 words plus worksheets, approximately 45-55 US Letter pages.
+Target: 10,000 words plus worksheets, approximately 45-65 workbook pages.
 
 Audience: SaaS founders, CTOs, engineering managers, product security teams, compliance leads, and procurement teams preparing an authorized third-party penetration test.
 

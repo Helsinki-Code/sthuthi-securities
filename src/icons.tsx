@@ -15,3 +15,4 @@ export function Flask(props: Props) { return <svg {...base} {...props}><path d="
 export function FileLock(props: Props) { return <svg {...base} {...props}><path d="M6 3h8l4 4v14H6V3Z"/><path d="M14 3v5h4M9 15h6v4H9zM10.5 15v-1.5a1.5 1.5 0 0 1 3 0V15" /></svg>; }
 export function CloudCheck(props: Props) { return <svg {...base} {...props}><path d="M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9.5 4.3 4.3 0 0 0 7 18Z"/><path d="m9 13 2 2 4-4" /></svg>; }
 export function ClipboardText(props: Props) { return <svg {...base} {...props}><rect x="5" y="4" width="14" height="17" rx="1"/><path d="M9 4V2h6v2M8 9h8M8 13h8M8 17h5" /></svg>; }
+export function Download(props: Props) { return <svg {...base} {...props}><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 20h14" /></svg>; }

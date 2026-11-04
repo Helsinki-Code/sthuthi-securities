@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { demoEngagement, runSyntheticAssessment, validateAssessmentRequest } from './server/domain.mjs';
+import { resolveResourceDownload } from './server/resources.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(root, 'dist');
@@ -47,6 +48,24 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === '/api/demo/run' && req.method === 'POST') {
       const input = await readBody(req);
       return json(res, 200, runSyntheticAssessment({ engagement: demoEngagement, fixed: input.fixed === true, cancelled: input.cancelled === true }));
+    }
+    const resourceMatch = url.pathname.match(/^\/api\/resources\/([a-z0-9-]+)\/download$/);
+    if (resourceMatch && (req.method === 'GET' || req.method === 'HEAD')) {
+      const download = resolveResourceDownload(dist, resourceMatch[1], url.searchParams.get('format') || 'pdf');
+      if (!download) return json(res, 404, { error: 'Resource format not found' });
+      let file;
+      try { file = await fs.readFile(download.filePath); } catch (error) {
+        if (error.code === 'ENOENT') return json(res, 404, { error: 'Resource file not found' });
+        throw error;
+      }
+      res.writeHead(200, {
+        'content-type': download.type,
+        'content-length': String(file.byteLength),
+        'content-disposition': `attachment; filename="${download.file}"`,
+        'cache-control': 'public, max-age=3600',
+        'x-content-type-options': 'nosniff',
+      });
+      return req.method === 'HEAD' ? res.end() : res.end(file);
     }
     if (url.pathname.startsWith('/api/')) return json(res, 404, { error: 'Not found' });
 

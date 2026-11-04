@@ -5,6 +5,7 @@ import {
   canDownloadEvidence, canReadEngagement, demoEngagement, demoUsers, runSyntheticAssessment,
   transitionRemediation, transitionReview, validateAssessmentRequest, validateRun,
 } from '../server/domain.mjs';
+import { resolveResourceDownload } from '../server/resources.mjs';
 
 test('service catalog keeps all approved offers and visible recurring terms', () => {
   assert.equal(services.length, 10);
@@ -58,4 +59,13 @@ test('intake validates and records notification separately from storage', () => 
   assert.ok(record.id);
   assert.equal(record.notificationStatus, 'unconnected');
   assert.throws(() => validateAssessmentRequest({}), /name is required/);
+});
+
+test('resource downloads use an allowlist and fixed filenames', () => {
+  const pdf = resolveResourceDownload('/srv/site/dist', 'penetration-test-scoping-workbook', 'pdf');
+  assert.equal(pdf.type, 'application/pdf');
+  assert.equal(pdf.file, 'Penetration-Test-Scoping-Workbook.pdf');
+  assert.equal(pdf.filePath, '/srv/site/dist/resources/penetration-test-scoping-workbook/Penetration-Test-Scoping-Workbook.pdf');
+  assert.equal(resolveResourceDownload('/srv/site/dist', 'penetration-test-scoping-workbook', '../../secret'), null);
+  assert.equal(resolveResourceDownload('/srv/site/dist', 'unknown-resource', 'pdf'), null);
 });
