@@ -63,17 +63,20 @@ test('intake validates and records notification separately from storage', () => 
 });
 
 test('resource downloads use an allowlist and fixed filenames', () => {
-  assert.equal(Object.keys(resourceDownloads).length, 8);
-  const pdf = resolveResourceDownload('/srv/site/dist', 'penetration-test-scoping-workbook', 'pdf');
+  assert.equal(Object.keys(resourceDownloads).length, 7);
+  const pdf = resolveResourceDownload('/srv/site/dist', 'saas-founders-enterprise-security-reviews', 'guide-pdf');
   assert.equal(pdf.type, 'application/pdf');
-  assert.equal(pdf.file, 'Penetration-Test-Scoping-Workbook.pdf');
-  assert.equal(pdf.filePath, '/srv/site/dist/resources/penetration-test-scoping-workbook/Penetration-Test-Scoping-Workbook.pdf');
-  const aiGuide = resolveResourceDownload('/srv/site/dist', 'ai-security-customer-support-agents', 'epub');
+  assert.equal(pdf.file, 'The-SaaS-Founders-Guide-to-Passing-Enterprise-Security-Reviews.pdf');
+  assert.equal(pdf.filePath, '/srv/site/dist/resources/saas-founders-enterprise-security-reviews/The-SaaS-Founders-Guide-to-Passing-Enterprise-Security-Reviews.pdf');
+  const aiGuide = resolveResourceDownload('/srv/site/dist', 'ai-security-customer-support-agents', 'guide-epub');
   assert.equal(aiGuide.type, 'application/epub+zip');
   assert.equal(aiGuide.file, 'AI-Security-for-Customer-Support-Agents.epub');
   assert.equal(aiGuide.filePath, '/srv/site/dist/resources/ai-security-customer-support-agents/AI-Security-for-Customer-Support-Agents.epub');
-  assert.equal(resolveResourceDownload('/srv/site/dist', 'penetration-test-scoping-workbook', '../../secret'), null);
-  assert.equal(resolveResourceDownload('/srv/site/dist', 'unknown-resource', 'pdf'), null);
+  const worksheets = resolveResourceDownload('/srv/site/dist', 'ai-security-customer-support-agents', 'worksheet-xlsx');
+  assert.equal(worksheets.type, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  assert.equal(worksheets.file, 'AI-Security-for-Customer-Support-Agents-Worksheet-Pack.xlsx');
+  assert.equal(resolveResourceDownload('/srv/site/dist', 'ai-security-customer-support-agents', '../../secret'), null);
+  assert.equal(resolveResourceDownload('/srv/site/dist', 'unknown-resource', 'guide-pdf'), null);
 });
 
 test('every resource edition is present at its static download path', () => {

@@ -1,1521 +1,996 @@
+![The SaaS Founder’s Guide to Passing Enterprise Security Reviews cover](assets/cover.jpg)
+
 # The SaaS Founder’s Guide to Passing Enterprise Security Reviews
 
-![The SaaS Founder’s Guide to Passing Enterprise Security Reviews cover](assets/cover.png)
+*Build one truthful evidence system for questionnaires, customer calls, audits, and renewals*
 
-## Build one truthful evidence system for questionnaires, customer calls, audits, and renewals
-
-**A Sthuthi Securities field guide**  
-Published by Sthuthi Technologies, LLC  
-Edition 1.0 — 4 November 2026
+**Shalini Tomar**, CEO, Sthuthi Technologies, LLC  
+Sthuthi Securities · Field Guide 01 · Edition 2.0 · November 2026
 
 ---
 
+**The SaaS Founder’s Guide to Passing Enterprise Security Reviews**  
+Edition 2.0, November 2026. First edition published 4 November 2026.
+
+© 2026 Sthuthi Technologies, LLC. All rights reserved. No part of this publication may be reproduced or distributed for commercial purposes without written permission from the publisher. You may copy the worksheets for internal use within your own organization.
+
+This guide is educational material. It is not legal advice, an audit opinion, a certification, or authorization to test any system. Security testing requires written permission from the system owner. Contract, privacy, employment, sector, and regional obligations should be reviewed with qualified advisers.
+
+Northstar Metrics, Halden Trust, and every other company in the worked examples are fictional. Any resemblance to a real organization is coincidental. Examples show a method; they are not a control set that fits every company.
+
+SOC 2 is a trademark of the American Institute of Certified Public Accountants. ISO and ISO/IEC 27001 belong to the International Organization for Standardization. CAIQ, CCM, and STAR are Cloud Security Alliance marks. SIG is a Shared Assessments product. Names are used for identification only and imply no endorsement.
+
+Framework versions and publication dates were checked against primary sources in November 2026. Requirements change; confirm the current edition before relying on a specific clause.
+
+---
+
+<a id="part3"></a>
+
+# Contents
+
+[**Before you start**](#intro)
+
+**PART I · THE REVIEWER’S SIDE OF THE TABLE**
+
+[**01   What an enterprise reviewer is actually deciding**](#ch1)
+
+  Read the questionnaire as a risk memo someone else has to sign.
+
+[**02   Build the review room before the questionnaire arrives**](#ch2)
+
+  The dated, owned set of artifacts every answer points to.
+
+[**03   Draw the product, data, tenant, and supplier boundary**](#ch3)
+
+  One system description that keeps every later answer honest.
+
+**PART II · ANSWERING THE TECHNICAL DOMAINS**
+
+[**04   Identity and access, with evidence**](#ch4)
+
+  Workforce access to your systems and customer access to your product.
+
+[**05   Encryption, secrets, logging, and monitoring**](#ch5)
+
+  Where precise wording matters more than anywhere else.
+
+[**06   Vulnerability management and secure development**](#ch6)
+
+  Show the loop: find, prioritize, fix, verify.
+
+[**07   Incident response, continuity, privacy, and deletion**](#ch7)
+
+  The promises that end up in the contract.
+
+[**08   SOC 2, ISO 27001, CAIQ, SIG, and penetration tests**](#ch8)
+
+  What each artifact proves, and what it doesn’t.
+
+**PART III · RUNNING THE REVIEW**
+
+[**09   Write answers a reviewer can approve**](#ch9)
+
+  A five-part answer pattern and a status vocabulary.
+
+[**10   Run the review as a controlled sales process**](#ch10)
+
+  One owner, one tracker, and a rule for every commitment.
+
+[**11   Worked review: Northstar Metrics and Halden Trust**](#ch11)
+
+  Nineteen business days from questionnaire to signed security addendum.
+
+**TOOLS AND REFERENCE**
+
+[**W   Companion worksheet pack**](#worksheets)
+
+  Eight worksheets, available as a separate printable PDF, Word, and Excel download.
+
+[**A   Model answers for twelve common questions**](#appendix-a)
+
+[**B   Sources**](#sources)
+
+[**About the author and Sthuthi Securities**](#about)
+
+---
+
+**INTRODUCTION**
+
+<a id="intro"></a>
+
+# Before you start
+
+*Enterprise security reviews are passable. Most of the pain comes from answering them from memory instead of from records.*
+
+The first enterprise security questionnaire usually lands at a bad moment. The deal is late in the quarter, the champion inside the buyer is pushing for a signature, and someone forwards a spreadsheet with a few hundred rows and a deadline. The founder, or whoever wrote the most infrastructure code, opens it and starts typing at row one.
+
+Two weeks later the spreadsheet is done, the answers are mostly right, and nobody could say which ones were checked. Six months later a second buyer sends a different questionnaire, and the team does it again. They paste from the first one, and an answer that was true in March is quietly false in September.
+
+This guide replaces that cycle with a small evidence system: a defined product boundary, a register of the security claims you make, the dated artifacts that support each claim, and a named owner for each. Once that system exists, a questionnaire is mostly retrieval. Reviews get faster and answers stay consistent, and the gaps you do have get disclosed on your terms instead of discovered on the buyer’s.
+
 ## Who this guide is for
 
-This guide is written for SaaS founders, first security hires, engineering leaders, and sales teams facing enterprise due diligence. Its purpose is to replace improvised answers with an owned, dated, reviewable evidence system that supports a deal without making claims the company cannot prove.
-
-This is educational material, not legal advice, an audit opinion, a certification, or authorization to test a system. Penetration testing and security assessment require written permission from the system owner. Contract, privacy, employment, sector, and regional requirements should be reviewed with qualified advisers.
+It is written for SaaS founders, first security hires, engineering leaders, and the sales or solutions people who carry security questions back and forth during a deal. You do not need a security background. You do need access to the people who run your infrastructure, identity provider, code repositories, and support tooling, because the answers live in those systems, not in this book.
 
 ## How to use it
 
-Read the operating model first. Complete the worksheets against one real product or customer request. Then use the technical field modules to challenge the scope and evidence. Keep dated copies of decisions and artifacts. Replace examples with facts from your own system.
+- **Read Part I first.** Chapters 1 to 3 set up the review room and the boundary statement. Everything after depends on them.
+- **Use Part II as a reference.** Each chapter covers one domain reviewers ask about, what they are looking for, and the evidence that answers it. Read them when the questions come up.
+- **Run Part III during a live deal.** Chapter 9 is about wording, chapter 10 about process, and chapter 11 follows one company through a full review.
+- **Print the worksheets.** They are designed to be filled in by hand or copied into your own tracker. Complete them against one real product and one real request rather than in the abstract.
 
-The guide distinguishes an observation from an inference and a recommendation. A source can state what a framework contains. It cannot prove that a company operates a control. That proof must come from the company’s own records and testing.
+## Four words this guide keeps separate
 
-# Part I — The operating model
+Most contradictions in security reviews come from mixing up four kinds of statement. The rest of the guide uses these terms precisely.
 
-## 1. Read the request as a set of decisions
-
-Separate the buyer’s actual decision from the format of the questionnaire. Record the product, data, contract, deadline, reviewer, and requested assurance. A 300-row spreadsheet may contain only a few gating questions.
-
-### Evidence to retain
-
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
-
-### Review questions
-
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
-
-## 2. Define the product and evidence boundary
-
-Write a short system description that names the service, hosting model, customer data, regions, administrative paths, material suppliers, and excluded products. Every later answer should point back to this boundary.
-
-### Evidence to retain
-
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
-
-### Review questions
-
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
-
-## 3. Build a claim register
-
-Record each recurring security claim, its owner, supporting artifact, scope, last review date, expiry date, and approved wording. Treat sales copy, questionnaire answers, policies, and reports as connected statements.
-
-### Evidence to retain
-
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
-
-### Review questions
-
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
-
-## 4. Create the minimum proof set
-
-Prepare architecture and data-flow diagrams, access-control evidence, secure-development records, vulnerability and penetration-test evidence, incident and continuity records, supplier oversight, and privacy records.
-
-### Evidence to retain
-
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
-
-### Review questions
-
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
-
-## 5. Answer from evidence
-
-Use direct answers, precise scope, and named artifacts. Distinguish implemented, partially implemented, planned, not applicable, and unknown. Do not turn a roadmap into a present-tense control.
-
-### Evidence to retain
-
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
-
-### Review questions
-
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
-
-## 6. Control sensitive sharing
-
-Use tiered disclosure. Share summaries first, detailed reports under suitable terms, and raw technical evidence only when the reviewer has a real need. Log recipients and expiry dates.
-
-### Evidence to retain
-
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
-
-### Review questions
-
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
-
-## 7. Resolve gaps without hiding them
-
-Assign the gap, choose a compensating control when reasonable, state the current condition, and give a date only when delivery is owned and scheduled.
-
-### Evidence to retain
-
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
-
-### Review questions
-
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
-
-## 8. Close the review and retain the learning
-
-Capture the final answers, buyer objections, accepted evidence, new claims, and reusable language. Update the evidence system before the next request arrives.
-
-### Evidence to retain
-
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
-
-### Review questions
-
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
-
-# Part II — Working records
-
-## Worksheet 1: Deal security intake
-
-Complete one row for each material product, control, artifact, request, or decision. Add rows rather than compressing several different scopes into one answer.
-
-| Field | Entry | Evidence or owner |
+| Term | What it is | Example |
 |---|---|---|
-| Buyer and reviewer |  |  |
-| Product and data in scope |  |  |
-| Contract value and deadline |  |  |
-| Requested reports or certifications |  |  |
-| Hard blockers |  |  |
-| Sensitive sharing restrictions |  |  |
+| Claim | Something the company says about its security. | “Production access requires MFA.” |
+| Control | What people and systems actually do. | An identity-provider policy that blocks sign-in without a second factor. |
+| Evidence | A dated record showing the control operated. | A policy export and a sign-in log sample from last week. |
+| Assurance | An independent conclusion, limited to a stated scope and period. | A SOC 2 Type II report covering the control over six months. |
 
-### Quality check
+A claim without evidence is a promise. Evidence without assurance is still useful, as long as you present it as your own record and not as an independent opinion. Most early-stage companies will be working mainly with the first three, and that is fine as long as nobody describes them as the fourth.
 
-- The entry names a product or system rather than “the platform” when several products exist.
-- Dates describe the evidence period, not merely the day the file was uploaded.
-- Exceptions and unknowns remain visible until resolved.
-- The owner can explain the control and is accountable for refresh.
-- Sensitive records have a disclosure decision and expiry where needed.
+> **A note on honesty**
+>
+> Nothing in this guide will help you pass a review by sounding more secure than you are. Reviewers compare answers against reports, contracts, and their own testing, and a contradiction they find costs more trust than a gap you disclosed. Every pattern here is built to make true answers easier to give.
 
-## Worksheet 2: Claim register
+---
 
-Complete one row for each material product, control, artifact, request, or decision. Add rows rather than compressing several different scopes into one answer.
+**PART I · CHAPTERS 1–3**
 
-| Field | Entry | Evidence or owner |
-|---|---|---|
-| Approved claim |  |  |
-| Evidence link |  |  |
-| Control owner |  |  |
-| Scope and exclusions |  |  |
-| Last verified |  |  |
-| Expires or recheck date |  |  |
+<a id="part4"></a>
 
-### Quality check
+# The reviewer’s side of the table
 
-- The entry names a product or system rather than “the platform” when several products exist.
-- Dates describe the evidence period, not merely the day the file was uploaded.
-- Exceptions and unknowns remain visible until resolved.
-- The owner can explain the control and is accountable for refresh.
-- Sensitive records have a disclosure decision and expiry where needed.
+*Before you answer a single row, understand who reads your answers, what they have to decide, and what you need in place so that every answer has somewhere true to point.*
 
-## Worksheet 3: Review closeout
+---
 
-Complete one row for each material product, control, artifact, request, or decision. Add rows rather than compressing several different scopes into one answer.
+**CHAPTER 01 · PART I · THE REVIEWER’S SIDE**
 
-| Field | Entry | Evidence or owner |
-|---|---|---|
-| Questions that delayed the deal |  |  |
-| Evidence accepted |  |  |
-| Gaps committed |  |  |
-| Promises added to contract |  |  |
-| Artifacts to refresh |  |  |
-| Owner and due date |  |  |
+<a id="ch1"></a>
 
-### Quality check
+## What an enterprise reviewer is actually deciding
 
-- The entry names a product or system rather than “the platform” when several products exist.
-- Dates describe the evidence period, not merely the day the file was uploaded.
-- Exceptions and unknowns remain visible until resolved.
-- The owner can explain the control and is accountable for refresh.
-- Sensitive records have a disclosure decision and expiry where needed.
+*A questionnaire looks like an exam. It is closer to the raw material for a memo that someone else has to sign.*
 
-# Part III — Worked case: Northstar Metrics
+Picture the person on the other side. At a bank, an insurer, or a hospital group, a third-party risk analyst has a queue of vendors. Each one arrives with a business sponsor who wants the tool approved quickly. The analyst’s job is not to decide whether your product is good. It is to describe the risk of letting you hold their data or touch their systems, recommend whether to accept it, and list the conditions that would make it acceptable. That recommendation goes to someone more senior who owns the decision and will be asked about it if anything goes wrong.
 
-Northstar Metrics is a 32-person multi-tenant analytics company entering procurement with a regulated enterprise buyer. The example is fictional. It shows how to apply the records without suggesting that one control set fits every company.
+Seen that way, the questionnaire is a data-collection instrument. Most of its rows exist because a standard template includes them, not because your deal depends on them. A handful of rows carry the real decision, and the analyst knows which ones they are before you start typing.
 
-## Starting condition
+### Vendors are tiered before they are reviewed
 
-The team had useful technical controls but fragmented proof. Sales answers lived in old questionnaires, diagrams did not name dates or environments, and remediation records did not consistently link to verification. The team chose one current enterprise request as the boundary and refused to describe controls outside that product as if they were universal.
+Large buyers sort suppliers into tiers before choosing how hard to look. The tier is usually driven by what data you will receive, how many of their users or customers it covers, whether you connect to their internal systems, and how badly their operations suffer if you fail. A note-taking tool used by ten people with no customer data might get a short form. An analytics platform ingesting customer transaction records gets the full questionnaire, a document request, and possibly a call with their security architects.
 
-### Decision 1: Read the request as a set of decisions
+Your first move is to find out which tier you are in. Ask the business sponsor, or ask the analyst directly. It is a normal question and it tells you how much effort the review deserves.
 
-The team applied this step to Northstar Metrics. Separate the buyer’s actual decision from the format of the questionnaire. Record the product, data, contract, deadline, reviewer, and requested assurance. A 300-row spreadsheet may contain only a few gating questions. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
+### The questions that actually gate the deal
 
-### Decision 2: Define the product and evidence boundary
+The gating questions vary by buyer, but they cluster in the same places almost every time:
 
-The team applied this step to Northstar Metrics. Write a short system description that names the service, hosting model, customer data, regions, administrative paths, material suppliers, and excluded products. Every later answer should point back to this boundary. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
+- **Data.** What data will you hold, where is it stored, and who else receives it?
+- **Access.** Can the buyer’s users sign in through the buyer’s identity provider? Is multi-factor authentication enforced for your own staff?
+- **Independent assurance.** Is there a SOC 2 report, an ISO/IEC 27001 certificate, or a recent penetration test, and does it cover the product being bought?
+- **Incidents.** How quickly will you notify them of a breach, and is that written into the contract?
+- **Exit.** What happens to their data when the contract ends?
 
-### Decision 3: Build a claim register
+If you answer those well, a weak answer about password rotation on row 187 rarely sinks a deal. If you answer them badly, nothing else on the sheet will rescue it.
 
-The team applied this step to Northstar Metrics. Record each recurring security claim, its owner, supporting artifact, scope, last review date, expiry date, and approved wording. Treat sales copy, questionnaire answers, policies, and reports as connected statements. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
+> **Reviewer’s lens**
+>
+> The analyst is looking for reasons to trust your answers, not reasons to like your product. Specific, scoped, dated answers are easy to trust. Confident generalities send them looking for the evidence you didn’t supply.
 
-### Decision 4: Create the minimum proof set
+### Three ways a review ends
 
-The team applied this step to Northstar Metrics. Prepare architecture and data-flow diagrams, access-control evidence, secure-development records, vulnerability and penetration-test evidence, incident and continuity records, supplier oversight, and privacy records. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
+A review rarely ends with a clean pass or a flat rejection. There are three common outcomes:
 
-### Decision 5: Answer from evidence
-
-The team applied this step to Northstar Metrics. Use direct answers, precise scope, and named artifacts. Distinguish implemented, partially implemented, planned, not applicable, and unknown. Do not turn a roadmap into a present-tense control. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
-
-### Decision 6: Control sensitive sharing
-
-The team applied this step to Northstar Metrics. Use tiered disclosure. Share summaries first, detailed reports under suitable terms, and raw technical evidence only when the reviewer has a real need. Log recipients and expiry dates. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
-
-## Completed-case review
-
-Before closing the work, the team compared every external claim with the evidence register, removed unsupported absolute language, and recorded the remaining gaps. Each planned improvement had an owner and internal date, but the customer-facing answer described the current condition. The final package preserved the questions, supplied artifacts, decisions, and commitments so the next review could start from a verified record.
-
-# Part IV — Technical and evidence field modules
-
-These modules answer recurring questions that appear across customer reviews, program design, penetration-test planning, and AI-agent assessment. Use only the modules that match the product and decision in scope.
-
-## Field module 1: Security Questionnaire Evidence Checklist for SaaS Teams
-
-*Primary keyword: security questionnaire evidence checklist. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A safe security-questionnaire process connects every answer to current evidence, a named owner, an approval date, and a review date.** If the evidence is missing or the question does not match your system, flag it for review. Do not generate a confident “yes” from a policy template.
-
-Questionnaires are part of enterprise sales, but the answers can become contractual representations. The goal is not to finish the spreadsheet as quickly as possible. The goal is to give the buyer an accurate view of the system while identifying gaps that need a technical or operational fix.
-
-#### Build the answer library before the next deal
-
-Store approved answers by topic, not by customer spreadsheet. Each record should include:
-
-- the standard question or control topic;
-
-- the approved answer in plain language;
-
-- systems and products the answer applies to;
-
-- supporting evidence and where it is stored;
-
-- the control or evidence owner;
-
-- approver and approval date;
-
-- next review date;
-
-- exceptions, planned work, and claims you must not make.
-
-Common questionnaire formats such as the [Cloud Security Alliance CAIQ](https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4-1) can help organize topics, but a standard questionnaire is not proof that your controls operate. Map answers to your actual product and evidence.
-
-#### Evidence checklist
-
-#### Company and system description
-
-- legal contracting entity and product names;
-
-- plain-language service description;
-
-- system boundary and architecture diagram;
-
-- data-flow diagram for customer and sensitive data;
-
-- hosting providers and relevant regions;
-
-- subprocessor inventory and purpose;
-
-- named security and privacy contacts.
-
-#### Data classification, use, retention, and deletion
-
-- data categories collected and processed;
-
-- purposes and customer instructions;
-
-- classification policy and handling rules;
-
-- retention schedule by data type;
-
-- deletion workflow, backups, and verification;
-
-- test-data and production-data separation.
-
-#### Encryption and key management
-
-- transport encryption configuration;
-
-- storage encryption by service and data type;
-
-- key-management provider and access model;
-
-- rotation, revocation, recovery, and audit records;
-
-- exceptions where data is not encrypted.
-
-Do not answer “AES-256 everywhere” because a cloud-service marketing page says so. Confirm which storage services, application fields, backups, exports, and endpoints the statement covers.
-
-#### Identity and access
-
-- identity provider and single sign-on coverage;
-
-- multi-factor authentication requirements;
-
-- role definitions and privileged-access process;
-
-- joiner, mover, and leaver evidence;
-
-- periodic access reviews and approvals;
-
-- service accounts, API keys, and machine identities;
-
-- customer authentication and account-recovery controls.
-
-#### Secure development and change management
-
-- code-review and branch-protection rules;
-
-- build, test, and deployment evidence;
-
-- dependency, secret, static, and dynamic testing;
-
-- change approval and emergency-change process;
-
-- separation of development and production access;
-
-- release rollback and artifact verification.
-
-The [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework) can help organize governance and risk outcomes. It does not certify your implementation. Use it to locate evidence and ownership, not as a blanket “compliant” answer.
-
-#### Vulnerability management and penetration testing
-
-- asset and software inventory;
-
-- scan cadence and authenticated coverage;
-
-- triage, severity, ownership, and remediation targets;
-
-- independent penetration-test scope and date;
-
-- redacted report or attestation where permitted;
-
-- retest results and open-risk acceptance.
-
-If the buyer asks for a penetration test, confirm what it must cover. Our guide explains [when SOC 2 and customer reviews lead to penetration testing](/blog/does-soc-2-require-a-penetration-test).
-
-#### Logging, monitoring, and incident response
-
-- security-relevant event sources;
-
-- log access, protection, and retention;
-
-- alert ownership and escalation;
-
-- incident-response plan and contact tree;
-
-- tabletop or exercise record;
-
-- customer-notification decision process;
-
-- post-incident review and corrective action.
-
-#### Availability, backups, and recovery
-
-- service dependencies and criticality;
-
-- backup scope, frequency, protection, and retention;
-
-- restoration test evidence;
-
-- recovery objectives approved by the business;
-
-- business-continuity and disaster-recovery exercises;
-
-- customer communication during an outage.
-
-#### Vendor and subprocessor management
-
-- vendor inventory and risk tier;
-
-- due-diligence records;
-
-- contracts and data-processing terms;
-
-- security review and renewal dates;
-
-- offboarding and access-revocation evidence;
-
-- current public subprocessor notice.
-
-#### AI-specific evidence
-
-- models and providers used in each feature;
-
-- data sent to the model and whether it is used for training;
-
-- model hosting and processing regions;
-
-- tenant separation in retrieval and memory;
-
-- prompt-injection and output-handling controls;
-
-- tools, permissions, approval gates, and action logs;
-
-- human review for consequential output;
-
-- evaluation, monitoring, and incident procedures.
-
-The [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) and [OWASP Top 10 for LLM Applications](https://owasp.org/projects/top-10-for-large-language-model-applications) provide useful risk categories. Your answer still needs to describe the deployed product.
-
-#### Use five answer states
-
-| State | Meaning | Action |
-| --- | --- | --- |
-| Supported | Current evidence supports the answer for the stated scope | Attach or reference approved evidence |
-| Partially supported | The control applies only to part of the system | State the boundary and exception |
-| Planned | Work is approved but not operating | Give an owner and honest target date |
-| Not applicable | The question does not fit the product or relationship | Explain why, without using it to hide a gap |
-| Needs review | Evidence or ownership is missing | Do not send until the owner resolves it |
-
-#### Review before sending
-
-Route answers to the people who own the facts: engineering for architecture and development controls, IT for workforce identity, legal and privacy for contracts and data rights, finance for insurance, and executive management for risk acceptance. Security or compliance should coordinate consistency, not invent answers on behalf of other owners.
-
-Keep the original customer wording beside the approved response. A slight wording change can alter the claim. “Do administrators use MFA?” is not the same as “Is MFA technically available?”
-
-#### Frequently asked questions
-
-#### Can AI complete a security questionnaire?
-
-It can help map questions to approved source material and draft responses. A named owner must review the result. Unsupported answers should be flagged, never guessed.
-
-#### Should we send our full penetration-test report?
-
-Only under appropriate access and confidentiality controls. Many buyers can begin with a redacted report, executive summary, attestation, or controlled trust-center access.
-
-#### Can we reuse answers?
-
-Yes, when the question, system scope, and current facts match. Keep evidence and review dates so reuse does not preserve an outdated claim.
-
-#### Does a completed questionnaire certify our security?
-
-No. It represents answers to a customer's due-diligence questions. It does not create an audit opinion, certification, or guarantee.
-
-## Field module 2: Does SOC 2 Require a Penetration Test? What to Ask Your Auditor
-
-*Primary keyword: does SOC 2 require a penetration test. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**No, SOC 2 does not contain one universal rule that every organization must complete a penetration test.** A test can still become necessary because of your selected controls, risk assessment, system description, auditor's evidence request, or an enterprise customer's contract. Confirm the requirement before buying a test.
-
-The distinction matters. A company can spend money on the wrong scope and still fail to answer the question its auditor or customer asked. A public vulnerability scan, an unauthenticated web test, and a gray-box application penetration test produce different evidence. The name on the invoice does not make them interchangeable.
-
-#### SOC 2 examines controls, not a fixed shopping list
-
-A SOC 2 examination evaluates controls relevant to security, availability, processing integrity, confidentiality, or privacy. The [AICPA's SOC resource library](https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services) publishes the governing guides, Trust Services Criteria, description criteria, and illustrative reports. Those materials do not reduce the examination to a universal list that says every service organization must purchase the same penetration test.
-
-Your organization describes its system and the controls it says are operating. The auditor then tests whether that description is fair and whether the controls meet the applicable criteria. If your risk assessment, control language, customer promise, or auditor request says independent penetration testing occurs, you need evidence that matches that statement.
-
-> **Ask for the exact requirement.** “We need a SOC 2 pentest” is not a scope. Ask which system, control, period, testing method, report contents, and retest evidence the auditor or customer expects.
-
-#### When a penetration test becomes part of the evidence
-
-A penetration test commonly enters a SOC 2 project through one of five paths:
-
-- **Your control says you perform one.** If management has committed to annual independent penetration testing, the auditor will expect dated evidence that the control operated.
-
-- **Your risk assessment calls for it.** An internet-facing application holding customer data may warrant deeper testing than a scanner can provide.
-
-- **The auditor asks how a technical control was validated.** The test may support evidence for access control, change management, vulnerability management, or risk mitigation.
-
-- **A customer contract requires it.** Enterprise procurement often asks for an independent report even when the examination itself does not prescribe one.
-
-- **Your insurer or regulator expects it.** That is a separate requirement and should be scoped separately, even if the resulting report also supports the SOC 2 evidence package.
-
-The [NIST SP 800-115 testing guide](https://csrc.nist.gov/pubs/sp/800/115/final) distinguishes security testing techniques and stresses planning, execution, analysis, and mitigation. That is a useful model for discussing the test with your auditor: define the objective first, then choose the technique.
-
-#### Seven questions to ask your auditor before requesting quotes
-
-#### 1. Which systems must be in scope?
-
-Ask whether the evidence must cover the customer-facing web application, first-party API, mobile application, external infrastructure, cloud environment, or a specific combination. Match the answer to the system description. A report for a marketing site will not establish how an authenticated SaaS product protects tenant data.
-
-#### 2. Does the test need authenticated access?
-
-For a login-gated product, authenticated testing is usually where authorization and business-logic failures appear. Provide separate accounts for important roles and, where relevant, two test tenants. The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) covers identity, authentication, authorization, sessions, business logic, client-side behavior, and APIs. A scope that ignores roles may miss the controls buyers care about most.
-
-#### 3. Is a vulnerability scan enough?
-
-Usually not when the request says “penetration test.” Scanners can identify known patterns and exposed software. They do not reliably reason through tenant boundaries, role combinations, approval flows, or application-specific abuse. Ask whether the evidence needs manual testing and whether the vendor must document the manual hours and methodology.
-
-#### 4. Which period must the report cover?
-
-Confirm when testing must occur relative to the examination period. A technically good report with the wrong date may not support the control sample the auditor selected. Also ask whether the auditor wants the original report, a management response, a remediation tracker, or the retest version.
-
-#### 5. What must the report contain?
-
-Request a redacted sample before selecting a vendor. Look for scope and exclusions, target versions, testing dates, methodology, affected workflow, evidence, reproduction steps, impact, severity rationale, recommended fix, and retest history. See our [penetration-test report guide](/blog/what-a-penetration-test-report-should-contain) and [illustrative sample report](/sample-report).
-
-#### 6. Is remediation retesting required?
-
-A finding marked “fixed” by the development team is not the same as a verified retest. Confirm whether the auditor or customer expects independent verification and whether the original vendor must perform it. Sthuthi's [security fixes and retesting service](/services/security-fixes-retesting) keeps remediation state separate from verification evidence.
-
-#### 7. Are there vendor qualifications or independence rules?
-
-Some customers specify insurance, tester certifications, geographic restrictions, data-handling terms, or independence requirements. Collect those before requesting proposals. Do not assume the auditor endorses a vendor merely because a report is formatted for compliance.
-
-#### What a defensible SOC 2 penetration-test scope looks like
-
-For a typical authenticated SaaS product, a defensible starting scope identifies one application, its first-party API, the roles that can perform sensitive operations, two representative tenants, the test environment, the test window, and prohibited actions. It also states whether mobile clients, cloud infrastructure, third-party integrations, social engineering, denial-of-service testing, and source review are excluded.
-
-Cloud-provider rules still apply. For example, review the [AWS penetration-testing policy](https://aws.amazon.com/security/penetration-testing/) before testing hosted services. Written authorization should name the target and allowed activity. “Our application runs on AWS” is not permission to test every related AWS service or third-party system.
-
-#### How to compare SOC 2 penetration-test proposals
-
-| Proposal detail | What to look for |
-| --- | --- |
-| Target | Named application, API, domains, environment, roles, and tenants |
-| Method | Manual testing supported by tools, mapped to an established testing guide |
-| Depth | Authorization, sessions, business logic, workflow abuse, and API behavior |
-| Deliverables | Executive summary, technical evidence, reproduction, fixes, limits, and report version |
-| Retest | Clear window, included findings, evidence standard, and updated report |
-| Safety | Written authorization, test window, contacts, rate limits, and stop conditions |
-
-A cheap proposal may be adequate for a small, low-complexity application. An expensive proposal is not automatically deeper. Compare test hours, authenticated roles, assets, exclusions, reporting, and retesting. The useful question is whether the scope tests the controls and risks your evidence must address.
-
-#### Frequently asked questions
-
-#### Is a penetration test mandatory for SOC 2 Type 1?
-
-Not as one universal requirement. A Type 1 report addresses the design of controls at a point in time. Your controls, risks, customer commitments, and auditor requests determine whether a penetration test belongs in the evidence.
-
-#### Is a penetration test mandatory for SOC 2 Type 2?
-
-Again, not universally. Type 2 examines operating effectiveness over a period. If your control says a penetration test occurs during that period, the auditor will expect evidence that it operated as described.
-
-#### Can a vulnerability scan replace a penetration test?
-
-Only if the requirement actually calls for vulnerability scanning. A scan and a penetration test answer different questions. Confirm the requested technique and deliverable with the auditor or customer.
-
-#### Should the test happen in production?
-
-Use a representative test environment when possible. If production testing is necessary, define allowed actions, data restrictions, request limits, monitoring, contacts, and stop conditions in writing.
-
-#### Does the penetration-testing company issue the SOC 2 report?
-
-No. A qualified CPA firm performs the SOC examination and issues the SOC report. A penetration-testing company supplies technical assessment evidence.
-
-## Field module 3: How to Scope a Web Application Penetration Test
-
-*Primary keyword: web application penetration test scope. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A useful web application penetration-test scope names the application, backing APIs, environments, authenticated roles, tenant boundaries, sensitive workflows, allowed testing actions, exclusions, dates, deliverables, and retest terms.** If one of those is missing, quotes will not be comparable and coverage will be ambiguous.
-
-Good scoping is not administrative overhead. It controls safety, cost, testing depth, and the meaning of the final report. “Test our web app” can describe a three-day unauthenticated review or weeks of authenticated business-logic work. The tester needs enough detail to estimate effort without collecting secrets or customer records during sales.
-
-#### Start with the decision the report must support
-
-Write one sentence that explains why the assessment exists. Examples:
-
-- An enterprise customer requires an independent application test before contract signature.
-
-- An auditor asked for evidence that authenticated access controls were tested.
-
-- The product now supports refunds and administrators want the approval flow tested.
-
-- A new multi-tenant architecture needs an independent check before migration.
-
-The decision determines the evidence. A launch review may prioritize high-risk workflows and release blockers. A customer-requested report may need an executive summary and defined remediation status. A regulated scope may need particular systems, tester qualifications, or dates.
-
-#### 1. Name the application boundary
-
-List the exact hosts, application names, and environment. Include alternate domains used for authentication, file delivery, administration, or regional deployments. State which systems are owned by your organization and which are operated by third parties.
-
-The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) covers configuration, identity, authentication, authorization, sessions, input validation, error handling, cryptography, business logic, client-side behavior, and APIs. That breadth is useful, but the guide is not a substitute for naming your specific product boundary.
-
-> **Do not use a wildcard as the scope.** “Everything under example.com” can include marketing systems, vendors, abandoned hosts, and services the client is not authorized to test.
-
-#### 2. Decide whether the backing API is included
-
-A web application test normally exercises the endpoints used by the browser. That does not automatically cover every API endpoint, mobile route, partner API, service credential, GraphQL operation, or deprecated version. If the API is a product in its own right, give it a separate inventory and role matrix.
-
-Read [API pentest versus web application pentest](/blog/api-pentest-vs-web-application-pentest) before combining the scopes. The [OWASP API Security Top 10](https://api-security.owasp.org/) highlights broken object and function authorization, unrestricted resource consumption, sensitive business flows, inventory problems, and unsafe third-party API use. Those risks often require endpoint and role coverage beyond the browser's normal path.
-
-#### 3. Map roles, accounts, and tenants
-
-Provide a role matrix showing what each account should be allowed to view and do. Common roles include unauthenticated user, customer member, customer administrator, support agent, finance operator, partner, and internal administrator. Add two test tenants when customer isolation matters.
-
-| Role | Expected access | High-risk actions |
-| --- | --- | --- |
-| Customer member | Own tenant records | Export, file access, API tokens |
-| Customer admin | Own tenant users and settings | Invite, role change, integration setup |
-| Support agent | Assigned customer cases | Impersonation, resets, private records |
-| Finance operator | Approved billing workflows | Refunds, payout details, credits |
-
-Do not send passwords in the scoping form or ordinary email. Record the account types first, then arrange a controlled credential handoff after the scope and authorization are agreed. Sthuthi's [security and data-handling page](/security) explains this boundary.
-
-#### 4. Identify the workflows where failure has material impact
-
-Page count is a weak estimate of application complexity. A six-page product may contain payments, file imports, account recovery, administrative impersonation, and cross-tenant search. A hundred-page documentation portal may have little authenticated logic.
-
-List the workflows that can expose data, change authority, move money, execute code, publish content, or connect another system. For each workflow, state the expected rule. A tester can then check whether the server enforces it rather than merely recording that the interface hides a button.
-
-#### 5. Choose the access model
-
-#### Black-box testing
-
-The tester begins with public information and no authenticated context. This can model an outside attacker, but it may spend time rediscovering facts the team already knows and may provide shallow coverage of authenticated controls.
-
-#### Gray-box testing
-
-The tester receives representative accounts, architecture context, and agreed test data. For most authenticated SaaS products, this produces better coverage per testing hour because the assessor can compare roles and tenants directly.
-
-#### Source-assisted testing
-
-The tester can inspect selected source, configuration, or API definitions to target complex controls. This can be valuable for authorization middleware, cryptographic use, or unusual workflows. It should not be described as a complete secure-code review unless the scope and effort support that claim.
-
-[NIST SP 800-115](https://csrc.nist.gov/pubs/sp/800/115/final) describes several testing and examination techniques and their limitations. Choose the access model based on the objective, not on which label sounds more adversarial.
-
-#### 6. Define the environment and test data
-
-A test environment should represent production controls closely enough for the result to matter. Confirm authentication, authorization, feature flags, integrations, and data shape. Use representative fake data where possible. If production testing is necessary, identify sensitive operations that require notice or approval.
-
-State whether emails, webhooks, SMS messages, payments, refunds, deletion, file processing, third-party API calls, and background jobs are safe to trigger. Provide sandbox credentials for payment or messaging providers when those workflows are in scope.
-
-#### 7. Write allowed actions, exclusions, and stop conditions
-
-Written authorization should name the target, owner, test window, source addresses where relevant, allowed techniques, request limits, contacts, and stop conditions. Explicitly address denial-of-service testing, social engineering, persistence, destructive actions, data export, cloud metadata access, and third-party systems.
-
-Cloud rules may add constraints. Review the provider's policy, such as the [AWS penetration-testing policy](https://aws.amazon.com/security/penetration-testing/), before fieldwork. Client authorization does not grant permission to attack a vendor's independent service.
-
-#### 8. Define deliverables before testing starts
-
-A strong report should include:
-
-- scope, dates, targets, versions, roles, and exclusions;
-
-- methodology and completed coverage;
-
-- executive summary written for the decision maker;
-
-- finding title, affected workflow, evidence, reproduction, and impact;
-
-- severity rationale and recommended change;
-
-- limitations and remaining untested areas;
-
-- report version and reviewer;
-
-- retest result tied to new evidence.
-
-Ask for a redacted sample. Our [sample report](/sample-report) shows the minimum chain from observation to fix and retest. The [OWASP Application Security Verification Standard](https://owasp.org/www-project-application-security-verification-standard/) can help teams describe security requirements, while the WSTG provides testing techniques. Neither should be pasted into a report as proof that every check was completed.
-
-#### 9. Agree on retesting
-
-Define how long the included retest remains available, which findings it covers, whether design changes create a new scope, and what evidence marks a finding verified. Retesting should repeat the relevant scenario against the corrected version and record the observed result. “Developer says fixed” is a remediation status, not verification.
-
-#### Scoping checklist
-
-- Business reason and deadline
-
-- Named application, domains, and environment
-
-- Included API endpoints or inventory
-
-- Roles, test accounts, and tenant pairs
-
-- Critical workflows and expected rules
-
-- Third-party services and ownership
-
-- Allowed actions and explicit exclusions
-
-- Request limits, contacts, and stop conditions
-
-- Report recipients and required format
-
-- Retest window and acceptance evidence
-
-#### Frequently asked questions
-
-#### How long does a web application penetration test take?
-
-It depends on roles, workflows, APIs, integrations, and reporting needs. Sthuthi's standard launch scope is roughly ten business days after access and authorization are ready, but the written scope controls the estimate.
-
-#### How many test accounts should we provide?
-
-Provide at least one account for each material role and two representative tenants when isolation matters. More accounts may be needed for invitation, approval, support, or payment workflows.
-
-#### Should the API be a separate test?
-
-Use a separate API scope when it has endpoints, clients, credentials, roles, or business flows that the web application does not exercise.
-
-#### Can the tester use production customer data?
-
-Avoid it. Use representative fake data where possible. If production evidence is unavoidable, define collection, redaction, access, retention, and deletion before testing.
-
-## Field module 4: API Pentest vs Web Application Pentest: What Each Scope Covers
-
-*Primary keyword: API pentest vs web application pentest. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A web application penetration test follows user-facing workflows through the browser and the application behind them. An API penetration test works from the API inventory, credentials, roles, objects, and business operations directly.** They overlap, but a web test does not automatically cover every API endpoint or client.
-
-The correct scope depends on how the product is built and sold. If one browser application is the only API client, a combined test may be efficient. If mobile apps, partners, service accounts, and customer integrations use the same API, the API needs its own coverage plan.
-
-#### The practical difference
-
-| Area | Web application pentest | API pentest |
-| --- | --- | --- |
-| Starting point | User journeys and browser behavior | Endpoint inventory and API operations |
-| Identity | Login, sessions, recovery, browser tokens | API keys, OAuth, service credentials, bearer tokens |
-| Authorization | Roles and actions visible through the app | Object and function rules across every included operation |
-| Business logic | Multi-step UI workflows | Direct calls, sequence changes, automation, bulk operations |
-| Input surface | Forms, files, URLs, client-rendered content | Parameters, bodies, headers, schemas, GraphQL operations |
-| Coverage risk | May miss unused or partner endpoints | May miss browser-only behavior and client-side failures |
-
-#### What a web application penetration test covers
-
-A web application test examines the system as a user and attacker encounter it through the browser. The assessor reviews public entry points, authentication, sessions, account recovery, role changes, tenant boundaries, file handling, input processing, client-side behavior, and application-specific workflows.
-
-The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) organizes these areas into practical testing domains. Its business-logic section matters because high-impact failures often follow valid requests in the wrong order, with the wrong identity, or against another customer's object.
-
-During a web test, the assessor will also see API requests made by the browser. Those requests should be tested. The limit is inventory: the browser reveals the endpoints used by the tested workflows, not necessarily every endpoint the API exposes.
-
-#### What an API penetration test covers
-
-An API test begins with a defined inventory: hosts, versions, protocols, operations, schemas, authentication methods, roles, object types, and sensitive business flows. The tester sends requests directly rather than relying on the interface to generate them.
-
-The [OWASP API Security Top 10](https://api-security.owasp.org/) puts broken object-level authorization first. The question is simple: if Account A changes an identifier to one owned by Account B, does the server reject it? The same discipline applies to function-level authorization: can a lower-privilege identity call an administrative operation directly?
-
-An API scope may also cover:
-
-- REST, GraphQL, gRPC, SOAP, or event-driven interfaces where supported;
-
-- API keys, OAuth clients, machine identities, and service-to-service credentials;
-
-- mass assignment and object-property authorization;
-
-- rate limits, resource consumption, and cost-amplifying requests;
-
-- bulk operations, exports, imports, and automation;
-
-- versioning, deprecated endpoints, and undocumented operations;
-
-- unsafe trust in third-party API responses.
-
-#### The largest overlap is authorization
-
-Both scopes should test authentication and authorization, but they approach coverage differently. The web test asks whether a user can misuse the product's workflows. The API test asks whether each included operation enforces the identity, role, tenant, object, and state rules the product depends on.
-
-Suppose a support application lets an agent search orders. The web test may manipulate the order reference inside the normal search flow. The API test should also enumerate related endpoints: order detail, export, refund, note history, attachments, and bulk search. A secure browser route does not compensate for an unprotected export endpoint.
-
-#### When a web test is enough
-
-A web application scope may be enough when:
-
-- the browser application is the only meaningful API client;
-
-- the included workflows exercise the sensitive endpoints;
-
-- there are few roles and no separate machine identities;
-
-- the report need concerns the product rather than the complete API platform;
-
-- the scope clearly states which API behavior was and was not tested.
-
-Do not describe this as a complete API penetration test. State that the backing endpoints used by the included web workflows were assessed.
-
-#### When the API needs its own scope
-
-Create a separate or combined API scope when:
-
-- customers or partners integrate directly;
-
-- mobile, desktop, or IoT clients use endpoints the browser does not;
-
-- service accounts or OAuth clients have distinct permissions;
-
-- GraphQL exposes a broad schema;
-
-- deprecated versions remain reachable;
-
-- bulk operations or sensitive business flows can be called directly;
-
-- the auditor or customer explicitly asked for API testing.
-
-#### How to scope a combined assessment
-
-Use one written system map. List the browser workflows, API operations, roles, tenants, and credentials. Mark which endpoints each client uses. Identify the expected authorization rule for sensitive objects and functions. Then allocate testing time to both workflow abuse and endpoint coverage.
-
-Our [web application penetration-test scoping guide](/blog/how-to-scope-web-application-penetration-test) provides the complete checklist. The [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/) can help define application security requirements, while the API Top 10 highlights recurring API risks. Neither replaces a product-specific threat model and role matrix.
-
-#### What the report should say
-
-The report must separate completed web and API coverage. It should list the application, hosts, API versions, operations or collections, roles, tenants, and excluded clients. Findings should name the affected workflow and endpoint, show the sanitized request and response, explain the expected rule, and record the server's observed decision.
-
-Read [what a useful penetration-test report contains](/blog/what-a-penetration-test-report-should-contain) before reviewing proposals. A list of generic vulnerability names is not enough to prove which product rules were tested.
-
-#### Frequently asked questions
-
-#### Does a web application penetration test include APIs?
-
-It normally tests API calls used by the included browser workflows. It does not automatically cover every endpoint, API version, client, or service credential.
-
-#### Is API testing only automated?
-
-No. Tools help enumerate and replay requests, but authorization, workflow, and business-impact testing require human reasoning and product context.
-
-#### Do we need to provide an OpenAPI specification?
-
-It helps establish inventory, but it may be incomplete. Provide the specification, collections, GraphQL schema, authentication details, role matrix, and known undocumented or deprecated routes.
-
-#### Should mobile APIs be included in a web test?
-
-Only when the written scope includes them. A mobile client may use different endpoints, tokens, device assumptions, or versions and often deserves explicit coverage.
-
-## Field module 5: What a Useful Penetration-Test Report Should Contain
-
-*Primary keyword: penetration test report example. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A useful penetration-test report states exactly what was tested, shows reproducible evidence for each finding, explains material impact, recommends a specific fix, records limitations, and adds retest evidence after remediation.** A list of scanner alerts and generic CVSS text is not enough.
-
-The report serves several readers. Executives need the decision and risk. Engineers need enough evidence to reproduce and fix the issue. Auditors and customers need scope, dates, independence, and remediation status. A good report separates those needs without hiding technical detail.
-
-#### 1. Document identity and version
-
-The cover and document metadata should identify:
-
-- client and assessed system;
-
-- assessment type;
-
-- testing dates and report date;
-
-- report version and change history;
-
-- assessor and reviewer;
-
-- distribution and confidentiality marking;
-
-- engagement or authorization reference.
-
-Versioning matters after retesting. Readers must be able to distinguish the original findings from later verification and understand which application version each result describes.
-
-#### 2. Scope, authorization, and exclusions
-
-List the exact applications, hosts, APIs, versions, environments, roles, tenants, workflows, and testing window. State the access model and whether the work was black-box, gray-box, or source-assisted. Record major exclusions such as cloud infrastructure, mobile clients, denial-of-service, social engineering, physical access, or third-party systems.
-
-[NIST SP 800-115](https://csrc.nist.gov/pubs/sp/800/115/final) treats planning as part of security testing. The report should connect the completed work to the approved plan. Read [how to scope a web application penetration test](/blog/how-to-scope-web-application-penetration-test) for the input checklist.
-
-> **Coverage must be falsifiable.** A reader should be able to identify what remains untested. “The application was tested against industry standards” is too vague.
-
-#### 3. Methodology and completed coverage
-
-Name the testing references and explain how they were adapted. The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) is a useful technique reference. The [OWASP API Security Top 10](https://api-security.owasp.org/) highlights recurring API risks. Neither proves that a tester completed every listed check.
-
-Summarize completed coverage by area: authentication, authorization, sessions, input handling, files, business logic, APIs, integrations, client-side behavior, configuration, and other agreed objectives. Note stopped, blocked, or incomplete checks and why they could not be completed.
-
-#### 4. Executive summary
-
-The executive summary should answer:
-
-- What system and decision did the assessment address?
-
-- What material risks were confirmed?
-
-- Which controls worked as expected?
-
-- What should management do next?
-
-- What was outside scope or remained untested?
-
-A severity count alone is not an executive summary. One cross-tenant authorization failure may matter more than many low-risk configuration observations.
-
-#### 5. Finding title and status
-
-Use a title that names the broken outcome: “A customer could download another tenant's invoice,” not “IDOR” or “OWASP A01.” Technical classifications can appear below the title.
-
-Keep status fields separate:
-
-- **Review state:** draft, needs review, confirmed, rejected.
-
-- **Remediation state:** open, in progress, ready for retest, risk accepted.
-
-- **Verification state:** not retested, fixed and verified, still present, partially fixed.
-
-A client saying “fixed” should not automatically change the verification result.
-
-#### 6. Affected workflow and expected rule
-
-Name the user, role, tenant, object, action, and workflow. Then state the rule the system should enforce. For example: “A signed-in customer may retrieve only orders owned by the same tenant.” This gives the engineer and retester a stable target even when implementation changes.
-
-#### 7. Reproducible evidence
-
-Evidence should contain enough detail to establish the result without exposing unnecessary sensitive data:
-
-- target and application version;
-
-- test identity and preconditions;
-
-- sanitized request, action, or command;
-
-- observed response or downstream state;
-
-- expected response or rule;
-
-- timestamps and relevant correlation identifiers;
-
-- screenshots or traces where they add information;
-
-- artifact digest and source-tool version where appropriate.
-
-Redact tokens, secrets, customer records, and unrelated personal data. A screenshot is not automatically better evidence than a concise request and response. Use the artifact that proves the control failure.
-
-#### 8. Reproduction steps
-
-Write steps that a developer can follow in a safe environment. Include the starting role and data state. Avoid vague phrases such as “intercept the request and change the ID” when multiple IDs, encodings, or endpoints exist.
-
-For a multi-step business-logic issue, show the sequence and state changes. For an AI finding, include the relevant model, system configuration, retrieved content, tool call, and material action. See [why model output alone may not establish impact](/blog/ai-jailbreak-vs-security-finding).
-
-#### 9. Business and technical impact
-
-Explain what a successful attacker can read, change, create, delete, execute, approve, or deny. State who is affected and the required access. Separate demonstrated impact from plausible escalation. Do not write “full account takeover” when the test proved only profile-field modification.
-
-#### 10. Severity and rationale
-
-A numeric score can help consistency, but the report must explain product context. The [FIRST CVSS v4.0 specification](https://www.first.org/cvss/v4.0/specification-document) defines a common scoring model. Use it accurately and add the business context it does not know: data sensitivity, tenant count, transaction value, detectability, and operational safeguards.
-
-Record uncertainty and assumptions. Severity should be reviewable, not an unexplained color.
-
-#### 11. Recommended fix
-
-Recommend the control, not only a symptom patch. For an object-authorization failure, the recommendation may be to enforce tenant ownership in a shared server-side authorization layer, add negative tests across roles, and remove client-supplied authority. “Sanitize input” would not address that cause.
-
-Where helpful, separate immediate containment from durable correction. Do not include a code patch the assessor has not tested or pretend there is one universal fix for every architecture.
-
-#### 12. Owner and remediation record
-
-Assign a team or named role, target date, tracking reference, and management decision. If risk is accepted, record the approver, reason, duration, and review date. Keep client operational notes separate from the assessor's original evidence.
-
-#### 13. Retest result
-
-A retest should state:
-
-- the corrected application and version;
-
-- date and tester;
-
-- the repeated scenario;
-
-- new observed result;
-
-- whether the original impact remains;
-
-- new limitations or partial fixes;
-
-- updated verification status.
-
-Our [illustrative report](/sample-report) shows a cross-customer order lookup changing from HTTP 200 to HTTP 403 after an ownership check was added. The example is labeled demo data; it demonstrates report structure rather than client history.
-
-#### 14. Limitations and remaining risk
-
-No test proves that a system is secure. State time limits, inaccessible features, unavailable roles, blocked integrations, rate constraints, environment differences, and untested systems. “No confirmed findings” means no finding was confirmed in the completed checks. It does not mean the business is safe from every attack.
-
-#### Report evaluation checklist
-
-- Exact targets, dates, versions, roles, and exclusions
-
-- Named methodology with completed coverage
-
-- Executive decision and remaining limits
-
-- Product-specific finding titles
-
-- Expected rule and affected workflow
-
-- Sanitized, reproducible evidence
-
-- Demonstrated impact and severity rationale
-
-- Specific recommended control
-
-- Owner and remediation state
-
-- Retest evidence and report version history
-
-#### Frequently asked questions
-
-#### Should a penetration-test report include every tool output?
-
-No. Include evidence that supports confirmed findings and coverage. Raw tool output can contain false positives, secrets, or irrelevant data and may belong in a controlled appendix.
-
-#### Is a clean report better than one with findings?
-
-Not necessarily. Evaluate scope, depth, evidence, and limitations. A report with zero findings from shallow coverage is not stronger than a report that found and verified meaningful fixes.
-
-#### Can we share the report with customers?
-
-Follow the agreement, confidentiality marking, and access controls. Many organizations share a redacted version, executive summary, or controlled trust-center copy.
-
-#### What is the difference between remediation and retesting?
-
-Remediation is the client's change. Retesting is the assessor's independent check of the corrected system using the relevant recorded scenario.
-
-## Field module 6: AI Security Assessment vs Web Application Pentest
-
-*Primary keyword: AI security assessment vs penetration test. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A web application penetration test checks the code, APIs, identity, sessions, authorization, and business logic around an AI feature. An AI security assessment also tests model behavior, retrieved content, prompt injection, tenant separation, tool permissions, approval gates, memory, and consequential actions.** AI products usually need both surfaces assessed.
-
-The model is one component inside a larger system. A secure API can still return the wrong customer's document if retrieval filters fail. A resistant model can still call an over-permissioned refund tool. A successful jailbreak can be harmless if the system has no protected rule or connected action. Scope the complete workflow.
-
-#### What the traditional web application test still needs to cover
-
-Adding an LLM does not remove ordinary application risk. The assessment should still examine:
-
-- authentication, session handling, and account recovery;
-
-- server-side authorization and tenant boundaries;
-
-- API object and function permissions;
-
-- file uploads, parsing, rendering, and storage;
-
-- input validation and output encoding;
-
-- secrets, tokens, logs, and error handling;
-
-- business workflows and administrative actions;
-
-- cloud and third-party integration boundaries.
-
-The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) remains relevant. Its application and API techniques address the software that collects prompts, retrieves data, calls the model, and executes the result.
-
-#### What the AI assessment adds
-
-#### Direct and indirect prompt injection
-
-Direct injection comes from the user. Indirect injection comes from content the system retrieves or processes: documents, tickets, webpages, emails, tool output, or database records. The [OWASP GenAI Security Project's prompt-injection guidance](https://genai.owasp.org/glossary/prompt-injection/) explains why instructions and data enter the same model context.
-
-#### Retrieval and tenant separation
-
-A RAG system may enforce access at ingestion, indexing, retrieval, or response time. The test should identify which layer makes the final authorization decision and whether another tenant's content can enter the context. Vector similarity is not an access-control rule.
-
-#### System instructions and sensitive context
-
-System-prompt exposure is material when the prompt contains secrets, private rules, or information that enables a more serious attack. Do not store credentials in prompts. Treat model context as observable to an adversarial user unless stronger controls establish otherwise.
-
-#### Tool permissions and approval gates
-
-List every tool the AI can call, the identity used, available operations, accepted arguments, affected systems, and actions requiring human approval. Then test whether malicious user or retrieved instructions can redirect the tool. See [how to test AI agent tool permissions](/blog/test-ai-agent-tool-permissions).
-
-#### Memory and cross-session behavior
-
-Check whether personal, tenant, or task context survives longer than intended and whether one user's data influences another user's session. Memory stores need the same explicit ownership and retention rules as other application data.
-
-#### Model and provider boundaries
-
-Record the model, version, system configuration, moderation, provider settings, data-use terms, and regional processing that affect the test. The [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) treats AI risk across design, development, deployment, use, and evaluation rather than as one prompt-level check.
-
-#### Use a broken rule, not a strange response, to define findings
-
-An AI test produces many surprising outputs. A confirmed security finding needs more:
-
-- **Expected rule:** what the system should prevent.
-
-- **Tested configuration:** application, model, prompts, tools, permissions, and data state.
-
-- **Observed outcome:** the sanitized trace and downstream action.
-
-- **Material impact:** data exposure, unauthorized action, privilege change, fraud, code execution, or another real consequence.
-
-- **Reproducibility and limits:** how often it worked and where the result does not generalize.
-
-Read [why a jailbreak is not automatically a security finding](/blog/ai-jailbreak-vs-security-finding) for the complete decision model.
-
-#### AI feature add-on or standalone assessment?
-
-#### Use an AI feature add-on when
-
-- AI provides chat, summary, classification, or recommendations inside an existing product;
-
-- the model has limited or no tool access;
-
-- the application remains the primary security boundary;
-
-- a few AI-specific scenarios can be added to a normal app test.
-
-#### Use a standalone AI assessment when
-
-- AI is central to the product's function;
-
-- RAG, vector stores, memory, or data ingestion carry sensitive information;
-
-- the system plans or calls tools;
-
-- multiple agents pass work or authority between them;
-
-- model output changes records, sends messages, moves money, or controls infrastructure;
-
-- the assessment needs versioned adversarial scenarios and AI-specific evidence.
-
-The [OWASP Top 10 for LLM Applications](https://owasp.org/projects/top-10-for-large-language-model-applications) covers prompt injection, sensitive information disclosure, improper output handling, excessive agency, system-prompt leakage, vector and embedding weaknesses, and other AI application risks. Use it as a risk reference, not as proof that ten generic prompts tested your product.
-
-#### How to scope the combined assessment
-
-Map one or two critical workflows from user intent to final action. Identify every component crossed: interface, API, orchestration layer, model, retrieval source, memory store, tool, approval service, and downstream system. For each boundary, write the identity and expected rule.
-
-| Boundary | Question | Evidence |
-| --- | --- | --- |
-| User to application | Who is signed in and which tenant? | Session and account trace |
-| Application to retrieval | Which records may enter context? | Query filters and returned record IDs |
-| Context to model | Can untrusted content become instruction? | Sanitized prompt and retrieved content |
-| Model to tool | Which operations and arguments are allowed? | Tool call and permission decision |
-| Tool to action | Was approval required and recorded? | Approval and action log |
-
-Sthuthi's published [AI Security Assessment](/services/ai-security-assessment) covers one application, two critical workflows, and up to five connected tools. Larger multi-agent, model-pipeline, or infrastructure work needs a separate scope.
-
-#### Frequently asked questions
-
-#### Can a normal penetration test find prompt injection?
-
-It may find obvious cases, but an AI assessment adds indirect content, retrieval, tool, memory, model, and action scenarios that a standard application scope may not include.
-
-#### Does an AI assessment replace a web application pentest?
-
-No. The AI workflow still depends on application, API, identity, cloud, and data controls. Combine the scopes or state their boundaries clearly.
-
-#### Is model safety the same as application security?
-
-No. Model safety may address harmful or disallowed content. Application security focuses on protected data, authority, integrity, availability, and actions in the deployed system. They can overlap but require different rules and evidence.
-
-#### Should we test the production model?
-
-Test a representative configuration with fake data where possible. If production is required, agree on data boundaries, tool restrictions, cost limits, monitoring, and stop conditions first.
-
-## Field module 7: Why an AI Jailbreak Is Not Automatically a Security Finding
-
-*Primary keyword: AI jailbreak security finding. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**An AI jailbreak is not automatically a security finding.** It becomes one when the tested system violates an explicit security rule, the result can be reproduced under a recorded configuration, and the outcome creates material impact such as private-data exposure or an unauthorized action.
-
-Models can produce surprising, inaccurate, rude, or policy-breaking text. Some outputs are safety or quality issues. Some are useful observations. A security report needs a traceable connection to confidentiality, integrity, availability, authority, or another agreed business rule.
-
-#### Jailbreak, prompt injection, and finding are different terms
-
-#### Jailbreak
-
-A jailbreak commonly means persuading a model to bypass behavioral or content restrictions. The result might violate a model policy without compromising application data or authority.
-
-#### Prompt injection
-
-Prompt injection uses malicious instructions to redirect a model or application. It may arrive directly from the user or indirectly through retrieved content. The [OWASP GenAI Security Project](https://genai.owasp.org/glossary/prompt-injection/) explains the structural problem: trusted and untrusted instructions can enter the same context.
-
-#### Security finding
-
-A finding records a tested rule, target, configuration, action trace, observed outcome, impact, severity rationale, limits, and reviewer decision. The prompt is only one part of that evidence.
-
-#### The three-part finding test
-
-#### 1. A defined rule was broken
-
-Write the expected rule before testing. Examples:
-
-- A customer may retrieve only records owned by their tenant.
-
-- The agent must obtain approval before issuing a refund over $100.
-
-- Retrieved documents must not change the agent's tool policy.
-
-- The model must not receive production credentials.
-
-- A user may not cause the agent to send a message as another employee.
-
-“The model should never say anything unexpected” is not a testable security rule. Tie the rule to data, identity, authority, system state, or a defined safety requirement.
-
-#### 2. The outcome is reproducible and attributable
-
-Record the application build, model and version, system instructions, retrieval state, tools, permissions, user role, tenant, test data, request trace, and observed action. Repeat the scenario enough to understand whether the result is stable, intermittent, or dependent on hidden state.
-
-AI behavior is probabilistic. Reproducibility does not always mean identical wording. It means the same material rule can be violated under a documented scenario with a meaningful success rate.
-
-#### 3. The impact is material
-
-Material impact can include:
-
-- another customer's private record enters the response;
-
-- a tool creates, changes, deletes, sends, or purchases without authorization;
-
-- the attacker gains a credential, token, or privileged operation;
-
-- untrusted model output reaches a code, query, template, or browser execution sink;
-
-- the attack causes meaningful financial or resource consumption;
-
-- a required safety control fails in the deployed use case.
-
-#### Examples: observation or confirmed finding?
-
-| Observed behavior | Likely treatment | Reason |
-| --- | --- | --- |
-| Model reveals a generic system instruction | Observation or low-risk finding | Impact depends on whether the instruction contains protected information or enables another attack |
-| Model produces disallowed fictional content | Safety finding if the product has that requirement | May not be an application-security issue without a protected system rule |
-| Retrieved document instructs agent to send a private file externally | Security finding | Indirect injection caused an unauthorized tool action |
-| User obtains another tenant's order through the agent | Security finding | Customer-data boundary was broken |
-| Model claims a refund occurred, but no tool was called | Quality or integrity issue | Material impact depends on downstream reliance and workflow |
-
-#### System-prompt leakage needs context
-
-The [OWASP Top 10 for LLM Applications](https://owasp.org/projects/top-10-for-large-language-model-applications) includes system-prompt leakage as a risk area. The security impact depends on content. A prompt containing API keys is a secret-management failure. A prompt exposing internal tool names may aid follow-on attacks. A prompt containing ordinary behavioral instructions may have limited impact.
-
-Do not treat secrecy of the system prompt as the main control. Design the application so prompt knowledge does not grant access to data or tools.
-
-#### Severity should follow impact and control failure
-
-Traditional severity systems can inform the discussion, but AI application findings need product context. Consider the required user access, reliability, affected tenants, data sensitivity, tool authority, human approval, detectability, reversibility, and downstream consequences.
-
-Document uncertainty. If the tester cannot establish that the action occurred, label the result as needing review rather than presenting a model statement as proof. Sthuthi's [illustrative sample report](/sample-report) separates observation, expected result, impact, remediation, and retest.
-
-#### How to write the finding
-
-Use a title that names the broken outcome: “The support agent could retrieve another customer's order,” not “Prompt injection.” Then record:
-
-- the expected ownership or approval rule;
-
-- the tested user, tenant, application, model, and tool versions;
-
-- the sanitized request, retrieved context, tool call, and server response;
-
-- the material business impact;
-
-- the recommended server-side or architectural control;
-
-- limits and success rate;
-
-- review state and reviewer;
-
-- the corrected-path retest evidence.
-
-The [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) provides a broader structure for governing, mapping, measuring, and managing AI risk. Use individual adversarial tests inside that lifecycle rather than treating a jailbreak count as the whole program.
-
-#### Frequently asked questions
-
-#### Is every prompt injection a vulnerability?
-
-No. Prompt injection is an attack technique. The vulnerability and severity depend on which trusted rule or boundary the deployed application fails to enforce.
-
-#### Is system-prompt leakage always a security issue?
-
-No. Assess what the prompt contains and what the disclosure enables. Credentials and protected data should never be placed there.
-
-#### Can guardrails fix prompt injection?
-
-Guardrails can reduce some behaviors. They should not be the only control protecting data or consequential tools. Enforce authorization and approvals outside the model.
-
-#### How should a jailbreak be retested?
-
-Repeat the recorded scenario against the corrected application and configuration. Verify the server-side rule or tool boundary, not merely a different wording from the model.
-
-## Field module 8: How to Test an AI Agent’s Tool Permissions and Approval Gates
-
-*Primary keyword: AI agent security testing. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**Test an AI agent's tools by tracing every consequential action through five controls: identity, permission, argument validation, approval, and evidence.** Then attempt to redirect those actions through user prompts, retrieved content, tool output, memory, and cross-tenant references.
-
-The model should propose an action. A deterministic service should decide whether the action is permitted. If the model's text is the final authorization layer, prompt injection can become application authority.
-
-#### 1. Inventory every tool and operation
-
-Create a tool register before testing. Include the tool name, downstream system, allowed operations, identity used, data reachable, argument schema, approval requirement, rate or cost limit, logging, and rollback method.
-
-| Tool | Operations | Identity | Approval | Rollback |
-| --- | --- | --- | --- | --- |
-| Order lookup | Read order by ID | Delegated customer | No | Not applicable |
-| Refund | Create refund | Scoped service role | Required above threshold | Finance reversal |
-| Email | Draft and send | Named mailbox | Required for external send | Recall where supported |
-| CRM | Read and update account | Support integration | Required for ownership change | Version history |
-
-Include MCP components, plugins, browser automation, code execution, databases, ticketing systems, file stores, messaging, and administrative APIs. A tool that appears read-only may still expose private data or trigger expensive work.
-
-#### 2. Identify whose authority the agent uses
-
-An agent can operate as:
-
-- the signed-in user through delegated authorization;
-
-- a shared service account;
-
-- a privileged application identity;
-
-- a workflow-specific temporary identity;
-
-- a human operator who approves and executes the action.
-
-Test whether the tool receives the user and tenant context needed to enforce ownership. A shared privileged token can erase the boundary established by the application. The server must not trust a tenant ID or user ID merely because the model supplied it.
-
-#### 3. Apply least privilege to each operation
-
-Do not grant an agent a general CRM administrator role when it needs to add a note. Separate read, draft, create, update, send, delete, and administrative operations. Limit resources, fields, tenants, amounts, destinations, and time windows.
-
-The [OWASP Top 10 for LLM Applications](https://owasp.org/projects/top-10-for-large-language-model-applications) describes excessive agency as a risk involving excessive functionality, permissions, or autonomy. The remedy is not only a stronger prompt. Reduce authority in the tools and identities outside the model.
-
-#### 4. Validate arguments outside the model
-
-Treat tool arguments as untrusted input. Validate types, formats, ownership, amounts, destinations, state transitions, and allowed values in ordinary application code. Resolve sensitive object references on the server when possible rather than accepting raw IDs from model output.
-
-Test:
-
-- another tenant's object ID;
-
-- negative, excessive, or boundary amounts;
-
-- unexpected recipients or destinations;
-
-- hidden additional arguments;
-
-- duplicate and replayed actions;
-
-- out-of-order state changes;
-
-- unescaped model output reaching queries, templates, or commands.
-
-#### 5. Put approval gates around consequences
-
-Approval should show the human what will happen: target, action, important arguments, source, and consequence. “Allow agent?” is not meaningful approval. Bind the approval to the exact action so the agent cannot change the arguments afterward.
-
-Test whether the agent can:
-
-- split one high-value action into smaller actions below a threshold;
-
-- substitute the destination after approval;
-
-- reuse an old approval;
-
-- misrepresent the action in the approval preview;
-
-- continue after denial or timeout;
-
-- trigger the action through a different tool path.
-
-#### 6. Test direct and indirect instructions
-
-Direct tests place the malicious instruction in the user conversation. Indirect tests place it in content the agent is expected to read: an email, support ticket, uploaded document, webpage, tool response, calendar event, code comment, or retrieved record.
-
-The [OWASP prompt-injection definition](https://genai.owasp.org/glossary/prompt-injection/) explains the difference. Test both because an agent may trust retrieved content more than an obviously hostile user message.
-
-#### 7. Verify logs are usable
-
-For each attempted action, record:
-
-- organization, user, tenant, and session;
-
-- application, agent, model, prompt, and tool versions;
-
-- the proposed operation and sanitized arguments;
-
-- retrieved content or tool output that influenced the decision;
-
-- permission and approval decisions;
-
-- downstream request and observed result;
-
-- cost, timing, and error state;
-
-- reviewer and evidence digest.
-
-Do not store secrets or unnecessary private data merely to improve debugging. Use identifiers, redaction, access control, retention, and controlled evidence views.
-
-#### 8. Plan cancellation and rollback
-
-Long-running agents need a kill switch that stops new operations and invalidates queued authority. Consequential tools need idempotency and a recovery path. Test what happens when the agent fails between steps, loses network access, receives a duplicate event, or is cancelled after partial execution.
-
-The [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) encourages risk management across the AI lifecycle. Cancellation, incident handling, monitoring, and recovery belong in the deployed-system assessment, not only the model evaluation.
-
-#### Core adversarial scenarios
-
-- **Cross-tenant lookup:** ask the agent to retrieve another customer's object by reference.
-
-- **Indirect tool redirection:** place instructions inside a document the agent summarizes.
-
-- **Approval substitution:** approve one target and attempt execution against another.
-
-- **Privilege confusion:** compare the signed-in user's authority with the tool's service identity.
-
-- **Replay:** repeat the same approved action and observe idempotency.
-
-- **Partial failure:** interrupt a multi-step task and inspect state and recovery.
-
-- **Cost abuse:** request repeated or recursive work within safe test limits.
-
-- **Log evasion:** attempt an action through an alternate path and verify the record.
-
-Our [AI Security Assessment](/services/ai-security-assessment) scopes two critical workflows and up to five connected tools. The assessment records the expected rule and downstream result; model output alone does not establish a finding.
-
-#### Frequently asked questions
-
-#### Should an AI agent use the user's credentials?
-
-Use delegated, scoped authority where practical. Avoid sharing raw user credentials with the model. The downstream service should receive enough trusted identity context to enforce permissions.
-
-#### Are confirmation dialogs enough?
-
-No. The preview must accurately describe the exact action, and the server must bind approval to immutable arguments and enforce authorization again at execution.
-
-#### Can prompt instructions enforce permissions?
-
-No. Prompts can guide behavior, but deterministic code and downstream services must enforce access and approval rules.
-
-#### What should a retest prove?
-
-Repeat the recorded attack against the corrected tool boundary. Verify the system denies or safely contains the action and that the evidence record captures the decision.
-
-# Research claim ledger
-
-Last checked: 4 November 2026
-
-This ledger records source observations used across the Sthuthi Securities guide library. Recommendations in the guides are labeled as recommendations, not attributed requirements.
-
-| ID | Source and observed fact | Version/date | URL |
-|---|---|---|---|
-| S01 | NIST CSF 2.0 organizes outcomes into Govern, Identify, Protect, Detect, Respond, and Recover and is intended for organizations of all sizes and sectors. | 26 February 2024 | https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20 |
-| S02 | NIST CSF 2.0 uses non-prescriptive outcomes and includes legal, regulatory, contractual, governance, supplier, and risk-management outcomes. | Current FAQ checked 4 November 2026 | https://www.nist.gov/cyberframework/faqs |
-| S03 | CIS Controls v8.1 contains 18 Controls and 153 Safeguards; CIS says every enterprise should start with Implementation Group 1. | v8.1, 2024 | https://www.cisecurity.org/controls/implementation-groups |
-| S04 | FTC guidance recommends knowing and minimizing retained personal data, restricting access, protecting data through its lifecycle, monitoring, managing providers, patching, and maintaining a vulnerability-reporting process. | Current page checked 4 November 2026 | https://www.ftc.gov/business-guidance/resources/start-security-guide-business |
-| S05 | NIST SSDF 1.1 groups secure-development work into preparing the organization, protecting software, producing well-secured software, and responding to vulnerabilities. | February 2022 | https://csrc.nist.gov/pubs/sp/800/218/final |
-| S06 | OWASP SAMM provides a risk-driven, technology-agnostic way to assess and improve the secure software lifecycle. | Current project checked 4 November 2026 | https://owasp.org/projects/samm |
-| S07 | NIST SP 800-115 covers planning, conducting, analyzing, and reporting technical security tests and emphasizes rules of engagement. | September 2008 | https://csrc.nist.gov/pubs/sp/800/115/final |
-| S08 | OWASP WSTG is a technique reference, not a rigid checklist; tests should be adapted to architecture, risk, and organizational needs. | v4.2 stable; v5 under development | https://owasp.org/projects/web-security-testing-guide |
-| S09 | OWASP API Security Top 10 2023 identifies object-level authorization, authentication, object-property authorization, resource consumption, function authorization, sensitive business flows, SSRF, configuration, inventory, and unsafe API consumption risks. | 2023 | https://owasp.org/projects/api-security-project |
-| S10 | AWS permits testing of listed customer-controlled services without prior approval, prohibits testing AWS infrastructure, and prohibits DoS-style activity; some simulations require separate approval. | Current page checked 4 November 2026 | https://aws.amazon.com/security/penetration-testing/ |
-| S11 | Microsoft permits testing of owned or explicitly authorized Azure resources without pre-approval but requires compliance with its cloud testing rules and prohibits cross-tenant testing, unauthorized credentials, DoS, and post-exploit activity against Microsoft services. | Current page checked 4 November 2026 | https://learn.microsoft.com/en-us/azure/security/fundamentals/pen-testing |
-| S12 | CSA CCM/CAIQ v4.1 was released 27 January 2026; the artifact page describes 207 controls in 17 domains and a yes/no CAIQ assessment questionnaire. | v4.1, 27 January 2026 | https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4-1 |
-| S13 | Shared Assessments describes SIG as a third-party risk questionnaire product mapped to standards and sector guidance; the questionnaire is licensed, so the guides do not reproduce it. | Current page checked 4 November 2026 | https://sharedassessments.org/sig/ |
-| S14 | AICPA describes SOC as CPA assurance services for system-level or entity-level controls and publishes the Trust Services Criteria, description criteria, and illustrative material. | Current page checked 4 November 2026 | https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services/ |
-| S15 | AICPA's SOC 2 description criteria support descriptions of systems examined against security, availability, processing integrity, confidentiality, and privacy criteria. | Revised guidance published 9 July 2025 | https://www.aicpa-cima.com/resources/download/get-description-criteria-for-your-organizations-soc-2-r-report |
-| S16 | NIST AI RMF is voluntary and intended to help organizations manage AI risks across design, development, use, and evaluation. | AI RMF 1.0, 26 January 2023 | https://www.nist.gov/itl/ai-risk-management-framework |
-| S17 | NIST AI 600-1 describes generative-AI risks and suggested actions organized around Govern, Map, Measure, and Manage. | 26 July 2024 | https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf |
-| S18 | OWASP's Agentic Security Initiative studies security of autonomous agents and multi-step workflows. Its 2026 Top 10 includes goal hijack, tool misuse, identity abuse, supply-chain problems, unexpected code execution, memory poisoning, insecure inter-agent communication, cascading failures, human-agent trust exploitation, and rogue-agent behavior. | 2026 | https://genai.owasp.org/initiatives/agentic-security-initiative/ |
-| S19 | OWASP Agentic AI Threats and Mitigations is a threat-model-based reference for emerging agentic risks and mitigations. | 17 February 2025 | https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/ |
-| S20 | CISA Secure by Design guidance asks software manufacturers to treat customer security as a core business requirement and emphasizes ownership, transparency, and secure defaults. | Current guidance checked 4 November 2026 | https://www.cisa.gov/securebydesign |
-| S21 | Microsoft 365 App Certification evidence guidance expects the complete external attack surface in scope and requires critical/high-risk penetration-test findings to be remediated within its stated review window. This is a program-specific requirement, not a universal rule. | Current page checked 4 November 2026 | https://learn.microsoft.com/en-us/microsoft-365-app-certification/docs/seg2_app |
-| S22 | CIS Control 18 calls for an established penetration-testing program and periodic external and internal tests based on program requirements. | v8.1 | https://www.cisecurity.org/controls/cis-controls-list |
-
-# Sources and further reading
-
-Sources were checked on 4 November 2026. Version facts are stated where material. Recommendations in this guide are Sthuthi guidance, not attributed requirements.
-
-- [NIST Cybersecurity Framework 2.0](https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20)
-- [NIST SP 800-115 Technical Guide to Information Security Testing and Assessment](https://csrc.nist.gov/pubs/sp/800/115/final)
-- [NIST SP 800-218 Secure Software Development Framework](https://csrc.nist.gov/pubs/sp/800/218/final)
-- [CIS Controls v8.1](https://www.cisecurity.org/controls/v8-1)
-- [FTC Start with Security](https://www.ftc.gov/business-guidance/resources/start-security-guide-business)
-- [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide)
-- [OWASP API Security Project](https://owasp.org/projects/api-security-project)
-- [OWASP Software Assurance Maturity Model](https://owasp.org/projects/samm)
-- [Cloud Security Alliance CCM and CAIQ v4.1](https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4-1)
-- [AICPA System and Organization Controls resources](https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services/)
-- [CISA Secure by Design](https://www.cisa.gov/securebydesign)
-
-# Completion record
-
-| Record | Entry |
+| Outcome | What it usually means for you |
 |---|---|
-| Product or program |  |
-| Scope owner |  |
-| Executive approver |  |
-| Version reviewed |  |
-| Review completed |  |
-| Open exceptions |  |
-| Next review |  |
+| Approved | The residual risk fits the tier. You may still be scheduled for reassessment at renewal. |
+| Approved with conditions | The buyer accepts the risk if you commit to changes, such as delivering a SOC 2 Type II report by a date, adding SSO, or agreeing to a notification clause. The most common result for a first enterprise deal. |
+| Escalated or declined | A gating requirement cannot be met, or the answers contradict each other. Escalation can sometimes be recovered with a call and a written plan, but a contradiction is much harder to fix. |
+
+Plan for the middle row. Conditions are not a failure. They are how a buyer says yes to a young company. Your goal is to make sure every condition you accept is one you can deliver, on a date someone in your company has agreed to.
+
+### Questions to ask before you answer anything
+
+Spend fifteen minutes with the buyer’s sponsor or analyst at the start. These questions often cut the work in half:
+
+- Which product, plan, and features are being purchased, and what data will we receive?
+- What tier have you assigned us, and which requirements are mandatory at that tier?
+- Will you accept an existing report, such as SOC 2 or ISO, in place of some sections?
+- What is the real deadline, and what happens if a section is late?
+- Who will review our answers, and can we schedule a call before submission?
+- How will you store and share the documents we send?
+
+Write the answers down on [Worksheet 1](#worksheets). They define the scope of everything you do next.
+
+**Before you move on**
+
+- [ ] You know your vendor tier and the data you will receive.
+- [ ] You have listed the five to ten questions that will decide the outcome.
+- [ ] You have asked whether existing reports can replace sections of the questionnaire.
+
+---
+
+**CHAPTER 02 · PART I · THE REVIEWER’S SIDE**
+
+<a id="ch2"></a>
+
+## Build the review room before the questionnaire arrives
+
+*Every answer you give should point to something. The review room is where those somethings live.*
+
+A review room is a controlled folder, or a trust portal if you already use one, holding the current version of every artifact a reviewer is likely to ask for. Each artifact has an owner, a “valid as of” date, and a sharing tier. That is all it is. Its value comes from the discipline of keeping it current, not from the tool it sits in.
+
+Companies that skip this step answer each questionnaire by asking engineers in chat, pasting from old spreadsheets, and taking screenshots under deadline pressure. Every review then produces a slightly different version of the truth. Companies that build the room once spend most of each review copying links.
+
+### What goes in it
+
+Start with the smallest set that answers the gating questions from chapter 1. You can add more later.
+
+| Artifact | What it contains | Typical tier |
+|---|---|---|
+| System description | The product boundary from chapter 3: components, data, regions, suppliers, exclusions. | 2 |
+| Security overview | Two to four pages in plain language covering each domain in Part II. | 1 |
+| Architecture and data-flow diagram | Where customer data enters, is stored, is processed, and leaves. Trust boundaries marked. | 2 |
+| Policy index | Title, owner, approval date, and review date for each policy. Full text on request. | 1–2 |
+| Independent reports | SOC 2 report, ISO certificate and statement of applicability, bridge letters. | 2 |
+| Penetration-test summary | Tester, dates, scope, method, findings by severity, and remediation status. Not the raw report. | 2 |
+| Subprocessor list | Each supplier that processes customer data, its purpose, and its location. | 1 |
+| Claim register and answer library | Approved wording for recurring claims, each linked to evidence. Internal only. | Internal |
+
+### Sharing tiers
+
+Not everything belongs in front of every prospect. A simple three-tier model covers most needs:
+
+- **Tier 1, public or on request.** Security overview, subprocessor list, policy index. Nothing here should help an attacker.
+- **Tier 2, under NDA.** System description, diagrams, SOC 2 report, penetration-test summary. Share these with qualified reviewers on a named-recipient basis.
+- **Tier 3, by exception.** Full policy text, detailed configuration evidence, raw findings. Only when a reviewer has a specific need, ideally shown on a call instead of sent.
+
+Record who received what and when on [Worksheet 7](#worksheets). If a report is later superseded, you will know who holds the stale copy.
+
+### Three rules that keep the room trustworthy
+
+**Every artifact carries a date and an owner on its first page.** A diagram with no date is a guess. Reviewers notice, and so will your own team when it is time to refresh it.
+
+**Evidence names its scope.** A screenshot of an identity-provider policy should say which tenant, which user groups, and when it was captured. Crop out secrets, tokens, and other customers’ names before anything enters the room.
+
+**One version is current.** Move superseded files to an archive folder. Never leave “Security Overview v3 FINAL (2)” beside “v4” and hope the right person picks the right one.
+
+> **If you are starting from nothing**
+>
+> Write the system description and security overview first. Together they answer roughly half of a typical questionnaire in narrative form. Many reviewers will accept them as a starting point while you assemble the rest.
+
+### Who owns it
+
+Name one review lead. At a seed or Series A company this is often the CTO or a senior engineer. Later it becomes the first security hire. The lead does not have to write every artifact, but they decide what is current, they approve wording, and they are the only person who sends tier 2 and tier 3 material. Each artifact also has a control owner: the person who runs the thing the artifact describes and who can explain it on a call.
+
+Put a review date on the calendar for every artifact. Quarterly works for most. Diagrams and subprocessor lists should also be reviewed whenever the architecture or supplier set changes.
+
+**Before you move on**
+
+- [ ] A review lead is named and has authority to approve wording.
+- [ ] Each artifact in the room has an owner, a date, and a sharing tier.
+- [ ] Superseded versions are archived, not deleted and not left beside the current one.
+
+---
+
+**CHAPTER 03 · PART I · THE REVIEWER’S SIDE**
+
+<a id="ch3"></a>
+
+## Draw the product, data, tenant, and supplier boundary
+
+*Most wrong answers are not lies. They are true statements about a different part of the company.*
+
+“We encrypt all data at rest” may be true of the production database and false of the analytics warehouse a data engineer set up last spring. “Only three people have production access” may be true of the cloud console and leave out the support tool that can read any customer’s records. A boundary statement prevents these errors by fixing, in one dated document, what system you are describing. Every later answer is about that system and nothing else.
+
+### What the boundary statement covers
+
+Keep it to two pages. Write it for a technical reader who has never seen your product. [Worksheet 2](#worksheets) walks through each field.
+
+- **Service.** Product name, the plans or editions in scope, and the features that touch customer data.
+- **Hosting.** Cloud provider, regions, and whether customers can choose a region.
+- **Customer data.** The categories you receive (contact details, usage events, uploaded files, payment references), how each arrives, and where it is stored.
+- **Tenancy.** How one customer’s data is kept apart from another’s, in plain terms.
+- **Administrative paths.** Every way a person at your company can reach customer data: cloud console, database access, internal admin panel, support tooling, log search.
+- **Environments.** Production, staging, development, and whether real customer data ever leaves production.
+- **Suppliers.** Each third party that stores or processes customer data.
+- **Exclusions.** What is not covered: the marketing site, internal corporate tools, beta features, products from an acquisition.
+
+### Explaining tenant isolation honestly
+
+Multi-tenant SaaS buyers will ask how you stop one customer from seeing another’s data. There is no single right architecture, but there is a right way to describe whichever one you have. Name the mechanism, say where it is enforced, and say how you test it.
+
+> **Hard to approve**
+>
+> “Customer data is logically separated and fully isolated.”
+
+> **Easy to approve**
+>
+> “All customers share one PostgreSQL cluster. Every table holding customer data carries a tenant identifier, and the data-access layer adds a tenant filter derived from the authenticated session. Application code cannot query those tables without it. Row-level security policies in the database enforce the same rule as a second layer. Cross-tenant access is covered by automated tests on every build and was a named objective of our last penetration test (June 2026), which found no cross-tenant issues.”
+
+The second answer is longer, but the reviewer can stop reading after it. The first one invites five follow-up questions.
+
+### Suppliers you forgot you had
+
+Subprocessor lists are often incomplete because nobody owns them. Check these places before you publish one:
+
+- Error tracking and application monitoring, which often capture request bodies or user identifiers.
+- Log aggregation and search.
+- Email delivery, in-app messaging, and customer-support platforms.
+- Product analytics and session-replay tools.
+- Data warehouses and the pipelines that feed them.
+- AI and machine-learning providers that receive prompts containing customer content.
+
+That last category is growing fast in questionnaires. Shared Assessments added AI-related content to recent editions of its SIG questionnaire, and many buyers now ask directly whether customer data is sent to a model provider, whether it is retained there, and whether it is used for training. Know the answer for each AI feature, and know the contract terms behind it.
+
+### Draw the diagram last
+
+Once the written statement is settled, draw one data-flow diagram that matches it. Show customer users, your application tiers, each data store, each supplier, and each administrative path. Mark the trust boundaries: the internet edge, the line between your cloud account and a supplier’s, and the line between production and everything else. Add the date and the version of the boundary statement it reflects. If the diagram and the text disagree, fix one before either goes into the room.
+
+> **Reviewer’s lens**
+>
+> A clear exclusion is a sign of maturity. “The mobile app launched in September and is not yet covered by our SOC 2 scope” tells the reviewer exactly where to look harder. Silence tells them they cannot rely on any of your scope statements.
+
+**Before you move on**
+
+- [ ] The boundary statement lists every administrative path to customer data, including support tools.
+- [ ] The subprocessor list has been checked against monitoring, analytics, support, and AI providers.
+- [ ] Exclusions are written down, and the diagram matches the text.
+
+---
+
+**PART II · CHAPTERS 4–8**
+
+<a id="part5"></a>
+
+# Answering the technical domains
+
+*Five chapters, one for each cluster of questions reviewers return to. Each one covers what the reviewer wants to know, the evidence that shows it, and the wording traps that create contradictions later.*
+
+---
+
+**CHAPTER 04 · PART II · TECHNICAL DOMAINS**
+
+<a id="ch4"></a>
+
+## Identity and access, with evidence
+
+*Two different populations, two different sets of questions. Reviewers ask about both, and they notice when you answer one and call it the other.*
+
+Identity questions split cleanly in two. **Workforce access** is how your own employees and contractors reach your systems: email, code, cloud accounts, production databases, support tools. **Customer access** is how the buyer’s users sign in to your product and what controls the buyer gets over them. A reviewer wants confidence in both, but for different reasons. Weak workforce access is how attackers reach the buyer’s data through you. Weak customer access controls mean the buyer cannot manage their own users safely.
+
+### Workforce access: what reviewers look for
+
+- **Central identity.** One identity provider for workforce accounts, with business applications connected through single sign-on, so that disabling one account removes access everywhere.
+- **Strong authentication.** Multi-factor authentication enforced by policy, not by habit. Phishing-resistant methods such as security keys or passkeys for administrators at minimum. NIST’s current authentication guidance, SP 800-63B-4, published in 2025, gives phishing resistance far more weight than earlier editions did.
+- **Least privilege for production.** Few standing administrators. Elevated access granted for a task and then removed, with a record of who asked and why.
+- **Joiners, movers, leavers.** Access granted on a ticket, changed when roles change, and removed promptly on departure, with timestamps.
+- **Periodic review.** Someone with authority checks who has access to sensitive systems, removes what is no longer needed, and signs off.
+- **Break-glass accounts.** Emergency credentials stored securely, monitored, and tested.
+
+### Customer access: what reviewers look for
+
+- **Single sign-on** using SAML or OpenID Connect, so the buyer’s users authenticate through the buyer’s identity provider and inherit its MFA policy.
+- **Automated provisioning** through SCIM or an equivalent, so leavers lose access when the buyer’s HR system says they have left.
+- **Roles and permissions** that let the buyer restrict who can export data, manage integrations, or invite users.
+- **Audit logs** the buyer can see: sign-ins, permission changes, exports, and API key creation.
+
+If SSO is only available on a higher plan, say so plainly and name the plan. A surprising number of reviews stall because the sales team quoted one plan and the security answer described another.
+
+### Evidence that answers the question
+
+| Claim | Evidence that supports it |
+|---|---|
+| MFA is enforced for all staff | Dated export of the identity-provider sign-on policy showing the groups it applies to, plus the list of any excluded accounts and why. |
+| Access is removed on departure | A sample of recent leavers with HR end date, deprovisioning timestamp, and confirmation that sessions were revoked. |
+| Production access is limited | Current list of people holding standing production roles, and a log of temporary elevation requests for the last quarter. |
+| Access is reviewed quarterly | The completed review for the last quarter: systems covered, reviewer, changes made, sign-off date. |
+
+A policy that says “access is reviewed quarterly” is not evidence that it was. If the last review happened eight months ago, the honest answer is that reviews are required quarterly, the most recent was completed in March, and the next is scheduled for a named date.
+
+> **Hard to approve**
+>
+> “Yes. We take access security very seriously and use MFA everywhere.”
+
+> **Easy to approve**
+>
+> “Yes. All 34 workforce accounts sign in through our identity provider, where MFA is enforced by policy for every user group. Administrators of the identity provider and of our cloud accounts must use hardware security keys. There are no exclusions as of 1 October 2026. A dated policy export is available in our review room under NDA.”
+
+**Before you move on**
+
+- [ ] You can list every person with standing production access by name.
+- [ ] The last access review is complete, dated, and signed off.
+- [ ] Your SSO and SCIM answers name the plan they apply to.
+
+---
+
+**CHAPTER 05 · PART II · TECHNICAL DOMAINS**
+
+<a id="ch5"></a>
+
+## Encryption, secrets, logging, and monitoring
+
+*“Encrypted” is probably the most overclaimed word in security questionnaires. Be specific about what is encrypted, how, and who holds the keys.*
+
+### Encryption at rest
+
+Most cloud databases, object stores, and disks can be encrypted at rest using keys managed by the provider’s key-management service. That protects against a narrow set of threats, mainly lost physical media and some infrastructure-level access. It does not protect against someone who can query the database through your application or your admin tools. Reviewers know this. Say what you have, and do not imply more.
+
+A complete answer names the stores covered (primary database, backups, file storage, search index, data warehouse, logs), the mechanism, and who can use the keys. If any store holding customer data is not encrypted, list it as an exception with a plan. If customers can bring their own keys, say which plan includes it and how revocation works.
+
+### Encryption in transit
+
+State the minimum TLS version on public endpoints and how you enforce it, such as at the load balancer or CDN. Then answer the question reviewers increasingly ask next: is traffic between your internal services and to your databases also encrypted? “Inside our private network” is not the same as “encrypted”. If internal traffic is unencrypted on a private network, say that, and describe the network controls.
+
+### Secrets
+
+Reviewers want to know that credentials, API keys, and signing keys live in a secret manager rather than in code, chat, or environment files on laptops. Back that claim with three things: the tool you use, a secret-scanning control on your repositories that blocks or alerts on commits containing credentials, and a rotation practice, especially when someone with access leaves. If you found and rotated a leaked key last year, that is evidence the scanning works. You do not have to volunteer it, but you should not deny it if asked.
+
+### Logging
+
+The logging question is really four questions. Answer each one separately:
+
+| Question | A complete answer covers |
+|---|---|
+| What is logged? | Authentication events, administrative actions, access to customer data by staff, changes to production infrastructure, and application errors. |
+| How long is it kept? | A retention period per log type, and whether it fits what customers and your own incident process need. |
+| Who can change it? | Whether logs are sent to a separate account or service that production administrators cannot alter or delete. |
+| Does anyone look? | The alerts that exist, where they go, and who responds. See below. |
+
+Also check what your logs contain. Request bodies, access tokens, and personal data end up in application logs more often than teams expect. If they do, those logs become customer data, and your log provider becomes a subprocessor.
+
+### Monitoring and alerting
+
+Small companies rarely run a staffed security operations center, and reviewers do not expect one from a thirty-person vendor. They do expect a truthful description of what happens when something suspicious occurs. A good answer names a handful of specific alerts, such as root-account sign-in, MFA disabled on an account, a new administrator role granted, unusual data-export volume, or a public storage bucket. It says where alerts are routed, who is on call, and the expected response time outside business hours.
+
+> **Words to retire**
+>
+> “Military-grade encryption.” “Bank-level security.” “24/7 monitoring” when alerts go to one engineer’s phone. Each one either means nothing or means something you cannot show. Replace them with the mechanism and the scope.
+
+**Before you move on**
+
+- [ ] Every data store in the boundary statement has a stated encryption status.
+- [ ] Repository secret scanning is on, and you know what happens when it fires.
+- [ ] You can name five security alerts, their destination, and their responder.
+
+---
+
+**CHAPTER 06 · PART II · TECHNICAL DOMAINS**
+
+<a id="ch6"></a>
+
+## Vulnerability management and secure development
+
+*Reviewers are not asking whether you have vulnerabilities. You do. They are asking whether you find them, fix them in a sensible order, and can prove it.*
+
+Think of this domain as a loop with four stages: find, prioritize, fix, verify. A questionnaire will ask about each stage in different words, often across several sections. Answer them all from the same records and the answers will agree with each other.
+
+### Find
+
+List the sources that feed your vulnerability backlog: dependency scanning on every repository, container image scanning, cloud configuration checks, infrastructure scanning of internet-facing hosts, a channel for external researchers to report issues, and periodic penetration testing. For each, say how often it runs and what it covers. A security.txt file or a published disclosure policy is worth having for its own sake, and it answers a question that appears on many questionnaires.
+
+### Prioritize
+
+Severity scores such as CVSS are a useful input, but most mature programs also weigh exploitability and exposure. A critical-rated flaw in a library function you never call matters less than a medium-rated flaw on your login endpoint that attackers are already exploiting elsewhere. CISA’s Known Exploited Vulnerabilities catalog is a free, practical signal for the second kind. Write down how you combine these, even in three sentences, so reviewers can see the reasoning behind your timelines.
+
+### Fix, within targets you actually meet
+
+Questionnaires usually ask for remediation timelines by severity. Many companies copy targets from a template, such as critical in 7 days and high in 30, and never measure against them. Before you write a number, export your backlog and check how long fixes really took over the last two quarters. If the honest median for high-severity issues is 45 days, either commit resources to bring it down or publish a target you meet and explain how exceptions are approved.
+
+| Severity | Target | Measured (last 2 quarters) | Open past target |
+|---|---|---|---|
+| Critical | _________ | _________ | _________ |
+| High | _________ | _________ | _________ |
+| Medium | _________ | _________ | _________ |
+| Low | _________ | _________ | _________ |
+
+Fill in this table before your next review. The gap between the second and third columns is the most useful number in this chapter.
+
+### Verify
+
+A ticket marked “done” is not a verified fix. For scanner findings, the next scan should come back clean. For penetration-test findings, the tester or an independent engineer should retest the original issue and the obvious ways around the fix. Keep the retest result with the original finding. When a reviewer asks about your last penetration test, “three medium findings, two retested and closed in August, one accepted with a compensating control approved by the CTO” is a far stronger answer than “all findings remediated.”
+
+### Secure development
+
+The development questions ask whether security is built into how code reaches production. NIST’s Secure Software Development Framework (SP 800-218) is a good structure for your own answer even if the buyer never mentions it, and OWASP’s Application Security Verification Standard, version 5.0 since May 2025, is a solid source of concrete application requirements. In practice, reviewers want to see:
+
+- Protected main branches, with review by someone other than the author required before merge.
+- Automated checks in the pipeline: tests, dependency scanning, static analysis where useful, and secret scanning.
+- Separate production and non-production environments, and no real customer data in development without a documented exception.
+- A deployment path that only runs from the pipeline, with rollback.
+- Some form of design review or threat modeling for features that change authentication, authorization, or data handling.
+
+Evidence here is easy to collect and easy to date: repository protection settings, a pipeline definition, and a handful of recent merged changes showing review and passing checks.
+
+**Before you move on**
+
+- [ ] Your published remediation targets match measured performance.
+- [ ] Every finding from the last penetration test has a status and, where closed, a retest record.
+- [ ] Branch protection and pipeline checks are enforced, not just recommended.
+
+---
+
+**CHAPTER 07 · PART II · TECHNICAL DOMAINS**
+
+<a id="ch7"></a>
+
+## Incident response, continuity, privacy, and deletion
+
+*These answers tend to end up in the contract. Write each one as if a lawyer will quote it back to you, because one probably will.*
+
+### Incident response
+
+Reviewers want three things: a written plan, evidence that people know how to use it, and a clear commitment about when the buyer will hear from you. The plan does not need to be long. It needs to say who declares an incident, how severity is set, who leads the response, who decides about notifying customers and regulators, how evidence is preserved, and how you communicate when your usual tools might be compromised.
+
+NIST revised its incident-response guidance in April 2025. SP 800-61 Revision 3 is now organized as a community profile of the NIST Cybersecurity Framework 2.0 and treats response as part of overall risk management rather than a separate checklist. You do not have to adopt its structure, but mapping your plan to it is a quick way to spot gaps in preparation and recovery, the two areas small companies most often skip.
+
+The strongest evidence is a tabletop exercise. Pick a realistic scenario, such as a leaked cloud access key or a support account used to export a customer’s data. Walk through it with engineering, support, leadership, and whoever handles legal. Record the date, participants, what went well, and what you changed afterwards. One exercise a year, written up in a page, answers a question that many vendors cannot.
+
+> **Notification timelines**
+>
+> Buyers will ask how quickly you notify them of a security incident. Separate two clocks: the time from *discovery* to notification, and the time from *confirmation* that their data was affected. Agree only to a timeline your on-call process can meet on a holiday weekend, and make sure the same number appears in your policy, your questionnaire answers, and your contract template.
+
+### Continuity and recovery
+
+Continuity questions ask whether the service survives the failure of a component, a data center, or a supplier, and how much data could be lost. Answer with the architecture you have, not the one on the roadmap. Running across multiple availability zones in one region protects against a different set of failures than running in multiple regions, and reviewers know the difference.
+
+Recovery time objective (RTO) and recovery point objective (RPO) are the two numbers you will be asked for. Base them on a restore you have actually performed. “Backups run every hour” supports an RPO claim. Only a timed restore test supports an RTO claim. Record the date, what was restored, how long it took, and what broke along the way. A successful backup job is not a demonstrated recovery.
+
+### Privacy
+
+For most B2B SaaS companies, the buyer is the controller of the personal data in your product and you are a processor acting on their instructions. Privacy questions test whether you behave like one. Have a data processing agreement ready, keep the subprocessor list current, and describe how you notify customers before adding a new subprocessor. Explain how you help customers respond to data-subject requests, and whether personal data leaves the regions in your boundary statement. If the buyer operates in a regulated sector or jurisdiction, involve counsel. This guide cannot tell you which laws apply.
+
+### Deletion and exit
+
+“What happens to our data when we leave?” deserves a precise answer with numbers in it:
+
+- How the customer can export their data before termination, and in what format.
+- How many days after termination their data is deleted from production systems.
+- How long it then persists in backups before those backups expire, and whether backups can be selectively purged. Usually they cannot.
+- Whether you will confirm deletion in writing on request.
+
+Do not promise “immediate and permanent deletion from all systems” unless your backup design really allows it. A truthful answer with a 35-day backup tail is easy to approve. An impossible promise in a contract is a liability you have signed up for.
+
+**Before you move on**
+
+- [ ] Your incident plan has been exercised at least once, and the write-up is in the review room.
+- [ ] Your RTO is based on a timed restore, not an estimate.
+- [ ] The notification timeline is identical in policy, answers, and contract template.
+
+---
+
+**CHAPTER 08 · PART II · TECHNICAL DOMAINS**
+
+<a id="ch8"></a>
+
+## SOC 2, ISO 27001, CAIQ, SIG, and penetration tests
+
+*Each artifact answers a different question. Most overclaiming happens when one is used to answer another’s question.*
+
+Founders often ask which certification to “get” first, as if they were interchangeable badges. They are not. Two are independent assurance over a defined scope, two are standardized questionnaires you complete yourself, and one is a point-in-time technical test. Knowing which is which lets you offer the right artifact for each question and avoid the claims that reviewers are trained to catch.
+
+### SOC 2
+
+A SOC 2 report is an attestation by an independent CPA firm, under AICPA standards, about controls relevant to the Trust Services Criteria: security, and optionally availability, processing integrity, confidentiality, and privacy. A **Type I** report covers whether controls were suitably designed at a single point in time. A **Type II** report also covers whether they operated effectively over a period, commonly somewhere between three and twelve months.
+
+When you share a SOC 2 report, reviewers will read four parts closely: the system description (does it match the product being bought?), the period, any exceptions in the testing results, and the complementary user entity controls, which are the things the customer must do for your controls to work. If your report period ended months ago, offer a bridge letter covering the gap and stating whether anything material has changed.
+
+### ISO/IEC 27001
+
+ISO/IEC 27001 certification means an accredited certification body has audited your information security management system against the standard. The current edition is ISO/IEC 27001:2022, whose Annex A lists 93 reference controls in four themes. The transition period for certificates against the 2013 edition ended in October 2025, so a 2013 certificate should no longer be current. Reviewers will want the certificate, its scope statement, and often the statement of applicability, which shows which Annex A controls you have included and why any were excluded. Certification runs on a three-year cycle with annual surveillance audits.
+
+### CAIQ and SIG
+
+The Consensus Assessments Initiative Questionnaire (CAIQ) is the Cloud Security Alliance’s questionnaire aligned to its Cloud Controls Matrix. The current version line is 4.1. You can complete it yourself and publish it to CSA’s STAR registry as a Level 1 self-assessment, which saves time with buyers who accept it. The Standardized Information Gathering questionnaire (SIG) comes from Shared Assessments, is licensed, and is revised every year. The 2026 edition was released in September 2025, and buyers typically send either the shorter SIG Lite or the broader SIG Core.
+
+Both are self-assessments. A completed CAIQ is your own claim in a standard format, not an audit. Present it that way.
+
+### Penetration tests
+
+A penetration test is an authorized attempt by skilled testers to find and exploit weaknesses in a defined scope over a defined window. It shows what those testers found, with those accounts, against that version of the system, during those dates. It does not show that the system is secure, and it says nothing about anything outside its scope. Share a summary letter or executive summary stating the tester, the dates, the scope, the method, the findings by severity, and the current remediation status. Keep the full report with reproduction steps in tier 3.
+
+| Artifact | Issued by | What it answers | What it does not prove |
+|---|---|---|---|
+| SOC 2 Type I | Independent CPA firm | Were controls suitably designed on a date? | That they operated over time. |
+| SOC 2 Type II | Independent CPA firm | Did controls operate effectively over the period? | Anything outside the system description or after the period. |
+| ISO/IEC 27001 | Accredited certification body | Does a conforming management system cover the stated scope? | That every control is strong, or that out-of-scope products are covered. |
+| CAIQ / STAR Level 1 | You, published via CSA | What do you say you do, in a standard format? | Anything independently. |
+| SIG Lite / Core | You, on the buyer’s licensed form | Same, in the format many financial and regulated buyers use. | Anything independently. |
+| Penetration test | Independent tester | What could skilled testers find in this scope, in this window? | That nothing else exists, or that later releases are covered. |
+
+### If you don’t have a report yet
+
+Say so in the first sentence. Then offer what you do have: the security overview, a recent penetration-test summary, a completed CAIQ, and evidence for the gating controls. If an audit is underway, give the auditor’s name, the engagement date, and the expected report date, but only if an engagement letter is signed. “We are planning SOC 2” with no engagement behind it is a roadmap item, not a status.
+
+> **Phrases that cause trouble**
+>
+> “SOC 2 certified” (SOC 2 is an attestation report, not a certification). “ISO compliant” without a certificate. “Pen tested and secure.” “Our cloud provider is SOC 2, so we are covered.” The last one is the most common. Your provider’s report covers their controls, and your own report has to describe how you rely on them.
+
+**Before you move on**
+
+- [ ] For each report you hold, you know its scope, period or date, and any exceptions.
+- [ ] Nobody in sales, marketing, or support uses the word “certified” incorrectly.
+- [ ] Your penetration-test summary is shareable without exposing exploit detail.
+
+---
+
+**PART III · CHAPTERS 9–11**
+
+<a id="part6"></a>
+
+# Running the review
+
+*How to word answers so they survive scrutiny, how to run the review alongside the sale, and one company’s review from first email to signed addendum.*
+
+---
+
+**CHAPTER 09 · PART III · RUNNING THE REVIEW**
+
+<a id="ch9"></a>
+
+## Write answers a reviewer can approve
+
+*A good answer can be pasted straight into the reviewer’s memo. A bad one makes them write a follow-up question.*
+
+Reviewers read hundreds of answers a month. They are fast, skeptical, and looking for the specific words that let them mark a row as satisfied. You help them by giving every answer the same shape, so the parts they need are always in the same place.
+
+### The five-part answer
+
+1. **Direct answer.** Yes, no, partially, or not applicable, in the first word or two.
+2. **Scope.** Which product, environment, users, or data the answer covers.
+3. **Mechanism.** How the control works, in one or two concrete sentences.
+4. **Evidence.** The named artifact that shows it, and how to get it.
+5. **Exceptions.** Anything the answer does not cover, or “none”.
+
+Not every answer needs all five. A yes/no column with a short comment field may only fit the first two and the fourth. But when there is room, this order works because it puts the verdict first and the qualification last, where a careful reader will find it.
+
+### A status vocabulary
+
+Agree internally on five statuses and use them everywhere: in answers, the claim register, and the gap log.
+
+| Status | Use it when |
+|---|---|
+| Implemented | The control operates today across the stated scope, and you have current evidence. |
+| Partially implemented | It operates for part of the scope. Name the part that is not covered. |
+| Planned | Work is owned and scheduled. Give the target date only if an owner has committed to it. |
+| Not applicable | The question does not fit your service. Always give the reason, for example “we do not process card data; payments are handled by our payment provider.” |
+| Being confirmed | You don’t know yet. Say when you will. This is far better than guessing. |
+
+### Three rewrites
+
+**Q · Do you perform background checks on employees?**
+
+> **Before**
+>
+> “Yes, all employees are thoroughly vetted.”
+
+> **After**
+>
+> “Partially. Employees in the United States hired since January 2025 complete a third-party background check before their start date, where local law permits. Two contractors in other countries with production access were verified through their agency. We will extend checks to all staff with production access by 31 March 2027; the owner is our Head of People.”
+
+**Q · Is customer data encrypted at rest?**
+
+> **Before**
+>
+> “Yes, we use AES-256 encryption for everything.”
+
+> **After**
+>
+> “Yes. The production database, its automated backups, object storage for uploaded files, and the search index are encrypted at rest with keys managed in our cloud provider’s key-management service. Access to use those keys is limited to the production service roles and two named administrators. Exceptions: none in the production boundary described in our system description, version 2.3.”
+
+**Q · Do you have a disaster recovery plan that is tested annually?**
+
+> **Before**
+>
+> “Yes.”
+
+> **After**
+>
+> “Yes. Our recovery plan was last tested on 14 August 2026 by restoring the production database from backup into an isolated account. The restore completed in 2 hours 10 minutes, with a data-loss window of under one hour. One issue, a missing permission on the restore role, was fixed the same week. A summary of the test is available under NDA.”
+
+### Keep one source of truth
+
+Once an answer has been approved, store it in the claim register ([Worksheet 3](#worksheets)) with its evidence link, owner, and review date. Next time, start from the register, not from the last questionnaire. When a control changes, update the register first, then every live questionnaire, the security overview, and the contract template that uses the same claim. Contradictions almost always come from a stale copy that someone pasted without checking.
+
+**Before you move on**
+
+- [ ] Your team uses the same five statuses everywhere.
+- [ ] Every “not applicable” has a reason, and every “planned” has an owner.
+- [ ] New answers are drafted from the claim register, not from old questionnaires.
+
+---
+
+**CHAPTER 10 · PART III · RUNNING THE REVIEW**
+
+<a id="ch10"></a>
+
+## Run the review as a controlled sales process
+
+*The security review is part of the sale. Treat it with the same discipline as pricing and legal: one owner, one tracker, and clear rules about who can commit to what.*
+
+Security reviews go wrong in predictable ways. An account executive promises SSO next month to save a call. An engineer answers a follow-up email directly and contradicts the questionnaire. The buyer’s legal team adds a 24-hour breach notification clause, and nobody checks it against the incident plan. None of this is malicious. It happens because the review has no owner and no process.
+
+### Roles
+
+- **Review lead.** Owns the response end to end, approves every answer, and is the only person who sends tier 2 or 3 material.
+- **Account owner.** Manages the relationship and timeline, and brings buyer requests to the review lead instead of answering them.
+- **Control owners.** Supply facts and evidence for their domain, and join calls when the reviewer wants to go deeper.
+- **Approver for commitments.** Usually the CEO or CTO. Signs off on any new promise with a date, cost, or contract consequence.
+
+### A typical timeline
+
+| When | What happens |
+|---|---|
+| Day 0–2 | Intake. Complete Worksheet 1, confirm tier and gating questions, and offer existing reports. |
+| Day 2–3 | Triage. Map rows to the claim register, flag rows with no approved answer, and assign them to owners. |
+| Day 3–8 | Drafting. Owners draft new answers, and the review lead edits them for consistency and status. |
+| Day 8–9 | Challenge. A second person reads every answer against the evidence and the boundary statement. |
+| Day 10 | Submit with a short cover note summarizing gaps and commitments, and offer a call. |
+| After | Follow-ups, review call, security addendum negotiation, closeout (Worksheet 8). |
+
+The cover note matters more than its length suggests. A reviewer who reads “two partial controls and one planned item, summarized below with owners and dates” before opening the spreadsheet starts from trust. A reviewer who discovers the same three items on row 140 starts from suspicion.
+
+### Requests you will be asked to accept
+
+Enterprise security addenda contain a familiar set of clauses. Decide your position on each before you meet one in a live deal.
+
+| Request | A workable response |
+|---|---|
+| Right to audit on site | Offer independent reports first, then a remote review once a year with reasonable notice, at the buyer’s cost, limited to the in-scope service. |
+| Breach notice in 24 hours | Accept a timeline from confirmation of an incident affecting their data that your on-call can meet. Commit to initial notice followed by updates. |
+| Annual penetration test shared in full | Commit to an annual independent test and to sharing the summary letter with remediation status. Show the full report only on a call, if at all. |
+| Deliver SOC 2 Type II by a date | Accept only if the audit is engaged and the observation period has started. Tie the date to the auditor’s schedule, and agree what happens if it slips. |
+| Advance approval of new subprocessors | Offer advance notice, such as 30 days, with a right to object, rather than approval, which no multi-tenant service can give each customer. |
+| Unlimited liability for data breach | A legal and insurance question. Involve counsel and check your cyber insurance limits before you respond. |
+
+> **The commitment rule**
+>
+> No one commits to a new security control, date, or contract clause during a call. They write it down, say “we’ll confirm in writing,” and bring it to the approver. Every accepted commitment goes into the gap and commitment log ([Worksheet 6](#worksheets)) with an owner and a date before the contract is signed.
+
+### The review call
+
+If the buyer asks for a call, send an agenda request in advance so you can bring the right control owners. Keep the group small. The review lead opens with the boundary statement, control owners answer in their domains, and one person takes notes on every follow-up and promise. Afterwards, send a written summary within a day. It becomes part of the record and corrects any misunderstandings before they reach the reviewer’s memo.
+
+**Before you move on**
+
+- [ ] Sales knows the commitment rule and who the approver is.
+- [ ] You have a standard position on the six common addendum requests.
+- [ ] Every submission goes out with a cover note that lists gaps up front.
+
+---
+
+**CHAPTER 11 · PART III · RUNNING THE REVIEW**
+
+<a id="ch11"></a>
+
+## Worked review: Northstar Metrics and Halden Trust
+
+*A fictional company, a realistic review. Nineteen business days from questionnaire to signed security addendum, and what each decision looked like on paper.*
+
+|   |   |
+|---|---|
+| **Vendor** | **Northstar Metrics**, 32 people. Multi-tenant product analytics SaaS on one cloud provider, two US regions. |
+| **Buyer** | **Halden Trust**, a regional bank buying analytics for its digital banking team. |
+| **Starting position** | SOC 2 Type I issued in May. Type II observation period running since June. Penetration test completed in April. |
+| **The request** | A 240-row SIG Lite-based questionnaire, a document list, and a ten-business-day deadline. |
+
+### Days 1–2: intake
+
+Priya, Northstar’s CTO and review lead, did not open the spreadsheet first. She asked Halden’s vendor risk analyst for twenty minutes and came away with four facts. Northstar had been placed in Halden’s second-highest tier because the product would receive pseudonymous customer event data from the bank’s mobile app. The bank would accept the SOC 2 Type I report in place of about sixty rows. Three requirements were mandatory at that tier: SSO for bank users, an annual independent penetration test, and contractual breach notification. The real deadline was the bank’s monthly vendor risk committee, fifteen business days away, not the ten printed on the form.
+
+She recorded all of this on the intake worksheet and sent the analyst the security overview and subprocessor list the same afternoon.
+
+### Day 3: triage against the claim register
+
+Northstar had built a claim register after its SOC 2 readiness work, with 61 approved claims. Priya’s team mapped the 180 remaining rows to it in an afternoon. 142 rows matched an approved claim. 26 needed light adaptation. Twelve had no approved answer at all, and those twelve became the real work of the review.
+
+Four of the twelve were about AI. Northstar had launched a feature in August that summarized usage trends using a third-party language model. Nobody had added the model provider to the subprocessor list or the boundary statement.
+
+> **Decision 1 · Fix the boundary before answering**
+>
+> Priya paused drafting for a day. The engineer who built the feature confirmed what was sent to the provider: aggregated metrics and event names, no raw event payloads. He also confirmed the contract terms on retention and training. The boundary statement went to version 2.4, the subprocessor list was updated, and existing customers were notified under the 30-day notice clause in Northstar’s data processing agreement. Then the AI rows were answered from the corrected boundary.
+
+### Days 4–8: drafting the hard rows
+
+Three of the remaining eight rows needed a decision, not just an answer.
+
+**SSO and SCIM.** SAML single sign-on was available on Northstar’s Enterprise plan, which was the plan quoted. SCIM provisioning was not built. The answer said exactly that, and added that deprovisioning in the meantime happened when a user was removed in the bank’s identity provider, because sessions required a fresh SSO assertion every twelve hours. That was a true, testable compensating control, and the analyst accepted it.
+
+**Penetration-test findings.** The April test had found two medium-severity issues. One, an IDOR on a report-sharing endpoint, had been fixed in May and retested by the same firm in June. The other, verbose error messages on an internal admin route, had been fixed but not retested. The draft answer first said “all findings remediated.” The challenge step in chapter 10 caught it, and the final answer separated the two and gave the date of the scheduled retest.
+
+**Data residency.** A row asked whether data could be kept in the EU. It could not. The answer said “No,” gave the two US regions, and stopped. It did not mention a roadmap.
+
+**Row 118 · Are all penetration-test findings remediated and verified?**
+
+> **First draft**
+>
+> “Yes, all findings from our latest penetration test have been remediated.”
+
+> **Submitted**
+>
+> “Partially. Our April 2026 test of the Northstar web application and public API found no critical or high findings and two medium findings. Finding M-1, an object-level authorization issue on report sharing, was fixed on 12 May and verified closed by the testing firm on 18 June. Finding M-2, verbose errors on an internal admin route, was fixed on 3 June. Its retest is scheduled with the testing firm for 21 November. The summary letter is available under NDA.”
+
+### Days 9–10: challenge and submission
+
+Northstar’s head of engineering, who had not drafted any answers, read all 240 rows against the boundary statement and evidence index. He found three more problems. Backup retention was given as 30 days in one row and 35 in another. One answer described the staging environment as having “no customer data,” but a sampled copy had been used for load testing in July. And a policy cited by name had been renamed in the policy index. All three were corrected before submission.
+
+The submission went out with a one-page cover note. It listed the two partial controls, SCIM and the M-2 retest, the absent EU residency, the AI subprocessor added that week, and the SOC 2 Type II report expected at the end of the observation period in December, with the auditor named.
+
+### Days 11–19: follow-ups and the addendum
+
+Halden’s analyst came back with seven follow-up questions and a draft security addendum. The questions were narrow, which is a good sign: two about the AI provider’s retention terms, three asking for evidence already listed in the answers, and two about the staging-data exception. Priya answered them in writing and held a 40-minute call with the analyst and one of the bank’s security architects.
+
+The addendum contained four clauses that needed decisions:
+
+| Halden asked for | Northstar agreed to |
+|---|---|
+| Breach notice within 24 hours of discovery | Initial notice within 48 hours of confirming an incident affecting Halden data, with updates every 72 hours until closed. This matched the incident plan. |
+| SOC 2 Type II by 31 December | Delivery within 30 days of the auditor’s report, expected in January, with a bridge letter if delayed. |
+| SCIM within 90 days | SCIM by 31 March 2027, owner named, and the current session-based control documented in the meantime. |
+| Approval of new subprocessors | 30 days’ advance notice with a right to terminate without penalty on objection. |
+
+Each accepted clause went into the commitment log before signature, and the CEO signed off on all four. Halden’s vendor risk committee approved Northstar with conditions on day 19.
+
+### Closeout
+
+The following week Priya completed the closeout worksheet. The claim register gained nine new approved claims, including the AI-provider answers, and two corrected ones (backup retention and staging data). The staging-data exception got its own risk decision and an end date. The M-2 retest and SCIM delivery went on the engineering roadmap with the contractual dates attached. The next questionnaire, from an insurer three weeks later, took four days.
+
+> **What made the difference**
+>
+> Not the SOC 2 report, which only replaced sixty rows. What made the difference was a boundary statement that was corrected before anyone answered from it, a register that turned most rows into retrieval, and a challenge step by someone who hadn’t written the answers. Each of those three caught something that would otherwise have reached the buyer as a contradiction.
+
+---
+
+**TOOLS · COMPANION DOWNLOAD**
+
+<a id="worksheets"></a>
+
+# The companion worksheet pack
+
+*The eight worksheets referred to in this guide are a separate download, so you can print them, fill them in, and share them with your team without copying pages out of the book.*
+
+Download the pack from the same Sthuthi Securities resource-library page as this guide. It comes in three formats:
+
+- **Printable PDF.** One worksheet per A4 page, with lined fields for writing by hand during a live review.
+- **Editable Word document.** The same worksheets as fill-in tables. Type straight into them, or paste them into your own templates.
+- **Excel workbook.** One tab per worksheet. The four registers (claims, evidence, gaps and commitments, disclosures) are set up as working trackers with status drop-downs.
+
+| # | Worksheet | Use with | Purpose |
+|---|---|---|---|
+| 01 | Deal security intake | Chapter 1 | Scope the review in the first two days. |
+| 02 | Boundary statement | Chapter 3 | Fix the system you are describing. |
+| 03 | Claim register | Chapters 2, 9 | Approved wording for every recurring claim. |
+| 04 | Evidence index | Chapter 2 | The contents list of your review room. |
+| 05 | Answer drafting sheet | Chapter 9 | The five-part answer, for rows with no approved claim. |
+| 06 | Gap and commitment log | Chapter 10 | Every gap and every promise, with an owner. |
+| 07 | Disclosure log | Chapter 2 | Who received which sensitive artifact. |
+| 08 | Review closeout | Chapters 10, 11 | What to carry into the next review. |
+
+> **How to use the pack**
+>
+> Complete the worksheets against one real product and one real buyer request, not in the abstract. Keep the completed claim register and evidence index in your review room. They are the two records every later review starts from.
+
+---
+
+**APPENDIX A · REFERENCE**
+
+<a id="appendix-a"></a>
+
+# Model answers for twelve common questions
+
+*Starting points, not copy. Replace every bracketed item with your own facts, and change the status word if it isn’t true for you.*
+
+**A1 · Do you have a dedicated security team?**
+
+“Security is owned by [name, title], who reports to the CEO and spends [proportion] of their time on it. Control owners in engineering, IT, and people operations run their own controls. We use [external firm] for penetration testing and [other specialist support]. We do not operate a staffed security operations center.”
+
+**A2 · Do you have an information security policy approved by management?**
+
+“Yes. Our information security policy was approved by [role] on [date] and is reviewed annually. It is supported by [number] topic policies listed in our policy index, which is available on request. Full text is available under NDA.”
+
+**A3 · Where is customer data stored?**
+
+“In [cloud provider] in [regions]. Customer data does not leave these regions except through the subprocessors listed in our subprocessor list, version [n], each of which is shown with its processing location.”
+
+**A4 · Do you support SSO for customer users?**
+
+“Yes, on the [plan] plan. We support SAML 2.0 and OpenID Connect. Administrators can require SSO for all users in their organization. SCIM provisioning is [available / planned for date, owner].”
+
+**A5 · How quickly is access removed when an employee leaves?**
+
+“Workforce accounts are disabled in our identity provider on the employee’s last working day, which removes SSO access to connected systems. Accounts outside SSO are removed using a checklist within [n] business days. Over the last [period], [n] of [n] departures met this target. A sample is available under NDA.”
+
+**A6 · Who at your company can access our data?**
+
+“[n] engineers hold standing production access, listed by role in our system description. Support staff can view account metadata through our admin tool; viewing customer content requires [customer permission / ticket-linked elevation] and is logged. All access is through SSO with MFA.”
+
+**A7 · Is data encrypted in transit and at rest?**
+
+“Yes. Public endpoints require TLS [version] or higher, enforced at [component]. [Stores] are encrypted at rest using keys in [key service]. Internal service traffic is [encrypted / on a private network without TLS, with controls described in section n].”
+
+**A8 · When was your last penetration test?**
+
+“[Month year], by [firm], covering [scope]. It found [counts by severity]. [Status of each above low, with retest dates.] A summary letter is available under NDA. We test annually and after major changes to authentication or data handling.”
+
+**A9 · Do you have a SOC 2 report?**
+
+“[Yes: Type II covering date to date, issued by firm, scope.] or [Not yet. We have engaged firm for a Type [I/II] audit. The observation period began on date and the report is expected in month year. In the meantime we can share list.]”
+
+**A10 · How will you notify us of a security incident?**
+
+“We will notify your designated security contact by email and phone within [n] hours of confirming an incident affecting your data, then provide updates every [n] hours until it is resolved, and a written summary afterwards. This commitment is in our standard security addendum.”
+
+**A11 · Do you send our data to AI or machine-learning providers?**
+
+“[Feature] sends [specific data] to [provider] for [purpose]. Under our agreement, [provider] [does / does not] retain this data beyond [period] and does not use it to train models. The feature can be [disabled by an administrator / is off by default]. No other feature sends customer data to a model provider.”
+
+**A12 · What happens to our data when the contract ends?**
+
+“You can export your data in [format] at any time before termination. We delete it from production systems within [n] days of termination. Encrypted backups containing it expire within a further [n] days and cannot be selectively purged. We confirm deletion in writing on request.”
+
+---
+
+**APPENDIX B · REFERENCE**
+
+<a id="sources"></a>
+
+# Sources
+
+Version facts and publication dates were checked against these sources in November 2026. Recommendations in this guide are Sthuthi Securities guidance. They are not requirements of any framework listed here unless the text says so.
+
+1. **AICPA.** System and Organization Controls: SOC suite of services. [https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services](https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services)
+2. **ISO.** ISO/IEC 27001:2022, Information security, cybersecurity and privacy protection: Information security management systems: Requirements. [https://www.iso.org/standard/27001](https://www.iso.org/standard/27001)
+3. **Cloud Security Alliance.** Cloud Controls Matrix and CAIQ v4.1. [https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4-1](https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4-1)
+4. **Cloud Security Alliance.** Security, Trust, Assurance and Risk (STAR) program. [https://cloudsecurityalliance.org/star](https://cloudsecurityalliance.org/star)
+5. **Shared Assessments.** Standardized Information Gathering (SIG) Questionnaire. [https://sharedassessments.org/sig/](https://sharedassessments.org/sig/)
+6. **NIST.** SP 800-63B-4, Digital Identity Guidelines: Authentication and Authenticator Management, 2025. [https://csrc.nist.gov/pubs/sp/800/63/b/4/final](https://csrc.nist.gov/pubs/sp/800/63/b/4/final)
+7. **NIST.** SP 800-61 Rev. 3, Incident Response Recommendations and Considerations for Cybersecurity Risk Management: A CSF 2.0 Community Profile, April 2025. [https://csrc.nist.gov/news/2025/nist-revises-sp-800-61](https://csrc.nist.gov/news/2025/nist-revises-sp-800-61)
+8. **NIST.** The NIST Cybersecurity Framework (CSF) 2.0. [https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20](https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20)
+9. **NIST.** SP 800-218, Secure Software Development Framework (SSDF) Version 1.1. [https://csrc.nist.gov/pubs/sp/800/218/final](https://csrc.nist.gov/pubs/sp/800/218/final)
+10. **NIST.** SP 800-115, Technical Guide to Information Security Testing and Assessment. [https://csrc.nist.gov/pubs/sp/800/115/final](https://csrc.nist.gov/pubs/sp/800/115/final)
+11. **OWASP.** Application Security Verification Standard 5.0.0, May 2025. [https://asvs.owasp.org/](https://asvs.owasp.org/)
+12. **CISA.** Known Exploited Vulnerabilities Catalog. [https://www.cisa.gov/known-exploited-vulnerabilities-catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
+13. **FIRST.** Common Vulnerability Scoring System version 4.0. [https://www.first.org/cvss/v4-0/](https://www.first.org/cvss/v4-0/)
+14. **IETF.** RFC 9116, A File Format to Aid in Security Vulnerability Disclosure (security.txt). [https://www.rfc-editor.org/rfc/rfc9116](https://www.rfc-editor.org/rfc/rfc9116)
+15. **U.S. Federal Trade Commission.** Start with Security: A Guide for Business. [https://www.ftc.gov/business-guidance/resources/start-security-guide-business](https://www.ftc.gov/business-guidance/resources/start-security-guide-business)
+
+---
+
+**ABOUT · STHUTHI SECURITIES**
+
+<a id="about"></a>
+
+# About the author
+
+**Shalini Tomar** is the CEO of Sthuthi Technologies, LLC, and leads its cybersecurity practice, Sthuthi Securities. She works with SaaS teams that need to show enterprise buyers clear, scoped, and current evidence of how their products are secured.
 
 # About Sthuthi Securities
 
-Sthuthi Securities is the cybersecurity practice of Sthuthi Technologies, LLC. It provides scoped penetration testing, AI security assessment, security remediation support, retesting, and evidence-focused guidance for teams that need clear technical findings and controlled proof.
+Sthuthi Securities is the cybersecurity practice of Sthuthi Technologies, LLC. It tests web applications, APIs, cloud systems, and AI agents, then helps teams fix and retest what it finds. Engagements are scoped in writing and authorized by the system owner, and they end with findings and evidence a buyer’s reviewer can use.
 
-Internal links: [Sthuthi Securities services](/services) · [Security knowledge base](/blog) · [Sample penetration-test report](/sample-report) · [Resource library](/resources)
+Penetration testing
+
+Web application, API, and cloud testing with clear scope and safe rules of engagement.
+
+AI security assessment
+
+Tool permissions, tenant isolation, and prompt-injection testing for AI agents.
+
+Remediation support
+
+Working with your engineers to fix the cause, not just the symptom.
+
+Retesting and evidence
+
+Independent verification and summary letters you can share with buyers.
+
+More field guides in the Sthuthi Securities resource library
+
+Scoping a penetration test · The first 90 days of a security program · Preparing for a customer audit · Repeatable testing · AI security for support agents · Security proof for enterprise deals
+
+---

@@ -1,1538 +1,825 @@
+![The First 90 Days of a Startup Security Program cover](assets/cover.jpg)
+
 # The First 90 Days of a Startup Security Program
 
-![The First 90 Days of a Startup Security Program cover](assets/cover.png)
+*A sequenced operating plan for reducing material risk while the company keeps shipping*
 
-## A sequenced operating plan for reducing material risk while the company keeps shipping
-
-**A Sthuthi Securities field guide**  
-Published by Sthuthi Technologies, LLC  
-Edition 1.0 — 4 November 2026
+**Shalini Tomar**, CEO, Sthuthi Technologies, LLC  
+Sthuthi Securities · Field Guide 03 · Edition 2.0 · November 2026
 
 ---
 
-## Who this guide is for
+**The First 90 Days of a Startup Security Program**  
+Edition 2.0, November 2026.
 
-This guide is written for startup founders, technical leaders, and the first person asked to own security. Its purpose is to establish ownership, inventory, access discipline, response readiness, engineering controls, and customer evidence in a sequence a small team can sustain.
+© 2026 Sthuthi Technologies, LLC. All rights reserved. No part of this publication may be reproduced or distributed for commercial purposes without written permission from the publisher. You may copy the companion worksheets for internal use within your own organization.
 
-This is educational material, not legal advice, an audit opinion, a certification, or authorization to test a system. Penetration testing and security assessment require written permission from the system owner. Contract, privacy, employment, sector, and regional requirements should be reviewed with qualified advisers.
+This guide is educational material. It is not legal advice, an audit opinion, a certification, or authorization to test any system. Security testing requires written permission from the system owner. Contract, privacy, employment, sector, and regional obligations should be reviewed with qualified advisers.
 
-## How to use it
+ParcelPilot and every other company in the worked examples are fictional. Any resemblance to a real organization is coincidental.
 
-Read the operating model first. Complete the worksheets against one real product or customer request. Then use the technical field modules to challenge the scope and evidence. Keep dated copies of decisions and artifacts. Replace examples with facts from your own system.
+NIST, CIS, CISA, FTC, FIRST, and IETF names are used for identification only and imply no endorsement.
 
-The guide distinguishes an observation from an inference and a recommendation. A source can state what a framework contains. It cannot prove that a company operates a control. That proof must come from the company’s own records and testing.
+Framework versions, provider policies, and publication dates were checked against primary sources in November 2026. Requirements change; confirm the current edition before relying on a specific clause.
 
-# Part I — The operating model
+---
 
-## 1. Days 1–10: establish authority and stop obvious exposure
+<a id="part3"></a>
 
-Name an accountable executive and an operating owner. Inventory administrator accounts, production access, domains, cloud accounts, source repositories, secrets, backups, and critical suppliers. Fix exposed credentials and unsupported public systems first.
+# Contents
 
-### Evidence to retain
+[**Before you start**](#intro)
 
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
+**PART I · AUTHORITY AND INVENTORY**
 
-### Review questions
+[**01   Set the business outcomes and risk ownership**](#ch1)
 
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
+  Name the owner, the operator, and the outcomes.
 
-## 2. Days 11–20: define the business and data boundary
+[**02   Days 1–10: establish authority, inventory, and emergency contacts**](#ch2)
 
-Map products, environments, customer data, employee data, payment data, regions, and material processors. Add owners and business impact. This inventory is the basis for access, incident, supplier, and customer-review work.
+  Find every system, account, and secret, then close the doors left open.
 
-### Evidence to retain
+**PART II · IDENTITY AND DATA**
 
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
+[**03   Days 11–20: secure identity, devices, code, and cloud administration**](#ch3)
 
-### Review questions
+  MFA, separate admin accounts, and fewer standing privileges.
 
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
+[**04   Days 21–30: classify data and set retention boundaries**](#ch4)
 
-## 3. Days 21–30: control identity and privileged access
+  Know what data you hold, where, and for how long.
 
-Require phishing-resistant multi-factor authentication where supported, centralize workforce identity, remove dormant access, split routine and administrator accounts, and record break-glass access. Review joins, moves, and departures.
+**PART III · OPERATIONS**
 
-### Evidence to retain
+[**05   Days 31–45: build vulnerability and patch operations**](#ch5)
 
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
+  Find, prioritize, fix, and verify on a schedule.
 
-### Review questions
+[**06   Days 46–60: add secure development and release evidence**](#ch6)
 
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
+  Review, checks, separation, and a record of every release.
 
-## 4. Days 31–40: make vulnerability work routine
+[**07   Days 61–70: prepare incident response and recovery**](#ch7)
 
-Set patch expectations by asset and exposure, run authenticated infrastructure and dependency checks, create an intake for reported vulnerabilities, and track remediation to verified closure.
+  A short plan, one exercise, and one restore.
 
-### Evidence to retain
+**PART IV · CUSTOMERS, REVIEW, AND THE NEXT QUARTER**
 
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
+[**08   Days 71–80: manage vendors and customer obligations**](#ch8)
 
-### Review questions
+  A supplier register and a promise register.
 
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
+[**09   Days 81–90: test the program and issue the next-quarter plan**](#ch9)
 
-## 5. Days 41–50: put security into delivery
+  Measure, decide on residual risk, and fund the next quarter.
 
-Define branch protection, review expectations, secret scanning, dependency review, build provenance, environment separation, release approval, and rollback. Start with the paths that can change production.
+[**10   Worked example: ParcelPilot’s first ninety days**](#ch10)
 
-### Evidence to retain
+  One company’s ninety days, block by block.
 
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
+**TOOLS AND REFERENCE**
 
-### Review questions
+[**W   Companion worksheet pack**](#worksheets)
 
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
+  13 worksheets as a separate printable PDF, Word, and Excel download.
 
-## 6. Days 51–60: prepare for an incident
+[**A   Starter metrics and review cadence**](#appendix-a)
 
-Write a short response plan with contacts, severity, decision rights, evidence preservation, customer and legal escalation, containment options, and an exercise. Test one likely scenario.
+[**B   Policy starter set**](#appendix-b)
 
-### Evidence to retain
+[**S   Sources**](#sources)
 
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
+---
 
-### Review questions
+**INTRODUCTION**
 
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
+<a id="intro"></a>
 
-## 7. Days 61–70: test recovery and continuity
+# Before you start
 
-Identify services that must be restored, choose recovery targets, verify backup scope and protection, and perform a restoration test. A successful backup job is not a demonstrated recovery.
+*Most startups do not need a security department in their first year. They need ninety days of deliberate work that removes the obvious ways to lose.*
 
-### Evidence to retain
+The first person asked to “own security” at a startup usually inherits a mess that nobody made on purpose. Cloud accounts were created by whoever needed them. Two former contractors still have access to the code. The production database password lives in a chat thread from 2024. A customer has just asked for a security questionnaire, and the board wants to know whether the company is “secure”.
 
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
+None of this means the company is careless. It means it was busy building a product. The job now is to put a small, durable operating system around that product without stopping it from shipping.
 
-### Review questions
+This guide is a sequenced plan for doing that in ninety days. It is written for founders, technical leaders, and the first person asked to own security, often an engineer doing it alongside a full-time job. It assumes no dedicated security budget beyond a few tools, and no prior security experience beyond general engineering judgement.
 
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
+## How the plan is sequenced
 
-## 8. Days 71–80: produce customer-facing proof
+The order matters more than the speed. Each block of days produces something the next block depends on. You cannot review access properly until you know which systems exist. You cannot set patching expectations until you know which assets are exposed. You cannot write a useful incident plan until you know who can make decisions and where the important data lives.
 
-Create an accurate security overview, architecture and data-flow diagrams, policy index, testing summary, supplier list, and controlled evidence room. Build approved answers from these records.
+![Figure 1. Each block produces the record the next block depends on. Customer-facing proof comes last because it describes controls that now exist.](assets/fig-1.jpg)
 
-### Evidence to retain
+*Figure 1. Each block produces the record the next block depends on. Customer-facing proof comes last because it describes controls that now exist.*
 
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
+If you have less time, keep the order and shorten each block. If you have more help, run blocks in parallel only where the dependency allows it.
 
-### Review questions
+## What “done” looks like at day 90
 
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
+At the end of the plan you should be able to show, from records rather than memory:
 
-## 9. Days 81–90: measure, review, and fund the next quarter
+- A named executive who owns security risk, and a named operator who runs the program.
+- An inventory of systems, accounts, data, and suppliers, with an owner for each.
+- Phishing-resistant multi-factor authentication for administrators and enforced MFA for everyone else.
+- A routine for finding, prioritizing, and fixing vulnerabilities, with measured timelines.
+- Release controls on every path that can change production.
+- An incident plan that has been exercised once, and a backup that has been restored once.
+- A supplier register and a short, accurate customer-facing security overview.
+- A risk register with decisions, and a funded plan for the next quarter.
 
-Review unresolved high risks, overdue access, vulnerability age, restoration results, incidents, supplier reviews, and customer requests. Choose the next quarter from observed exposure and business demand.
+## How to use the worksheets
 
-### Evidence to retain
+Each chapter points to one or more worksheets in the companion pack, which is a separate download in PDF, Word, and Excel formats. Fill them in as you go. By day 90 the completed pack is your program’s first evidence file.
 
-Keep a dated record of the input, the decision, the person who approved it, the system boundary, exceptions, and the artifact that verifies completion. A policy without an operating record shows intent. A screenshot without context may show a setting but not its coverage, duration, or exception path. Pair the two where the decision depends on both design and operation.
+> **A note on scope**
+>
+> This is educational material, not legal advice or an audit opinion. Sector, privacy, and regional obligations vary. Where a step depends on law or contract, the guide says so; involve qualified advisers there.
 
-### Review questions
+---
 
-- What business or customer decision does this work support?
-- Which product, environment, entity, users, and data are included?
-- What would make the record stale or misleading?
-- Who can explain how the control works and where it fails?
-- Which exception needs a separate risk decision?
-- What evidence would an independent reviewer need to reproduce the conclusion?
+**PART I · CHAPTERS 1–2**
 
-# Part II — Working records
+<a id="part4"></a>
 
-## Worksheet 1: 90-day control board
+# Authority and inventory
 
-Complete one row for each material product, control, artifact, request, or decision. Add rows rather than compressing several different scopes into one answer.
+*Before you change anything, decide who owns the risk, and find out what you are protecting.*
 
-| Field | Entry | Evidence or owner |
+---
+
+**CHAPTER 01 · AUTHORITY AND INVENTORY**
+
+<a id="ch1"></a>
+
+## Set the business outcomes and risk ownership
+
+*A security program without an owner becomes a list of good intentions. Start by naming who decides.*
+
+Security work competes with product work for the same engineers. If nobody with authority has said what the work is for, it loses every time a release date slips. The first task is therefore not technical. It is to agree, in writing, why the company is doing this and who decides when security and delivery conflict.
+
+### Two roles, even if one person holds both
+
+Name an **accountable executive**, usually the CEO or CTO, who owns security risk for the company. This person accepts or rejects residual risk, approves spending, and answers to the board and to customers. Name an **operating owner** who runs the program day to day: maintains the inventory, chases remediation, prepares evidence, and raises decisions to the executive. In a twenty-person company these may be the same person. Write both names down anyway, because the roles will separate as the company grows.
+
+NIST’s Cybersecurity Framework 2.0 added a Govern function in 2024 for exactly this reason: risk strategy, roles, and oversight sit above the technical controls and shape them.<sup>[1]</sup> You do not need to adopt the framework to borrow the idea.
+
+### Write three to five outcomes
+
+Avoid outcomes like “be secure” or “achieve SOC 2”. Use outcomes the business recognizes and you can verify at day 90:
+
+- No production system or customer data reachable through an account without MFA.
+- Every customer-data store identified, owned, and covered by backup that has been restored at least once.
+- Critical and known-exploited vulnerabilities on internet-facing systems fixed within an agreed time.
+- An accurate security overview ready for enterprise prospects.
+- A decision record for every known high risk that is not being fixed this quarter.
+
+### Agree the rules for conflict
+
+Decide now how security work gets time. A common pattern is a fixed share of engineering capacity, for example one engineer-day per week, plus a rule that anything rated critical interrupts planned work. Whatever you choose, write it in the charter and get the executive to sign it.
+
+> **Worksheet 01 · in the companion pack**
+>
+> **Security charter and ownership.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
+
+### Tell the team
+
+Send a short note to the whole company: who owns security, what will change in the next ninety days, and how to report something suspicious. People will forgive new controls they were warned about. They resent controls that appear without explanation.
+
+**Before you move on**
+
+- [ ] The accountable executive and operating owner are named in writing.
+- [ ] Three to five outcomes are agreed and can be verified at day 90.
+- [ ] The rule for security work versus delivery work is signed.
+- [ ] The company knows who to tell about a security concern.
+
+---
+
+**CHAPTER 02 · AUTHORITY AND INVENTORY**
+
+<a id="ch2"></a>
+
+## Days 1–10: establish authority, inventory, and emergency contacts
+
+*You cannot protect systems you do not know about. Inventory first, then fix what is obviously exposed.*
+
+The first ten days are for finding things. Resist the temptation to start fixing as soon as you find the first problem, unless it is an emergency, such as an exposed credential or a public storage bucket holding customer data. Those you fix immediately. Everything else goes on the list.
+
+### What to inventory
+
+Start with the places where control over the company actually lives:
+
+- **Domains and DNS.** Registrar accounts, DNS providers, and who can change them. Losing a domain means losing email, sign-in, and customer trust together.
+- **Identity.** The workforce identity provider, email administrators, and any application that has its own separate user list.
+- **Cloud accounts.** Every account, subscription, or project, including the ones created for experiments. Record the root or owner credentials and who holds them.
+- **Source code.** Organizations, repositories, administrators, and integrations with write access.
+- **Production data stores.** Databases, object storage, search indexes, warehouses, and backups.
+- **Secrets.** Where API keys, database credentials, and signing keys are stored, and who can read them.
+- **Critical suppliers.** Services that store customer data or that the product cannot run without.
+- **Devices.** Laptops and phones that hold company data or can reach production.
+
+The CIS Critical Security Controls start with enterprise asset and software inventory for the same reason: every later control depends on knowing what exists.<sup>[2]</sup>
+
+> **Worksheet 02 · in the companion pack**
+>
+> **Asset and account inventory.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
+
+### Fix the obvious exposure
+
+While inventorying, you will find problems. Fix these within the ten days:
+
+- Credentials committed to repositories or pasted in chat. Rotate them, then remove them.
+- Storage buckets or databases reachable from the internet without authentication.
+- Accounts belonging to people who have left.
+- Shared administrator logins with no MFA.
+- Internet-facing systems running software that no longer receives security updates.
+
+Record each fix with a date. These are the first entries in your evidence file, and they are often the most important work of the quarter.
+
+### Build the emergency contact sheet
+
+Write one page that answers: if something goes badly wrong at 2 a.m. on a Sunday, who gets called, and how? Include the executive, the operating owner, whoever can change DNS and cloud configuration, your cloud provider’s support route, your domain registrar, legal counsel, and your cyber insurer if you have one. Store a copy somewhere that does not depend on company email or chat, because those may be the systems affected.
+
+> **Worksheet 03 · in the companion pack**
+>
+> **Emergency contact sheet.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
+
+> **Common day-ten surprise**
+>
+> Most teams discover at least one cloud account, domain, or SaaS administrator account that nobody currently employed can access. Recovering control of it, through the provider’s ownership verification process, is a priority, not a chore.
+
+**Before you move on**
+
+- [ ] Every domain, cloud account, repository organization, and production data store has a named owner.
+- [ ] Exposed credentials have been rotated, and their rotation is recorded.
+- [ ] Departed staff and contractors have been removed from every system found.
+- [ ] The emergency contact sheet exists outside company email and chat.
+
+---
+
+**PART II · CHAPTERS 3–4**
+
+<a id="part5"></a>
+
+# Identity and data
+
+*Control who can get in, then decide what data you hold, where it lives, and how long you keep it.*
+
+---
+
+**CHAPTER 03 · IDENTITY AND DATA**
+
+<a id="ch3"></a>
+
+## Days 11–20: secure identity, devices, code, and cloud administration
+
+*Most serious incidents at small companies begin with one stolen login. Make that login much harder to use.*
+
+With the inventory in hand, turn to access. The goal for these ten days is that every route into production or customer data requires a strong, individual identity, and that the most powerful routes are few, logged, and protected with phishing-resistant authentication.
+
+### Centralize workforce identity
+
+Connect business applications to one identity provider through single sign-on wherever the application supports it. When someone leaves, disabling one account should remove most of their access. For applications that do not support SSO, record them in the inventory and add them to the offboarding checklist by name.
+
+### Require strong authentication
+
+Enforce MFA for every workforce account by policy, not by request. For administrators of the identity provider, cloud accounts, code hosting, and DNS, use phishing-resistant methods such as hardware security keys or passkeys. NIST’s current authentication guidance, SP 800-63B-4 from 2025, treats phishing resistance as a central property of strong authentication, and favours these methods over codes sent by SMS.<sup>[3]</sup>
+
+### Separate everyday and administrator accounts
+
+People who administer cloud or identity systems should do routine work, such as email, documents, and browsing, from an account that cannot change production. Administrative work happens from a separate, more tightly protected account or through time-limited elevation. This single change removes a large class of attacks that start with a phishing email.
+
+### Reduce standing access to production
+
+List everyone who can reach production data directly: through the cloud console, database clients, admin panels, or support tools. Ask whether each person needs that access every day. Where they do not, move them to on-request access that expires and is logged. Keep a small number of break-glass credentials for emergencies, stored securely and tested quarterly.
+
+> **Worksheet 04 · in the companion pack**
+>
+> **Identity and administrator access review.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
+
+### Protect code and the build path
+
+Require MFA on the code host. Protect main branches so that changes need review and passing checks before merge. Limit who can change repository settings, secrets, and deployment workflows. Review third-party applications and tokens with write access to repositories, and remove the ones nobody can explain.
+
+### Baseline devices
+
+You do not need a full device-management rollout in ten days, but you do need the basics on any laptop that can reach production: full-disk encryption, automatic operating-system updates, a screen lock, and the ability to remove company access if the device is lost. Record which devices meet the baseline.
+
+**Before you move on**
+
+- [ ] MFA is enforced for every workforce account, and administrators use phishing-resistant methods.
+- [ ] Administrators use separate accounts or time-limited elevation for administrative work.
+- [ ] Standing production access is limited to a short, named list.
+- [ ] Main branches are protected and repository write integrations have been reviewed.
+- [ ] Every device that can reach production meets the baseline.
+
+---
+
+**CHAPTER 04 · IDENTITY AND DATA**
+
+<a id="ch4"></a>
+
+## Days 21–30: classify data and set retention boundaries
+
+*You cannot lose data you do not hold. Map what you collect, then decide how long to keep it.*
+
+Data work sounds like paperwork. It is the part of the program that most changes the impact of an incident. A breach of a database holding three months of records is a different event from a breach of one holding seven years of records nobody needed.
+
+### Use a small classification scheme
+
+Three or four levels are enough at this stage:
+
+| Level | What it covers | Examples |
 |---|---|---|
-| Outcome |  |  |
-| Current condition |  |  |
-| Action |  |  |
-| Owner |  |  |
-| Due date |  |  |
-| Verification evidence |  |  |
+| Restricted | Data whose exposure causes serious harm to customers or the company | Customer content, credentials, payment references, health or government identifiers |
+| Confidential | Internal data that should not be public | Contracts, financials, employee records, source code |
+| Internal | Everyday business information | Plans, internal documentation |
+| Public | Approved for publication | Marketing site, public documentation |
 
-### Quality check
+Then map each data store from your inventory to the highest level of data it holds. A log store that captures request bodies may be Restricted, even though nobody meant it to be.
 
-- The entry names a product or system rather than “the platform” when several products exist.
-- Dates describe the evidence period, not merely the day the file was uploaded.
-- Exceptions and unknowns remain visible until resolved.
-- The owner can explain the control and is accountable for refresh.
-- Sensitive records have a disclosure decision and expiry where needed.
+> **Worksheet 05 · in the companion pack**
+>
+> **Data classification map.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-## Worksheet 2: Risk decision record
+### Follow the data, not the org chart
 
-Complete one row for each material product, control, artifact, request, or decision. Add rows rather than compressing several different scopes into one answer.
+For each Restricted data type, trace where it enters, where it is stored, which services process it, which suppliers receive it, and where it leaves. Look closely at the places teams forget: error tracking, analytics, support tools, data exports in shared drives, AI features that send content to a model provider, and copies of production data used for testing.
 
-| Field | Entry | Evidence or owner |
-|---|---|---|
-| Scenario |  |  |
-| Asset and impact |  |  |
-| Existing controls |  |  |
-| Decision |  |  |
-| Approver |  |  |
-| Review date |  |  |
+### Set retention you can actually enforce
 
-### Quality check
+For each data store, decide how long data is kept and what happens when the period ends. Start from what the business and contracts need, and confirm legal requirements with counsel. Then check whether the system can actually delete on that schedule. A retention rule that nobody implements is worse than none, because it is a written promise you are breaking.
 
-- The entry names a product or system rather than “the platform” when several products exist.
-- Dates describe the evidence period, not merely the day the file was uploaded.
-- Exceptions and unknowns remain visible until resolved.
-- The owner can explain the control and is accountable for refresh.
-- Sensitive records have a disclosure decision and expiry where needed.
+Backups need their own line. Most backup systems cannot remove one customer’s records from an existing backup, so deleted data persists until the backup expires. Write that down honestly. It is the answer customers need when they ask about deletion.
 
-## Worksheet 3: Quarter-two backlog
+> **Worksheet 06 · in the companion pack**
+>
+> **Retention schedule.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-Complete one row for each material product, control, artifact, request, or decision. Add rows rather than compressing several different scopes into one answer.
+### Stop collecting what you do not need
 
-| Field | Entry | Evidence or owner |
-|---|---|---|
-| Control gap |  |  |
-| Evidence |  |  |
-| Business driver |  |  |
-| Effort |  |  |
-| Dependency |  |  |
-| Priority |  |  |
+The cheapest data control is not collecting the data at all. Review signup forms, event tracking, and logs for fields nobody uses. Remove them. The FTC’s long-standing guidance to businesses makes the same point: do not collect personal information you do not need, and do not keep it longer than you need it.<sup>[7]</sup>
 
-### Quality check
+**Before you move on**
 
-- The entry names a product or system rather than “the platform” when several products exist.
-- Dates describe the evidence period, not merely the day the file was uploaded.
-- Exceptions and unknowns remain visible until resolved.
-- The owner can explain the control and is accountable for refresh.
-- Sensitive records have a disclosure decision and expiry where needed.
+- [ ] Every data store in the inventory has a classification level.
+- [ ] Restricted data flows are traced to every supplier and copy.
+- [ ] Each store has a retention period and a working deletion method, or a recorded exception.
+- [ ] Backup retention is stated honestly.
 
-# Part III — Worked case: ParcelPilot
+---
 
-ParcelPilot is a 24-person logistics SaaS company with no dedicated security employee and its first enterprise prospect. The example is fictional. It shows how to apply the records without suggesting that one control set fits every company.
+**PART III · CHAPTERS 5–7**
 
-## Starting condition
+<a id="part6"></a>
 
-The team had useful technical controls but fragmented proof. Sales answers lived in old questionnaires, diagrams did not name dates or environments, and remediation records did not consistently link to verification. The team chose one current enterprise request as the boundary and refused to describe controls outside that product as if they were universal.
+# Operations
 
-### Decision 1: Days 1–10: establish authority and stop obvious exposure
+*Make vulnerability work routine, put controls on the path to production, and prepare for the day something goes wrong.*
 
-The team applied this step to ParcelPilot. Name an accountable executive and an operating owner. Inventory administrator accounts, production access, domains, cloud accounts, source repositories, secrets, backups, and critical suppliers. Fix exposed credentials and unsupported public systems first. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
+---
 
-### Decision 2: Days 11–20: define the business and data boundary
+**CHAPTER 05 · OPERATIONS**
 
-The team applied this step to ParcelPilot. Map products, environments, customer data, employee data, payment data, regions, and material processors. Add owners and business impact. This inventory is the basis for access, incident, supplier, and customer-review work. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
+<a id="ch5"></a>
 
-### Decision 3: Days 21–30: control identity and privileged access
+## Days 31–45: build vulnerability and patch operations
 
-The team applied this step to ParcelPilot. Require phishing-resistant multi-factor authentication where supported, centralize workforce identity, remove dormant access, split routine and administrator accounts, and record break-glass access. Review joins, moves, and departures. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
+*The aim is not zero vulnerabilities. It is a loop that finds them, ranks them sensibly, and closes them within times you can prove.*
 
-### Decision 4: Days 31–40: make vulnerability work routine
+Vulnerability management at a small company fails in one of two ways. Either nobody looks, or someone turns on every scanner at once and produces two thousand findings that nobody can triage. Both end in the same place. Start narrow, measure, and expand.
 
-The team applied this step to ParcelPilot. Set patch expectations by asset and exposure, run authenticated infrastructure and dependency checks, create an intake for reported vulnerabilities, and track remediation to verified closure. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
+### Choose your sources
 
-### Decision 5: Days 41–50: put security into delivery
+Begin with the sources most likely to matter:
 
-The team applied this step to ParcelPilot. Define branch protection, review expectations, secret scanning, dependency review, build provenance, environment separation, release approval, and rollback. Start with the paths that can change production. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
+- **Dependency scanning** on every repository, so known-vulnerable libraries are flagged in pull requests.
+- **Container and image scanning** if you deploy containers.
+- **Cloud configuration checks** for public exposure, logging, and identity misconfiguration.
+- **External scanning** of internet-facing hosts and services.
+- **A way for outsiders to report issues.** Publish a security.txt file and a short disclosure policy so researchers know where to send what they find.<sup>[10]</sup>
 
-### Decision 6: Days 51–60: prepare for an incident
+### Rank by exploitability and exposure
 
-The team applied this step to ParcelPilot. Write a short response plan with contacts, severity, decision rights, evidence preservation, customer and legal escalation, containment options, and an exercise. Test one likely scenario. They recorded the system and evidence boundary, named one owner, and wrote down the exception that could change the conclusion. The resulting record was short enough to review in a meeting and detailed enough to prevent a later answer from silently changing scope.
+Severity scores such as CVSS are a starting point.<sup>[9]</sup> Two other questions usually matter more: is this vulnerability being exploited in the wild, and can an attacker reach the affected component? CISA’s Known Exploited Vulnerabilities catalog answers the first question for free.<sup>[4]</sup> Your inventory answers the second. A medium-rated flaw on an internet-facing login page that appears in the catalog outranks a critical-rated flaw in a library function your code never calls.
 
-## Completed-case review
+### Set timelines you will meet
 
-Before closing the work, the team compared every external claim with the evidence register, removed unsupported absolute language, and recorded the remaining gaps. Each planned improvement had an owner and internal date, but the customer-facing answer described the current condition. The final package preserved the questions, supplied artifacts, decisions, and commitments so the next review could start from a verified record.
+Pick remediation targets by priority, not just by severity score. Then measure against them from the first week. If the honest median for high-priority items turns out to be forty days, either add capacity or change the target. Publishing numbers you do not meet creates a contradiction a customer or auditor will eventually find.
 
-# Part IV — Technical and evidence field modules
-
-These modules answer recurring questions that appear across customer reviews, program design, penetration-test planning, and AI-agent assessment. Use only the modules that match the product and decision in scope.
-
-## Field module 1: Security Questionnaire Evidence Checklist for SaaS Teams
-
-*Primary keyword: security questionnaire evidence checklist. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A safe security-questionnaire process connects every answer to current evidence, a named owner, an approval date, and a review date.** If the evidence is missing or the question does not match your system, flag it for review. Do not generate a confident “yes” from a policy template.
-
-Questionnaires are part of enterprise sales, but the answers can become contractual representations. The goal is not to finish the spreadsheet as quickly as possible. The goal is to give the buyer an accurate view of the system while identifying gaps that need a technical or operational fix.
-
-#### Build the answer library before the next deal
-
-Store approved answers by topic, not by customer spreadsheet. Each record should include:
-
-- the standard question or control topic;
-
-- the approved answer in plain language;
-
-- systems and products the answer applies to;
-
-- supporting evidence and where it is stored;
-
-- the control or evidence owner;
-
-- approver and approval date;
-
-- next review date;
-
-- exceptions, planned work, and claims you must not make.
-
-Common questionnaire formats such as the [Cloud Security Alliance CAIQ](https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4-1) can help organize topics, but a standard questionnaire is not proof that your controls operate. Map answers to your actual product and evidence.
-
-#### Evidence checklist
-
-#### Company and system description
-
-- legal contracting entity and product names;
-
-- plain-language service description;
-
-- system boundary and architecture diagram;
-
-- data-flow diagram for customer and sensitive data;
-
-- hosting providers and relevant regions;
-
-- subprocessor inventory and purpose;
-
-- named security and privacy contacts.
-
-#### Data classification, use, retention, and deletion
-
-- data categories collected and processed;
-
-- purposes and customer instructions;
-
-- classification policy and handling rules;
-
-- retention schedule by data type;
-
-- deletion workflow, backups, and verification;
-
-- test-data and production-data separation.
-
-#### Encryption and key management
-
-- transport encryption configuration;
-
-- storage encryption by service and data type;
-
-- key-management provider and access model;
-
-- rotation, revocation, recovery, and audit records;
-
-- exceptions where data is not encrypted.
-
-Do not answer “AES-256 everywhere” because a cloud-service marketing page says so. Confirm which storage services, application fields, backups, exports, and endpoints the statement covers.
-
-#### Identity and access
-
-- identity provider and single sign-on coverage;
-
-- multi-factor authentication requirements;
-
-- role definitions and privileged-access process;
-
-- joiner, mover, and leaver evidence;
-
-- periodic access reviews and approvals;
-
-- service accounts, API keys, and machine identities;
-
-- customer authentication and account-recovery controls.
-
-#### Secure development and change management
-
-- code-review and branch-protection rules;
-
-- build, test, and deployment evidence;
-
-- dependency, secret, static, and dynamic testing;
-
-- change approval and emergency-change process;
-
-- separation of development and production access;
-
-- release rollback and artifact verification.
-
-The [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework) can help organize governance and risk outcomes. It does not certify your implementation. Use it to locate evidence and ownership, not as a blanket “compliant” answer.
-
-#### Vulnerability management and penetration testing
-
-- asset and software inventory;
-
-- scan cadence and authenticated coverage;
-
-- triage, severity, ownership, and remediation targets;
-
-- independent penetration-test scope and date;
-
-- redacted report or attestation where permitted;
-
-- retest results and open-risk acceptance.
-
-If the buyer asks for a penetration test, confirm what it must cover. Our guide explains [when SOC 2 and customer reviews lead to penetration testing](/blog/does-soc-2-require-a-penetration-test).
-
-#### Logging, monitoring, and incident response
-
-- security-relevant event sources;
-
-- log access, protection, and retention;
-
-- alert ownership and escalation;
-
-- incident-response plan and contact tree;
-
-- tabletop or exercise record;
-
-- customer-notification decision process;
-
-- post-incident review and corrective action.
-
-#### Availability, backups, and recovery
-
-- service dependencies and criticality;
-
-- backup scope, frequency, protection, and retention;
-
-- restoration test evidence;
-
-- recovery objectives approved by the business;
-
-- business-continuity and disaster-recovery exercises;
-
-- customer communication during an outage.
-
-#### Vendor and subprocessor management
-
-- vendor inventory and risk tier;
-
-- due-diligence records;
-
-- contracts and data-processing terms;
-
-- security review and renewal dates;
-
-- offboarding and access-revocation evidence;
-
-- current public subprocessor notice.
-
-#### AI-specific evidence
-
-- models and providers used in each feature;
-
-- data sent to the model and whether it is used for training;
-
-- model hosting and processing regions;
-
-- tenant separation in retrieval and memory;
-
-- prompt-injection and output-handling controls;
-
-- tools, permissions, approval gates, and action logs;
-
-- human review for consequential output;
-
-- evaluation, monitoring, and incident procedures.
-
-The [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) and [OWASP Top 10 for LLM Applications](https://owasp.org/projects/top-10-for-large-language-model-applications) provide useful risk categories. Your answer still needs to describe the deployed product.
-
-#### Use five answer states
-
-| State | Meaning | Action |
-| --- | --- | --- |
-| Supported | Current evidence supports the answer for the stated scope | Attach or reference approved evidence |
-| Partially supported | The control applies only to part of the system | State the boundary and exception |
-| Planned | Work is approved but not operating | Give an owner and honest target date |
-| Not applicable | The question does not fit the product or relationship | Explain why, without using it to hide a gap |
-| Needs review | Evidence or ownership is missing | Do not send until the owner resolves it |
-
-#### Review before sending
-
-Route answers to the people who own the facts: engineering for architecture and development controls, IT for workforce identity, legal and privacy for contracts and data rights, finance for insurance, and executive management for risk acceptance. Security or compliance should coordinate consistency, not invent answers on behalf of other owners.
-
-Keep the original customer wording beside the approved response. A slight wording change can alter the claim. “Do administrators use MFA?” is not the same as “Is MFA technically available?”
-
-#### Frequently asked questions
-
-#### Can AI complete a security questionnaire?
-
-It can help map questions to approved source material and draft responses. A named owner must review the result. Unsupported answers should be flagged, never guessed.
-
-#### Should we send our full penetration-test report?
-
-Only under appropriate access and confidentiality controls. Many buyers can begin with a redacted report, executive summary, attestation, or controlled trust-center access.
-
-#### Can we reuse answers?
-
-Yes, when the question, system scope, and current facts match. Keep evidence and review dates so reuse does not preserve an outdated claim.
-
-#### Does a completed questionnaire certify our security?
-
-No. It represents answers to a customer's due-diligence questions. It does not create an audit opinion, certification, or guarantee.
-
-## Field module 2: Does SOC 2 Require a Penetration Test? What to Ask Your Auditor
-
-*Primary keyword: does SOC 2 require a penetration test. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**No, SOC 2 does not contain one universal rule that every organization must complete a penetration test.** A test can still become necessary because of your selected controls, risk assessment, system description, auditor's evidence request, or an enterprise customer's contract. Confirm the requirement before buying a test.
-
-The distinction matters. A company can spend money on the wrong scope and still fail to answer the question its auditor or customer asked. A public vulnerability scan, an unauthenticated web test, and a gray-box application penetration test produce different evidence. The name on the invoice does not make them interchangeable.
-
-#### SOC 2 examines controls, not a fixed shopping list
-
-A SOC 2 examination evaluates controls relevant to security, availability, processing integrity, confidentiality, or privacy. The [AICPA's SOC resource library](https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services) publishes the governing guides, Trust Services Criteria, description criteria, and illustrative reports. Those materials do not reduce the examination to a universal list that says every service organization must purchase the same penetration test.
-
-Your organization describes its system and the controls it says are operating. The auditor then tests whether that description is fair and whether the controls meet the applicable criteria. If your risk assessment, control language, customer promise, or auditor request says independent penetration testing occurs, you need evidence that matches that statement.
-
-> **Ask for the exact requirement.** “We need a SOC 2 pentest” is not a scope. Ask which system, control, period, testing method, report contents, and retest evidence the auditor or customer expects.
-
-#### When a penetration test becomes part of the evidence
-
-A penetration test commonly enters a SOC 2 project through one of five paths:
-
-- **Your control says you perform one.** If management has committed to annual independent penetration testing, the auditor will expect dated evidence that the control operated.
-
-- **Your risk assessment calls for it.** An internet-facing application holding customer data may warrant deeper testing than a scanner can provide.
-
-- **The auditor asks how a technical control was validated.** The test may support evidence for access control, change management, vulnerability management, or risk mitigation.
-
-- **A customer contract requires it.** Enterprise procurement often asks for an independent report even when the examination itself does not prescribe one.
-
-- **Your insurer or regulator expects it.** That is a separate requirement and should be scoped separately, even if the resulting report also supports the SOC 2 evidence package.
-
-The [NIST SP 800-115 testing guide](https://csrc.nist.gov/pubs/sp/800/115/final) distinguishes security testing techniques and stresses planning, execution, analysis, and mitigation. That is a useful model for discussing the test with your auditor: define the objective first, then choose the technique.
-
-#### Seven questions to ask your auditor before requesting quotes
-
-#### 1. Which systems must be in scope?
-
-Ask whether the evidence must cover the customer-facing web application, first-party API, mobile application, external infrastructure, cloud environment, or a specific combination. Match the answer to the system description. A report for a marketing site will not establish how an authenticated SaaS product protects tenant data.
-
-#### 2. Does the test need authenticated access?
-
-For a login-gated product, authenticated testing is usually where authorization and business-logic failures appear. Provide separate accounts for important roles and, where relevant, two test tenants. The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) covers identity, authentication, authorization, sessions, business logic, client-side behavior, and APIs. A scope that ignores roles may miss the controls buyers care about most.
-
-#### 3. Is a vulnerability scan enough?
-
-Usually not when the request says “penetration test.” Scanners can identify known patterns and exposed software. They do not reliably reason through tenant boundaries, role combinations, approval flows, or application-specific abuse. Ask whether the evidence needs manual testing and whether the vendor must document the manual hours and methodology.
-
-#### 4. Which period must the report cover?
-
-Confirm when testing must occur relative to the examination period. A technically good report with the wrong date may not support the control sample the auditor selected. Also ask whether the auditor wants the original report, a management response, a remediation tracker, or the retest version.
-
-#### 5. What must the report contain?
-
-Request a redacted sample before selecting a vendor. Look for scope and exclusions, target versions, testing dates, methodology, affected workflow, evidence, reproduction steps, impact, severity rationale, recommended fix, and retest history. See our [penetration-test report guide](/blog/what-a-penetration-test-report-should-contain) and [illustrative sample report](/sample-report).
-
-#### 6. Is remediation retesting required?
-
-A finding marked “fixed” by the development team is not the same as a verified retest. Confirm whether the auditor or customer expects independent verification and whether the original vendor must perform it. Sthuthi's [security fixes and retesting service](/services/security-fixes-retesting) keeps remediation state separate from verification evidence.
-
-#### 7. Are there vendor qualifications or independence rules?
-
-Some customers specify insurance, tester certifications, geographic restrictions, data-handling terms, or independence requirements. Collect those before requesting proposals. Do not assume the auditor endorses a vendor merely because a report is formatted for compliance.
-
-#### What a defensible SOC 2 penetration-test scope looks like
-
-For a typical authenticated SaaS product, a defensible starting scope identifies one application, its first-party API, the roles that can perform sensitive operations, two representative tenants, the test environment, the test window, and prohibited actions. It also states whether mobile clients, cloud infrastructure, third-party integrations, social engineering, denial-of-service testing, and source review are excluded.
-
-Cloud-provider rules still apply. For example, review the [AWS penetration-testing policy](https://aws.amazon.com/security/penetration-testing/) before testing hosted services. Written authorization should name the target and allowed activity. “Our application runs on AWS” is not permission to test every related AWS service or third-party system.
-
-#### How to compare SOC 2 penetration-test proposals
-
-| Proposal detail | What to look for |
-| --- | --- |
-| Target | Named application, API, domains, environment, roles, and tenants |
-| Method | Manual testing supported by tools, mapped to an established testing guide |
-| Depth | Authorization, sessions, business logic, workflow abuse, and API behavior |
-| Deliverables | Executive summary, technical evidence, reproduction, fixes, limits, and report version |
-| Retest | Clear window, included findings, evidence standard, and updated report |
-| Safety | Written authorization, test window, contacts, rate limits, and stop conditions |
-
-A cheap proposal may be adequate for a small, low-complexity application. An expensive proposal is not automatically deeper. Compare test hours, authenticated roles, assets, exclusions, reporting, and retesting. The useful question is whether the scope tests the controls and risks your evidence must address.
-
-#### Frequently asked questions
-
-#### Is a penetration test mandatory for SOC 2 Type 1?
-
-Not as one universal requirement. A Type 1 report addresses the design of controls at a point in time. Your controls, risks, customer commitments, and auditor requests determine whether a penetration test belongs in the evidence.
-
-#### Is a penetration test mandatory for SOC 2 Type 2?
-
-Again, not universally. Type 2 examines operating effectiveness over a period. If your control says a penetration test occurs during that period, the auditor will expect evidence that it operated as described.
-
-#### Can a vulnerability scan replace a penetration test?
-
-Only if the requirement actually calls for vulnerability scanning. A scan and a penetration test answer different questions. Confirm the requested technique and deliverable with the auditor or customer.
-
-#### Should the test happen in production?
-
-Use a representative test environment when possible. If production testing is necessary, define allowed actions, data restrictions, request limits, monitoring, contacts, and stop conditions in writing.
-
-#### Does the penetration-testing company issue the SOC 2 report?
-
-No. A qualified CPA firm performs the SOC examination and issues the SOC report. A penetration-testing company supplies technical assessment evidence.
-
-## Field module 3: How to Scope a Web Application Penetration Test
-
-*Primary keyword: web application penetration test scope. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A useful web application penetration-test scope names the application, backing APIs, environments, authenticated roles, tenant boundaries, sensitive workflows, allowed testing actions, exclusions, dates, deliverables, and retest terms.** If one of those is missing, quotes will not be comparable and coverage will be ambiguous.
-
-Good scoping is not administrative overhead. It controls safety, cost, testing depth, and the meaning of the final report. “Test our web app” can describe a three-day unauthenticated review or weeks of authenticated business-logic work. The tester needs enough detail to estimate effort without collecting secrets or customer records during sales.
-
-#### Start with the decision the report must support
-
-Write one sentence that explains why the assessment exists. Examples:
-
-- An enterprise customer requires an independent application test before contract signature.
-
-- An auditor asked for evidence that authenticated access controls were tested.
-
-- The product now supports refunds and administrators want the approval flow tested.
-
-- A new multi-tenant architecture needs an independent check before migration.
-
-The decision determines the evidence. A launch review may prioritize high-risk workflows and release blockers. A customer-requested report may need an executive summary and defined remediation status. A regulated scope may need particular systems, tester qualifications, or dates.
-
-#### 1. Name the application boundary
-
-List the exact hosts, application names, and environment. Include alternate domains used for authentication, file delivery, administration, or regional deployments. State which systems are owned by your organization and which are operated by third parties.
-
-The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) covers configuration, identity, authentication, authorization, sessions, input validation, error handling, cryptography, business logic, client-side behavior, and APIs. That breadth is useful, but the guide is not a substitute for naming your specific product boundary.
-
-> **Do not use a wildcard as the scope.** “Everything under example.com” can include marketing systems, vendors, abandoned hosts, and services the client is not authorized to test.
-
-#### 2. Decide whether the backing API is included
-
-A web application test normally exercises the endpoints used by the browser. That does not automatically cover every API endpoint, mobile route, partner API, service credential, GraphQL operation, or deprecated version. If the API is a product in its own right, give it a separate inventory and role matrix.
-
-Read [API pentest versus web application pentest](/blog/api-pentest-vs-web-application-pentest) before combining the scopes. The [OWASP API Security Top 10](https://api-security.owasp.org/) highlights broken object and function authorization, unrestricted resource consumption, sensitive business flows, inventory problems, and unsafe third-party API use. Those risks often require endpoint and role coverage beyond the browser's normal path.
-
-#### 3. Map roles, accounts, and tenants
-
-Provide a role matrix showing what each account should be allowed to view and do. Common roles include unauthenticated user, customer member, customer administrator, support agent, finance operator, partner, and internal administrator. Add two test tenants when customer isolation matters.
-
-| Role | Expected access | High-risk actions |
-| --- | --- | --- |
-| Customer member | Own tenant records | Export, file access, API tokens |
-| Customer admin | Own tenant users and settings | Invite, role change, integration setup |
-| Support agent | Assigned customer cases | Impersonation, resets, private records |
-| Finance operator | Approved billing workflows | Refunds, payout details, credits |
-
-Do not send passwords in the scoping form or ordinary email. Record the account types first, then arrange a controlled credential handoff after the scope and authorization are agreed. Sthuthi's [security and data-handling page](/security) explains this boundary.
-
-#### 4. Identify the workflows where failure has material impact
-
-Page count is a weak estimate of application complexity. A six-page product may contain payments, file imports, account recovery, administrative impersonation, and cross-tenant search. A hundred-page documentation portal may have little authenticated logic.
-
-List the workflows that can expose data, change authority, move money, execute code, publish content, or connect another system. For each workflow, state the expected rule. A tester can then check whether the server enforces it rather than merely recording that the interface hides a button.
-
-#### 5. Choose the access model
-
-#### Black-box testing
-
-The tester begins with public information and no authenticated context. This can model an outside attacker, but it may spend time rediscovering facts the team already knows and may provide shallow coverage of authenticated controls.
-
-#### Gray-box testing
-
-The tester receives representative accounts, architecture context, and agreed test data. For most authenticated SaaS products, this produces better coverage per testing hour because the assessor can compare roles and tenants directly.
-
-#### Source-assisted testing
-
-The tester can inspect selected source, configuration, or API definitions to target complex controls. This can be valuable for authorization middleware, cryptographic use, or unusual workflows. It should not be described as a complete secure-code review unless the scope and effort support that claim.
-
-[NIST SP 800-115](https://csrc.nist.gov/pubs/sp/800/115/final) describes several testing and examination techniques and their limitations. Choose the access model based on the objective, not on which label sounds more adversarial.
-
-#### 6. Define the environment and test data
-
-A test environment should represent production controls closely enough for the result to matter. Confirm authentication, authorization, feature flags, integrations, and data shape. Use representative fake data where possible. If production testing is necessary, identify sensitive operations that require notice or approval.
-
-State whether emails, webhooks, SMS messages, payments, refunds, deletion, file processing, third-party API calls, and background jobs are safe to trigger. Provide sandbox credentials for payment or messaging providers when those workflows are in scope.
-
-#### 7. Write allowed actions, exclusions, and stop conditions
-
-Written authorization should name the target, owner, test window, source addresses where relevant, allowed techniques, request limits, contacts, and stop conditions. Explicitly address denial-of-service testing, social engineering, persistence, destructive actions, data export, cloud metadata access, and third-party systems.
-
-Cloud rules may add constraints. Review the provider's policy, such as the [AWS penetration-testing policy](https://aws.amazon.com/security/penetration-testing/), before fieldwork. Client authorization does not grant permission to attack a vendor's independent service.
-
-#### 8. Define deliverables before testing starts
-
-A strong report should include:
-
-- scope, dates, targets, versions, roles, and exclusions;
-
-- methodology and completed coverage;
-
-- executive summary written for the decision maker;
-
-- finding title, affected workflow, evidence, reproduction, and impact;
-
-- severity rationale and recommended change;
-
-- limitations and remaining untested areas;
-
-- report version and reviewer;
-
-- retest result tied to new evidence.
-
-Ask for a redacted sample. Our [sample report](/sample-report) shows the minimum chain from observation to fix and retest. The [OWASP Application Security Verification Standard](https://owasp.org/www-project-application-security-verification-standard/) can help teams describe security requirements, while the WSTG provides testing techniques. Neither should be pasted into a report as proof that every check was completed.
-
-#### 9. Agree on retesting
-
-Define how long the included retest remains available, which findings it covers, whether design changes create a new scope, and what evidence marks a finding verified. Retesting should repeat the relevant scenario against the corrected version and record the observed result. “Developer says fixed” is a remediation status, not verification.
-
-#### Scoping checklist
-
-- Business reason and deadline
-
-- Named application, domains, and environment
-
-- Included API endpoints or inventory
-
-- Roles, test accounts, and tenant pairs
-
-- Critical workflows and expected rules
-
-- Third-party services and ownership
-
-- Allowed actions and explicit exclusions
-
-- Request limits, contacts, and stop conditions
-
-- Report recipients and required format
-
-- Retest window and acceptance evidence
-
-#### Frequently asked questions
-
-#### How long does a web application penetration test take?
-
-It depends on roles, workflows, APIs, integrations, and reporting needs. Sthuthi's standard launch scope is roughly ten business days after access and authorization are ready, but the written scope controls the estimate.
-
-#### How many test accounts should we provide?
-
-Provide at least one account for each material role and two representative tenants when isolation matters. More accounts may be needed for invitation, approval, support, or payment workflows.
-
-#### Should the API be a separate test?
-
-Use a separate API scope when it has endpoints, clients, credentials, roles, or business flows that the web application does not exercise.
-
-#### Can the tester use production customer data?
-
-Avoid it. Use representative fake data where possible. If production evidence is unavoidable, define collection, redaction, access, retention, and deletion before testing.
-
-## Field module 4: API Pentest vs Web Application Pentest: What Each Scope Covers
-
-*Primary keyword: API pentest vs web application pentest. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A web application penetration test follows user-facing workflows through the browser and the application behind them. An API penetration test works from the API inventory, credentials, roles, objects, and business operations directly.** They overlap, but a web test does not automatically cover every API endpoint or client.
-
-The correct scope depends on how the product is built and sold. If one browser application is the only API client, a combined test may be efficient. If mobile apps, partners, service accounts, and customer integrations use the same API, the API needs its own coverage plan.
-
-#### The practical difference
-
-| Area | Web application pentest | API pentest |
-| --- | --- | --- |
-| Starting point | User journeys and browser behavior | Endpoint inventory and API operations |
-| Identity | Login, sessions, recovery, browser tokens | API keys, OAuth, service credentials, bearer tokens |
-| Authorization | Roles and actions visible through the app | Object and function rules across every included operation |
-| Business logic | Multi-step UI workflows | Direct calls, sequence changes, automation, bulk operations |
-| Input surface | Forms, files, URLs, client-rendered content | Parameters, bodies, headers, schemas, GraphQL operations |
-| Coverage risk | May miss unused or partner endpoints | May miss browser-only behavior and client-side failures |
-
-#### What a web application penetration test covers
-
-A web application test examines the system as a user and attacker encounter it through the browser. The assessor reviews public entry points, authentication, sessions, account recovery, role changes, tenant boundaries, file handling, input processing, client-side behavior, and application-specific workflows.
-
-The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) organizes these areas into practical testing domains. Its business-logic section matters because high-impact failures often follow valid requests in the wrong order, with the wrong identity, or against another customer's object.
-
-During a web test, the assessor will also see API requests made by the browser. Those requests should be tested. The limit is inventory: the browser reveals the endpoints used by the tested workflows, not necessarily every endpoint the API exposes.
-
-#### What an API penetration test covers
-
-An API test begins with a defined inventory: hosts, versions, protocols, operations, schemas, authentication methods, roles, object types, and sensitive business flows. The tester sends requests directly rather than relying on the interface to generate them.
-
-The [OWASP API Security Top 10](https://api-security.owasp.org/) puts broken object-level authorization first. The question is simple: if Account A changes an identifier to one owned by Account B, does the server reject it? The same discipline applies to function-level authorization: can a lower-privilege identity call an administrative operation directly?
-
-An API scope may also cover:
-
-- REST, GraphQL, gRPC, SOAP, or event-driven interfaces where supported;
-
-- API keys, OAuth clients, machine identities, and service-to-service credentials;
-
-- mass assignment and object-property authorization;
-
-- rate limits, resource consumption, and cost-amplifying requests;
-
-- bulk operations, exports, imports, and automation;
-
-- versioning, deprecated endpoints, and undocumented operations;
-
-- unsafe trust in third-party API responses.
-
-#### The largest overlap is authorization
-
-Both scopes should test authentication and authorization, but they approach coverage differently. The web test asks whether a user can misuse the product's workflows. The API test asks whether each included operation enforces the identity, role, tenant, object, and state rules the product depends on.
-
-Suppose a support application lets an agent search orders. The web test may manipulate the order reference inside the normal search flow. The API test should also enumerate related endpoints: order detail, export, refund, note history, attachments, and bulk search. A secure browser route does not compensate for an unprotected export endpoint.
-
-#### When a web test is enough
-
-A web application scope may be enough when:
-
-- the browser application is the only meaningful API client;
-
-- the included workflows exercise the sensitive endpoints;
-
-- there are few roles and no separate machine identities;
-
-- the report need concerns the product rather than the complete API platform;
-
-- the scope clearly states which API behavior was and was not tested.
-
-Do not describe this as a complete API penetration test. State that the backing endpoints used by the included web workflows were assessed.
-
-#### When the API needs its own scope
-
-Create a separate or combined API scope when:
-
-- customers or partners integrate directly;
-
-- mobile, desktop, or IoT clients use endpoints the browser does not;
-
-- service accounts or OAuth clients have distinct permissions;
-
-- GraphQL exposes a broad schema;
-
-- deprecated versions remain reachable;
-
-- bulk operations or sensitive business flows can be called directly;
-
-- the auditor or customer explicitly asked for API testing.
-
-#### How to scope a combined assessment
-
-Use one written system map. List the browser workflows, API operations, roles, tenants, and credentials. Mark which endpoints each client uses. Identify the expected authorization rule for sensitive objects and functions. Then allocate testing time to both workflow abuse and endpoint coverage.
-
-Our [web application penetration-test scoping guide](/blog/how-to-scope-web-application-penetration-test) provides the complete checklist. The [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/) can help define application security requirements, while the API Top 10 highlights recurring API risks. Neither replaces a product-specific threat model and role matrix.
-
-#### What the report should say
-
-The report must separate completed web and API coverage. It should list the application, hosts, API versions, operations or collections, roles, tenants, and excluded clients. Findings should name the affected workflow and endpoint, show the sanitized request and response, explain the expected rule, and record the server's observed decision.
-
-Read [what a useful penetration-test report contains](/blog/what-a-penetration-test-report-should-contain) before reviewing proposals. A list of generic vulnerability names is not enough to prove which product rules were tested.
-
-#### Frequently asked questions
-
-#### Does a web application penetration test include APIs?
-
-It normally tests API calls used by the included browser workflows. It does not automatically cover every endpoint, API version, client, or service credential.
-
-#### Is API testing only automated?
-
-No. Tools help enumerate and replay requests, but authorization, workflow, and business-impact testing require human reasoning and product context.
-
-#### Do we need to provide an OpenAPI specification?
-
-It helps establish inventory, but it may be incomplete. Provide the specification, collections, GraphQL schema, authentication details, role matrix, and known undocumented or deprecated routes.
-
-#### Should mobile APIs be included in a web test?
-
-Only when the written scope includes them. A mobile client may use different endpoints, tokens, device assumptions, or versions and often deserves explicit coverage.
-
-## Field module 5: What a Useful Penetration-Test Report Should Contain
-
-*Primary keyword: penetration test report example. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A useful penetration-test report states exactly what was tested, shows reproducible evidence for each finding, explains material impact, recommends a specific fix, records limitations, and adds retest evidence after remediation.** A list of scanner alerts and generic CVSS text is not enough.
-
-The report serves several readers. Executives need the decision and risk. Engineers need enough evidence to reproduce and fix the issue. Auditors and customers need scope, dates, independence, and remediation status. A good report separates those needs without hiding technical detail.
-
-#### 1. Document identity and version
-
-The cover and document metadata should identify:
-
-- client and assessed system;
-
-- assessment type;
-
-- testing dates and report date;
-
-- report version and change history;
-
-- assessor and reviewer;
-
-- distribution and confidentiality marking;
-
-- engagement or authorization reference.
-
-Versioning matters after retesting. Readers must be able to distinguish the original findings from later verification and understand which application version each result describes.
-
-#### 2. Scope, authorization, and exclusions
-
-List the exact applications, hosts, APIs, versions, environments, roles, tenants, workflows, and testing window. State the access model and whether the work was black-box, gray-box, or source-assisted. Record major exclusions such as cloud infrastructure, mobile clients, denial-of-service, social engineering, physical access, or third-party systems.
-
-[NIST SP 800-115](https://csrc.nist.gov/pubs/sp/800/115/final) treats planning as part of security testing. The report should connect the completed work to the approved plan. Read [how to scope a web application penetration test](/blog/how-to-scope-web-application-penetration-test) for the input checklist.
-
-> **Coverage must be falsifiable.** A reader should be able to identify what remains untested. “The application was tested against industry standards” is too vague.
-
-#### 3. Methodology and completed coverage
-
-Name the testing references and explain how they were adapted. The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) is a useful technique reference. The [OWASP API Security Top 10](https://api-security.owasp.org/) highlights recurring API risks. Neither proves that a tester completed every listed check.
-
-Summarize completed coverage by area: authentication, authorization, sessions, input handling, files, business logic, APIs, integrations, client-side behavior, configuration, and other agreed objectives. Note stopped, blocked, or incomplete checks and why they could not be completed.
-
-#### 4. Executive summary
-
-The executive summary should answer:
-
-- What system and decision did the assessment address?
-
-- What material risks were confirmed?
-
-- Which controls worked as expected?
-
-- What should management do next?
-
-- What was outside scope or remained untested?
-
-A severity count alone is not an executive summary. One cross-tenant authorization failure may matter more than many low-risk configuration observations.
-
-#### 5. Finding title and status
-
-Use a title that names the broken outcome: “A customer could download another tenant's invoice,” not “IDOR” or “OWASP A01.” Technical classifications can appear below the title.
-
-Keep status fields separate:
-
-- **Review state:** draft, needs review, confirmed, rejected.
-
-- **Remediation state:** open, in progress, ready for retest, risk accepted.
-
-- **Verification state:** not retested, fixed and verified, still present, partially fixed.
-
-A client saying “fixed” should not automatically change the verification result.
-
-#### 6. Affected workflow and expected rule
-
-Name the user, role, tenant, object, action, and workflow. Then state the rule the system should enforce. For example: “A signed-in customer may retrieve only orders owned by the same tenant.” This gives the engineer and retester a stable target even when implementation changes.
-
-#### 7. Reproducible evidence
-
-Evidence should contain enough detail to establish the result without exposing unnecessary sensitive data:
-
-- target and application version;
-
-- test identity and preconditions;
-
-- sanitized request, action, or command;
-
-- observed response or downstream state;
-
-- expected response or rule;
-
-- timestamps and relevant correlation identifiers;
-
-- screenshots or traces where they add information;
-
-- artifact digest and source-tool version where appropriate.
-
-Redact tokens, secrets, customer records, and unrelated personal data. A screenshot is not automatically better evidence than a concise request and response. Use the artifact that proves the control failure.
-
-#### 8. Reproduction steps
-
-Write steps that a developer can follow in a safe environment. Include the starting role and data state. Avoid vague phrases such as “intercept the request and change the ID” when multiple IDs, encodings, or endpoints exist.
-
-For a multi-step business-logic issue, show the sequence and state changes. For an AI finding, include the relevant model, system configuration, retrieved content, tool call, and material action. See [why model output alone may not establish impact](/blog/ai-jailbreak-vs-security-finding).
-
-#### 9. Business and technical impact
-
-Explain what a successful attacker can read, change, create, delete, execute, approve, or deny. State who is affected and the required access. Separate demonstrated impact from plausible escalation. Do not write “full account takeover” when the test proved only profile-field modification.
-
-#### 10. Severity and rationale
-
-A numeric score can help consistency, but the report must explain product context. The [FIRST CVSS v4.0 specification](https://www.first.org/cvss/v4.0/specification-document) defines a common scoring model. Use it accurately and add the business context it does not know: data sensitivity, tenant count, transaction value, detectability, and operational safeguards.
-
-Record uncertainty and assumptions. Severity should be reviewable, not an unexplained color.
-
-#### 11. Recommended fix
-
-Recommend the control, not only a symptom patch. For an object-authorization failure, the recommendation may be to enforce tenant ownership in a shared server-side authorization layer, add negative tests across roles, and remove client-supplied authority. “Sanitize input” would not address that cause.
-
-Where helpful, separate immediate containment from durable correction. Do not include a code patch the assessor has not tested or pretend there is one universal fix for every architecture.
-
-#### 12. Owner and remediation record
-
-Assign a team or named role, target date, tracking reference, and management decision. If risk is accepted, record the approver, reason, duration, and review date. Keep client operational notes separate from the assessor's original evidence.
-
-#### 13. Retest result
-
-A retest should state:
-
-- the corrected application and version;
-
-- date and tester;
-
-- the repeated scenario;
-
-- new observed result;
-
-- whether the original impact remains;
-
-- new limitations or partial fixes;
-
-- updated verification status.
-
-Our [illustrative report](/sample-report) shows a cross-customer order lookup changing from HTTP 200 to HTTP 403 after an ownership check was added. The example is labeled demo data; it demonstrates report structure rather than client history.
-
-#### 14. Limitations and remaining risk
-
-No test proves that a system is secure. State time limits, inaccessible features, unavailable roles, blocked integrations, rate constraints, environment differences, and untested systems. “No confirmed findings” means no finding was confirmed in the completed checks. It does not mean the business is safe from every attack.
-
-#### Report evaluation checklist
-
-- Exact targets, dates, versions, roles, and exclusions
-
-- Named methodology with completed coverage
-
-- Executive decision and remaining limits
-
-- Product-specific finding titles
-
-- Expected rule and affected workflow
-
-- Sanitized, reproducible evidence
-
-- Demonstrated impact and severity rationale
-
-- Specific recommended control
-
-- Owner and remediation state
-
-- Retest evidence and report version history
-
-#### Frequently asked questions
-
-#### Should a penetration-test report include every tool output?
-
-No. Include evidence that supports confirmed findings and coverage. Raw tool output can contain false positives, secrets, or irrelevant data and may belong in a controlled appendix.
-
-#### Is a clean report better than one with findings?
-
-Not necessarily. Evaluate scope, depth, evidence, and limitations. A report with zero findings from shallow coverage is not stronger than a report that found and verified meaningful fixes.
-
-#### Can we share the report with customers?
-
-Follow the agreement, confidentiality marking, and access controls. Many organizations share a redacted version, executive summary, or controlled trust-center copy.
-
-#### What is the difference between remediation and retesting?
-
-Remediation is the client's change. Retesting is the assessor's independent check of the corrected system using the relevant recorded scenario.
-
-## Field module 6: AI Security Assessment vs Web Application Pentest
-
-*Primary keyword: AI security assessment vs penetration test. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A web application penetration test checks the code, APIs, identity, sessions, authorization, and business logic around an AI feature. An AI security assessment also tests model behavior, retrieved content, prompt injection, tenant separation, tool permissions, approval gates, memory, and consequential actions.** AI products usually need both surfaces assessed.
-
-The model is one component inside a larger system. A secure API can still return the wrong customer's document if retrieval filters fail. A resistant model can still call an over-permissioned refund tool. A successful jailbreak can be harmless if the system has no protected rule or connected action. Scope the complete workflow.
-
-#### What the traditional web application test still needs to cover
-
-Adding an LLM does not remove ordinary application risk. The assessment should still examine:
-
-- authentication, session handling, and account recovery;
-
-- server-side authorization and tenant boundaries;
-
-- API object and function permissions;
-
-- file uploads, parsing, rendering, and storage;
-
-- input validation and output encoding;
-
-- secrets, tokens, logs, and error handling;
-
-- business workflows and administrative actions;
-
-- cloud and third-party integration boundaries.
-
-The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) remains relevant. Its application and API techniques address the software that collects prompts, retrieves data, calls the model, and executes the result.
-
-#### What the AI assessment adds
-
-#### Direct and indirect prompt injection
-
-Direct injection comes from the user. Indirect injection comes from content the system retrieves or processes: documents, tickets, webpages, emails, tool output, or database records. The [OWASP GenAI Security Project's prompt-injection guidance](https://genai.owasp.org/glossary/prompt-injection/) explains why instructions and data enter the same model context.
-
-#### Retrieval and tenant separation
-
-A RAG system may enforce access at ingestion, indexing, retrieval, or response time. The test should identify which layer makes the final authorization decision and whether another tenant's content can enter the context. Vector similarity is not an access-control rule.
-
-#### System instructions and sensitive context
-
-System-prompt exposure is material when the prompt contains secrets, private rules, or information that enables a more serious attack. Do not store credentials in prompts. Treat model context as observable to an adversarial user unless stronger controls establish otherwise.
-
-#### Tool permissions and approval gates
-
-List every tool the AI can call, the identity used, available operations, accepted arguments, affected systems, and actions requiring human approval. Then test whether malicious user or retrieved instructions can redirect the tool. See [how to test AI agent tool permissions](/blog/test-ai-agent-tool-permissions).
-
-#### Memory and cross-session behavior
-
-Check whether personal, tenant, or task context survives longer than intended and whether one user's data influences another user's session. Memory stores need the same explicit ownership and retention rules as other application data.
-
-#### Model and provider boundaries
-
-Record the model, version, system configuration, moderation, provider settings, data-use terms, and regional processing that affect the test. The [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) treats AI risk across design, development, deployment, use, and evaluation rather than as one prompt-level check.
-
-#### Use a broken rule, not a strange response, to define findings
-
-An AI test produces many surprising outputs. A confirmed security finding needs more:
-
-- **Expected rule:** what the system should prevent.
-
-- **Tested configuration:** application, model, prompts, tools, permissions, and data state.
-
-- **Observed outcome:** the sanitized trace and downstream action.
-
-- **Material impact:** data exposure, unauthorized action, privilege change, fraud, code execution, or another real consequence.
-
-- **Reproducibility and limits:** how often it worked and where the result does not generalize.
-
-Read [why a jailbreak is not automatically a security finding](/blog/ai-jailbreak-vs-security-finding) for the complete decision model.
-
-#### AI feature add-on or standalone assessment?
-
-#### Use an AI feature add-on when
-
-- AI provides chat, summary, classification, or recommendations inside an existing product;
-
-- the model has limited or no tool access;
-
-- the application remains the primary security boundary;
-
-- a few AI-specific scenarios can be added to a normal app test.
-
-#### Use a standalone AI assessment when
-
-- AI is central to the product's function;
-
-- RAG, vector stores, memory, or data ingestion carry sensitive information;
-
-- the system plans or calls tools;
-
-- multiple agents pass work or authority between them;
-
-- model output changes records, sends messages, moves money, or controls infrastructure;
-
-- the assessment needs versioned adversarial scenarios and AI-specific evidence.
-
-The [OWASP Top 10 for LLM Applications](https://owasp.org/projects/top-10-for-large-language-model-applications) covers prompt injection, sensitive information disclosure, improper output handling, excessive agency, system-prompt leakage, vector and embedding weaknesses, and other AI application risks. Use it as a risk reference, not as proof that ten generic prompts tested your product.
-
-#### How to scope the combined assessment
-
-Map one or two critical workflows from user intent to final action. Identify every component crossed: interface, API, orchestration layer, model, retrieval source, memory store, tool, approval service, and downstream system. For each boundary, write the identity and expected rule.
-
-| Boundary | Question | Evidence |
-| --- | --- | --- |
-| User to application | Who is signed in and which tenant? | Session and account trace |
-| Application to retrieval | Which records may enter context? | Query filters and returned record IDs |
-| Context to model | Can untrusted content become instruction? | Sanitized prompt and retrieved content |
-| Model to tool | Which operations and arguments are allowed? | Tool call and permission decision |
-| Tool to action | Was approval required and recorded? | Approval and action log |
-
-Sthuthi's published [AI Security Assessment](/services/ai-security-assessment) covers one application, two critical workflows, and up to five connected tools. Larger multi-agent, model-pipeline, or infrastructure work needs a separate scope.
-
-#### Frequently asked questions
-
-#### Can a normal penetration test find prompt injection?
-
-It may find obvious cases, but an AI assessment adds indirect content, retrieval, tool, memory, model, and action scenarios that a standard application scope may not include.
-
-#### Does an AI assessment replace a web application pentest?
-
-No. The AI workflow still depends on application, API, identity, cloud, and data controls. Combine the scopes or state their boundaries clearly.
-
-#### Is model safety the same as application security?
-
-No. Model safety may address harmful or disallowed content. Application security focuses on protected data, authority, integrity, availability, and actions in the deployed system. They can overlap but require different rules and evidence.
-
-#### Should we test the production model?
-
-Test a representative configuration with fake data where possible. If production is required, agree on data boundaries, tool restrictions, cost limits, monitoring, and stop conditions first.
-
-## Field module 7: Why an AI Jailbreak Is Not Automatically a Security Finding
-
-*Primary keyword: AI jailbreak security finding. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**An AI jailbreak is not automatically a security finding.** It becomes one when the tested system violates an explicit security rule, the result can be reproduced under a recorded configuration, and the outcome creates material impact such as private-data exposure or an unauthorized action.
-
-Models can produce surprising, inaccurate, rude, or policy-breaking text. Some outputs are safety or quality issues. Some are useful observations. A security report needs a traceable connection to confidentiality, integrity, availability, authority, or another agreed business rule.
-
-#### Jailbreak, prompt injection, and finding are different terms
-
-#### Jailbreak
-
-A jailbreak commonly means persuading a model to bypass behavioral or content restrictions. The result might violate a model policy without compromising application data or authority.
-
-#### Prompt injection
-
-Prompt injection uses malicious instructions to redirect a model or application. It may arrive directly from the user or indirectly through retrieved content. The [OWASP GenAI Security Project](https://genai.owasp.org/glossary/prompt-injection/) explains the structural problem: trusted and untrusted instructions can enter the same context.
-
-#### Security finding
-
-A finding records a tested rule, target, configuration, action trace, observed outcome, impact, severity rationale, limits, and reviewer decision. The prompt is only one part of that evidence.
-
-#### The three-part finding test
-
-#### 1. A defined rule was broken
-
-Write the expected rule before testing. Examples:
-
-- A customer may retrieve only records owned by their tenant.
-
-- The agent must obtain approval before issuing a refund over $100.
-
-- Retrieved documents must not change the agent's tool policy.
-
-- The model must not receive production credentials.
-
-- A user may not cause the agent to send a message as another employee.
-
-“The model should never say anything unexpected” is not a testable security rule. Tie the rule to data, identity, authority, system state, or a defined safety requirement.
-
-#### 2. The outcome is reproducible and attributable
-
-Record the application build, model and version, system instructions, retrieval state, tools, permissions, user role, tenant, test data, request trace, and observed action. Repeat the scenario enough to understand whether the result is stable, intermittent, or dependent on hidden state.
-
-AI behavior is probabilistic. Reproducibility does not always mean identical wording. It means the same material rule can be violated under a documented scenario with a meaningful success rate.
-
-#### 3. The impact is material
-
-Material impact can include:
-
-- another customer's private record enters the response;
-
-- a tool creates, changes, deletes, sends, or purchases without authorization;
-
-- the attacker gains a credential, token, or privileged operation;
-
-- untrusted model output reaches a code, query, template, or browser execution sink;
-
-- the attack causes meaningful financial or resource consumption;
-
-- a required safety control fails in the deployed use case.
-
-#### Examples: observation or confirmed finding?
-
-| Observed behavior | Likely treatment | Reason |
-| --- | --- | --- |
-| Model reveals a generic system instruction | Observation or low-risk finding | Impact depends on whether the instruction contains protected information or enables another attack |
-| Model produces disallowed fictional content | Safety finding if the product has that requirement | May not be an application-security issue without a protected system rule |
-| Retrieved document instructs agent to send a private file externally | Security finding | Indirect injection caused an unauthorized tool action |
-| User obtains another tenant's order through the agent | Security finding | Customer-data boundary was broken |
-| Model claims a refund occurred, but no tool was called | Quality or integrity issue | Material impact depends on downstream reliance and workflow |
-
-#### System-prompt leakage needs context
-
-The [OWASP Top 10 for LLM Applications](https://owasp.org/projects/top-10-for-large-language-model-applications) includes system-prompt leakage as a risk area. The security impact depends on content. A prompt containing API keys is a secret-management failure. A prompt exposing internal tool names may aid follow-on attacks. A prompt containing ordinary behavioral instructions may have limited impact.
-
-Do not treat secrecy of the system prompt as the main control. Design the application so prompt knowledge does not grant access to data or tools.
-
-#### Severity should follow impact and control failure
-
-Traditional severity systems can inform the discussion, but AI application findings need product context. Consider the required user access, reliability, affected tenants, data sensitivity, tool authority, human approval, detectability, reversibility, and downstream consequences.
-
-Document uncertainty. If the tester cannot establish that the action occurred, label the result as needing review rather than presenting a model statement as proof. Sthuthi's [illustrative sample report](/sample-report) separates observation, expected result, impact, remediation, and retest.
-
-#### How to write the finding
-
-Use a title that names the broken outcome: “The support agent could retrieve another customer's order,” not “Prompt injection.” Then record:
-
-- the expected ownership or approval rule;
-
-- the tested user, tenant, application, model, and tool versions;
-
-- the sanitized request, retrieved context, tool call, and server response;
-
-- the material business impact;
-
-- the recommended server-side or architectural control;
-
-- limits and success rate;
-
-- review state and reviewer;
-
-- the corrected-path retest evidence.
-
-The [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) provides a broader structure for governing, mapping, measuring, and managing AI risk. Use individual adversarial tests inside that lifecycle rather than treating a jailbreak count as the whole program.
-
-#### Frequently asked questions
-
-#### Is every prompt injection a vulnerability?
-
-No. Prompt injection is an attack technique. The vulnerability and severity depend on which trusted rule or boundary the deployed application fails to enforce.
-
-#### Is system-prompt leakage always a security issue?
-
-No. Assess what the prompt contains and what the disclosure enables. Credentials and protected data should never be placed there.
-
-#### Can guardrails fix prompt injection?
-
-Guardrails can reduce some behaviors. They should not be the only control protecting data or consequential tools. Enforce authorization and approvals outside the model.
-
-#### How should a jailbreak be retested?
-
-Repeat the recorded scenario against the corrected application and configuration. Verify the server-side rule or tool boundary, not merely a different wording from the model.
-
-## Field module 8: How to Test an AI Agent’s Tool Permissions and Approval Gates
-
-*Primary keyword: AI agent security testing. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**Test an AI agent's tools by tracing every consequential action through five controls: identity, permission, argument validation, approval, and evidence.** Then attempt to redirect those actions through user prompts, retrieved content, tool output, memory, and cross-tenant references.
-
-The model should propose an action. A deterministic service should decide whether the action is permitted. If the model's text is the final authorization layer, prompt injection can become application authority.
-
-#### 1. Inventory every tool and operation
-
-Create a tool register before testing. Include the tool name, downstream system, allowed operations, identity used, data reachable, argument schema, approval requirement, rate or cost limit, logging, and rollback method.
-
-| Tool | Operations | Identity | Approval | Rollback |
-| --- | --- | --- | --- | --- |
-| Order lookup | Read order by ID | Delegated customer | No | Not applicable |
-| Refund | Create refund | Scoped service role | Required above threshold | Finance reversal |
-| Email | Draft and send | Named mailbox | Required for external send | Recall where supported |
-| CRM | Read and update account | Support integration | Required for ownership change | Version history |
-
-Include MCP components, plugins, browser automation, code execution, databases, ticketing systems, file stores, messaging, and administrative APIs. A tool that appears read-only may still expose private data or trigger expensive work.
-
-#### 2. Identify whose authority the agent uses
-
-An agent can operate as:
-
-- the signed-in user through delegated authorization;
-
-- a shared service account;
-
-- a privileged application identity;
-
-- a workflow-specific temporary identity;
-
-- a human operator who approves and executes the action.
-
-Test whether the tool receives the user and tenant context needed to enforce ownership. A shared privileged token can erase the boundary established by the application. The server must not trust a tenant ID or user ID merely because the model supplied it.
-
-#### 3. Apply least privilege to each operation
-
-Do not grant an agent a general CRM administrator role when it needs to add a note. Separate read, draft, create, update, send, delete, and administrative operations. Limit resources, fields, tenants, amounts, destinations, and time windows.
-
-The [OWASP Top 10 for LLM Applications](https://owasp.org/projects/top-10-for-large-language-model-applications) describes excessive agency as a risk involving excessive functionality, permissions, or autonomy. The remedy is not only a stronger prompt. Reduce authority in the tools and identities outside the model.
-
-#### 4. Validate arguments outside the model
-
-Treat tool arguments as untrusted input. Validate types, formats, ownership, amounts, destinations, state transitions, and allowed values in ordinary application code. Resolve sensitive object references on the server when possible rather than accepting raw IDs from model output.
-
-Test:
-
-- another tenant's object ID;
-
-- negative, excessive, or boundary amounts;
-
-- unexpected recipients or destinations;
-
-- hidden additional arguments;
-
-- duplicate and replayed actions;
-
-- out-of-order state changes;
-
-- unescaped model output reaching queries, templates, or commands.
-
-#### 5. Put approval gates around consequences
-
-Approval should show the human what will happen: target, action, important arguments, source, and consequence. “Allow agent?” is not meaningful approval. Bind the approval to the exact action so the agent cannot change the arguments afterward.
-
-Test whether the agent can:
-
-- split one high-value action into smaller actions below a threshold;
-
-- substitute the destination after approval;
-
-- reuse an old approval;
-
-- misrepresent the action in the approval preview;
-
-- continue after denial or timeout;
-
-- trigger the action through a different tool path.
-
-#### 6. Test direct and indirect instructions
-
-Direct tests place the malicious instruction in the user conversation. Indirect tests place it in content the agent is expected to read: an email, support ticket, uploaded document, webpage, tool response, calendar event, code comment, or retrieved record.
-
-The [OWASP prompt-injection definition](https://genai.owasp.org/glossary/prompt-injection/) explains the difference. Test both because an agent may trust retrieved content more than an obviously hostile user message.
-
-#### 7. Verify logs are usable
-
-For each attempted action, record:
-
-- organization, user, tenant, and session;
-
-- application, agent, model, prompt, and tool versions;
-
-- the proposed operation and sanitized arguments;
-
-- retrieved content or tool output that influenced the decision;
-
-- permission and approval decisions;
-
-- downstream request and observed result;
-
-- cost, timing, and error state;
-
-- reviewer and evidence digest.
-
-Do not store secrets or unnecessary private data merely to improve debugging. Use identifiers, redaction, access control, retention, and controlled evidence views.
-
-#### 8. Plan cancellation and rollback
-
-Long-running agents need a kill switch that stops new operations and invalidates queued authority. Consequential tools need idempotency and a recovery path. Test what happens when the agent fails between steps, loses network access, receives a duplicate event, or is cancelled after partial execution.
-
-The [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) encourages risk management across the AI lifecycle. Cancellation, incident handling, monitoring, and recovery belong in the deployed-system assessment, not only the model evaluation.
-
-#### Core adversarial scenarios
-
-- **Cross-tenant lookup:** ask the agent to retrieve another customer's object by reference.
-
-- **Indirect tool redirection:** place instructions inside a document the agent summarizes.
-
-- **Approval substitution:** approve one target and attempt execution against another.
-
-- **Privilege confusion:** compare the signed-in user's authority with the tool's service identity.
-
-- **Replay:** repeat the same approved action and observe idempotency.
-
-- **Partial failure:** interrupt a multi-step task and inspect state and recovery.
-
-- **Cost abuse:** request repeated or recursive work within safe test limits.
-
-- **Log evasion:** attempt an action through an alternate path and verify the record.
-
-Our [AI Security Assessment](/services/ai-security-assessment) scopes two critical workflows and up to five connected tools. The assessment records the expected rule and downstream result; model output alone does not establish a finding.
-
-#### Frequently asked questions
-
-#### Should an AI agent use the user's credentials?
-
-Use delegated, scoped authority where practical. Avoid sharing raw user credentials with the model. The downstream service should receive enough trusted identity context to enforce permissions.
-
-#### Are confirmation dialogs enough?
-
-No. The preview must accurately describe the exact action, and the server must bind approval to immutable arguments and enforce authorization again at execution.
-
-#### Can prompt instructions enforce permissions?
-
-No. Prompts can guide behavior, but deterministic code and downstream services must enforce access and approval rules.
-
-#### What should a retest prove?
-
-Repeat the recorded attack against the corrected tool boundary. Verify the system denies or safely contains the action and that the evidence record captures the decision.
-
-# Research claim ledger
-
-Last checked: 4 November 2026
-
-This ledger records source observations used across the Sthuthi Securities guide library. Recommendations in the guides are labeled as recommendations, not attributed requirements.
-
-| ID | Source and observed fact | Version/date | URL |
+| Priority | Typical trigger | Target | Exception approved by |
 |---|---|---|---|
-| S01 | NIST CSF 2.0 organizes outcomes into Govern, Identify, Protect, Detect, Respond, and Recover and is intended for organizations of all sizes and sectors. | 26 February 2024 | https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20 |
-| S02 | NIST CSF 2.0 uses non-prescriptive outcomes and includes legal, regulatory, contractual, governance, supplier, and risk-management outcomes. | Current FAQ checked 4 November 2026 | https://www.nist.gov/cyberframework/faqs |
-| S03 | CIS Controls v8.1 contains 18 Controls and 153 Safeguards; CIS says every enterprise should start with Implementation Group 1. | v8.1, 2024 | https://www.cisecurity.org/controls/implementation-groups |
-| S04 | FTC guidance recommends knowing and minimizing retained personal data, restricting access, protecting data through its lifecycle, monitoring, managing providers, patching, and maintaining a vulnerability-reporting process. | Current page checked 4 November 2026 | https://www.ftc.gov/business-guidance/resources/start-security-guide-business |
-| S05 | NIST SSDF 1.1 groups secure-development work into preparing the organization, protecting software, producing well-secured software, and responding to vulnerabilities. | February 2022 | https://csrc.nist.gov/pubs/sp/800/218/final |
-| S06 | OWASP SAMM provides a risk-driven, technology-agnostic way to assess and improve the secure software lifecycle. | Current project checked 4 November 2026 | https://owasp.org/projects/samm |
-| S07 | NIST SP 800-115 covers planning, conducting, analyzing, and reporting technical security tests and emphasizes rules of engagement. | September 2008 | https://csrc.nist.gov/pubs/sp/800/115/final |
-| S08 | OWASP WSTG is a technique reference, not a rigid checklist; tests should be adapted to architecture, risk, and organizational needs. | v4.2 stable; v5 under development | https://owasp.org/projects/web-security-testing-guide |
-| S09 | OWASP API Security Top 10 2023 identifies object-level authorization, authentication, object-property authorization, resource consumption, function authorization, sensitive business flows, SSRF, configuration, inventory, and unsafe API consumption risks. | 2023 | https://owasp.org/projects/api-security-project |
-| S10 | AWS permits testing of listed customer-controlled services without prior approval, prohibits testing AWS infrastructure, and prohibits DoS-style activity; some simulations require separate approval. | Current page checked 4 November 2026 | https://aws.amazon.com/security/penetration-testing/ |
-| S11 | Microsoft permits testing of owned or explicitly authorized Azure resources without pre-approval but requires compliance with its cloud testing rules and prohibits cross-tenant testing, unauthorized credentials, DoS, and post-exploit activity against Microsoft services. | Current page checked 4 November 2026 | https://learn.microsoft.com/en-us/azure/security/fundamentals/pen-testing |
-| S12 | CSA CCM/CAIQ v4.1 was released 27 January 2026; the artifact page describes 207 controls in 17 domains and a yes/no CAIQ assessment questionnaire. | v4.1, 27 January 2026 | https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4-1 |
-| S13 | Shared Assessments describes SIG as a third-party risk questionnaire product mapped to standards and sector guidance; the questionnaire is licensed, so the guides do not reproduce it. | Current page checked 4 November 2026 | https://sharedassessments.org/sig/ |
-| S14 | AICPA describes SOC as CPA assurance services for system-level or entity-level controls and publishes the Trust Services Criteria, description criteria, and illustrative material. | Current page checked 4 November 2026 | https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services/ |
-| S15 | AICPA's SOC 2 description criteria support descriptions of systems examined against security, availability, processing integrity, confidentiality, and privacy criteria. | Revised guidance published 9 July 2025 | https://www.aicpa-cima.com/resources/download/get-description-criteria-for-your-organizations-soc-2-r-report |
-| S16 | NIST AI RMF is voluntary and intended to help organizations manage AI risks across design, development, use, and evaluation. | AI RMF 1.0, 26 January 2023 | https://www.nist.gov/itl/ai-risk-management-framework |
-| S17 | NIST AI 600-1 describes generative-AI risks and suggested actions organized around Govern, Map, Measure, and Manage. | 26 July 2024 | https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf |
-| S18 | OWASP's Agentic Security Initiative studies security of autonomous agents and multi-step workflows. Its 2026 Top 10 includes goal hijack, tool misuse, identity abuse, supply-chain problems, unexpected code execution, memory poisoning, insecure inter-agent communication, cascading failures, human-agent trust exploitation, and rogue-agent behavior. | 2026 | https://genai.owasp.org/initiatives/agentic-security-initiative/ |
-| S19 | OWASP Agentic AI Threats and Mitigations is a threat-model-based reference for emerging agentic risks and mitigations. | 17 February 2025 | https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/ |
-| S20 | CISA Secure by Design guidance asks software manufacturers to treat customer security as a core business requirement and emphasizes ownership, transparency, and secure defaults. | Current guidance checked 4 November 2026 | https://www.cisa.gov/securebydesign |
-| S21 | Microsoft 365 App Certification evidence guidance expects the complete external attack surface in scope and requires critical/high-risk penetration-test findings to be remediated within its stated review window. This is a program-specific requirement, not a universal rule. | Current page checked 4 November 2026 | https://learn.microsoft.com/en-us/microsoft-365-app-certification/docs/seg2_app |
-| S22 | CIS Control 18 calls for an established penetration-testing program and periodic external and internal tests based on program requirements. | v8.1 | https://www.cisecurity.org/controls/cis-controls-list |
+| Urgent | Known exploited and reachable | Days, not weeks | Accountable executive |
+| High | Critical or high severity, reachable | Agreed number of days | Operating owner |
+| Normal | Other confirmed findings | Next planned cycle | Team lead |
+| Low | Informational, defense in depth | Backlog review | Team lead |
 
-# Sources and further reading
+> **Worksheet 07 · in the companion pack**
+>
+> **Vulnerability targets and backlog tracker.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-Sources were checked on 4 November 2026. Version facts are stated where material. Recommendations in this guide are Sthuthi guidance, not attributed requirements.
+### Close the loop
 
-- [NIST Cybersecurity Framework 2.0](https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20)
-- [NIST SP 800-115 Technical Guide to Information Security Testing and Assessment](https://csrc.nist.gov/pubs/sp/800/115/final)
-- [NIST SP 800-218 Secure Software Development Framework](https://csrc.nist.gov/pubs/sp/800/218/final)
-- [CIS Controls v8.1](https://www.cisecurity.org/controls/v8-1)
-- [FTC Start with Security](https://www.ftc.gov/business-guidance/resources/start-security-guide-business)
-- [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide)
-- [OWASP API Security Project](https://owasp.org/projects/api-security-project)
-- [OWASP Software Assurance Maturity Model](https://owasp.org/projects/samm)
-- [Cloud Security Alliance CCM and CAIQ v4.1](https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4-1)
-- [AICPA System and Organization Controls resources](https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services/)
-- [CISA Secure by Design](https://www.cisa.gov/securebydesign)
+A ticket marked done is not a fixed vulnerability. Scanner findings should disappear on the next scan. Externally reported or penetration-test findings should be retested. Keep the original finding, the fix, and the verification together, with dates.
 
-# Completion record
+**Before you move on**
 
-| Record | Entry |
+- [ ] Dependency, cloud configuration, and external scanning are running on a schedule.
+- [ ] A security contact and disclosure policy are published.
+- [ ] Priority considers exploitation and exposure, not just severity.
+- [ ] Targets are written down and measured from the first week.
+
+---
+
+**CHAPTER 06 · OPERATIONS**
+
+<a id="ch6"></a>
+
+## Days 46–60: add secure development and release evidence
+
+*Every path that can change production is a path an attacker can use. Put controls on each one.*
+
+By now the most powerful accounts are protected and the obvious vulnerabilities are being worked. The next exposure is the delivery pipeline: the code host, build system, and deployment tooling that can change production on your behalf.
+
+### Map the paths to production
+
+List every way a change can reach production: merges that trigger deployment, manual deploy commands, infrastructure-as-code pipelines, database migrations, feature flags, and direct console changes. Each one needs an owner and a control. Start with the paths that run most often and the ones that bypass review.
+
+### Put a small set of controls on each path
+
+- **Review.** Changes to production code and infrastructure need approval from someone other than the author.
+- **Automated checks.** Tests, dependency scanning, secret scanning, and static analysis where it is useful, all required before merge.
+- **Separation.** Development and staging cannot reach production data. Production credentials are not available to build jobs that do not need them.
+- **Deploy from the pipeline.** Production changes come from the pipeline, not from laptops. Where manual access is necessary, it is time-limited and logged.
+- **Rollback.** Every deploy can be reversed, and the team has practised it.
+
+NIST’s Secure Software Development Framework (SP 800-218) groups practices like these into preparing the organization, protecting the software, producing well-secured software, and responding to vulnerabilities.<sup>[5]</sup> CISA’s Secure by Design work makes a related argument: that the security of a product should not depend on its customers configuring it correctly.<sup>[8]</sup>
+
+> **Worksheet 08 · in the companion pack**
+>
+> **Release control checklist.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
+
+### Add design review where it matters
+
+You do not need a threat model for every ticket. You do need a short design review for changes to authentication, authorization, tenant isolation, payment flows, data export, and anything that sends customer data to a new supplier. Thirty minutes with a template is enough. Record the decision.
+
+### Keep release evidence by default
+
+The best evidence is produced as a side effect of normal work: merged pull requests with approvals and passing checks, pipeline logs, and deployment records. Make sure these are retained long enough to answer a customer or auditor question about a release from last year.
+
+**Before you move on**
+
+- [ ] Every path to production is listed, with an owner.
+- [ ] Review and automated checks are enforced, not just recommended.
+- [ ] Production deploys come from the pipeline, and rollback has been practised.
+- [ ] Security-relevant changes get a short, recorded design review.
+
+---
+
+**CHAPTER 07 · OPERATIONS**
+
+<a id="ch7"></a>
+
+## Days 61–70: prepare incident response and recovery
+
+*An incident plan is tested by its first use. Make sure the first use is an exercise, not a real event.*
+
+### Write a short plan
+
+The plan should fit on a few pages and answer:
+
+- Who can declare an incident, and how?
+- How is severity decided, and what changes at each level?
+- Who leads the response, and who makes decisions about customers, regulators, and law enforcement?
+- How is evidence preserved before systems are changed?
+- How does the team communicate if email or chat is affected?
+- Who contacts the cyber insurer and legal counsel, and when?
+
+NIST revised its incident-response guidance in April 2025. SP 800-61 Revision 3 presents incident response as part of overall cybersecurity risk management, organized around the CSF 2.0 functions, rather than as a stand-alone lifecycle.<sup>[6]</sup> For a small team, the practical lesson is that preparation and recovery deserve as much attention as the response itself.
+
+> **Worksheet 09 · in the companion pack**
+>
+> **Incident response quick card.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
+
+### Run one tabletop exercise
+
+Pick a realistic scenario, such as a leaked cloud key used to copy a database, or a support account used to export a customer’s records. Walk through it for an hour with engineering, support, leadership, and whoever handles legal and communications. Write down what you would do at each step, what you did not know, and what you will change. One exercise teaches more than any template.
+
+### Test a restore
+
+Pick the system you most need to recover, usually the primary database, and restore it from backup into an isolated environment. Time the restore. Record what broke. Most teams discover at least one missing permission, undocumented step, or backup that does not contain what they assumed. A successful backup job is not a demonstrated recovery.
+
+> **Worksheet 10 · in the companion pack**
+>
+> **Restore test record.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
+
+> **Two numbers you will be asked for**
+>
+> Recovery time objective (how long until the service is back) and recovery point objective (how much data you could lose). Base both on the restore you just timed, not on what the architecture should achieve in theory.
+
+**Before you move on**
+
+- [ ] A short incident plan names decision-makers and an out-of-band communication route.
+- [ ] One tabletop exercise is complete and written up.
+- [ ] One restore has been timed, and its problems have been fixed or logged.
+
+---
+
+**PART IV · CHAPTERS 8–10**
+
+<a id="part7"></a>
+
+# Customers, review, and the next quarter
+
+*Manage the suppliers you depend on, describe the program honestly to customers, and turn ninety days of work into a funded plan.*
+
+---
+
+**CHAPTER 08 · CUSTOMERS, REVIEW, AND THE NEXT QUARTER**
+
+<a id="ch8"></a>
+
+## Days 71–80: manage vendors and customer obligations
+
+*Your suppliers hold some of your customers’ data. Your contracts hold some of your promises. Know both.*
+
+By day 70 you know where your data lives. Some of it lives with other companies: your cloud provider, email platform, support desk, analytics, error tracking, and perhaps an AI provider. And some of your obligations live in documents you may never have read closely: customer contracts, data processing agreements, and the security pages on your own website.
+
+### Build a supplier register
+
+For each supplier in the inventory that stores or processes customer data, or that the product cannot run without, record:
+
+- What it does for you, and what data it receives.
+- Where it processes that data.
+- Who in your company owns the relationship.
+- What assurance it offers, such as a SOC 2 report, ISO/IEC 27001 certificate, or a published security page, and when you last looked.
+- How you would leave: export path, notice period, and what happens to your data.
+
+Focus on the suppliers that matter. A payroll provider and a cloud host deserve a real review. A font library does not.
+
+> **Worksheet 11 · in the companion pack**
+>
+> **Supplier register.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
+
+### Read your own promises
+
+Collect every place where the company has made a security commitment: customer contracts and security addenda, data processing agreements, past questionnaire answers, the security page on your website, and sales decks. List each commitment: breach notification timelines, encryption claims, data location, deletion periods, penetration-test frequency, and certifications.
+
+Then compare that list with what is true at day 70. Where a promise exceeds reality, decide whether to change the control or the promise, and who will tell affected customers if a contract is involved. This is uncomfortable work. It is much less uncomfortable than having a customer discover the gap during an incident.
+
+> **The most common mismatch**
+>
+> A sales or marketing page claims “bank-level encryption” or “SOC 2 compliant” before any report exists. Replace marketing claims with plain, specific statements you can show evidence for.
+
+### Write a short security overview
+
+With the program now in place, write a two- to four-page overview for prospects: the product boundary, hosting and regions, how access is controlled, how data is protected, how vulnerabilities and releases are managed, how incidents are handled, and which suppliers process customer data. Date it and name an owner. It will answer half of most questionnaires on its own.
+
+**Before you move on**
+
+- [ ] Every supplier that holds customer data is in the register with an owner and a last-review date.
+- [ ] Every external security promise is listed and checked against reality.
+- [ ] Overstated claims have been corrected or scheduled for correction.
+- [ ] A dated security overview is ready to share.
+
+---
+
+**CHAPTER 09 · CUSTOMERS, REVIEW, AND THE NEXT QUARTER**
+
+<a id="ch9"></a>
+
+## Days 81–90: test the program and issue the next-quarter plan
+
+*The last ten days are for finding out what the first eighty actually achieved, and deciding what to do next.*
+
+### Check the outcomes against the record
+
+Go back to the outcomes in the charter from chapter 1. For each one, find the evidence that shows it was met, or record that it was not. Do not mark an outcome complete because the work was started. Mark it complete because the record shows the control is operating.
+
+### Look at a few honest numbers
+
+A handful of measurements tells you more than a dashboard full of them:
+
+| Measure | What it shows |
 |---|---|
-| Product or program |  |
-| Scope owner |  |
-| Executive approver |  |
-| Version reviewed |  |
-| Review completed |  |
-| Open exceptions |  |
-| Next review |  |
+| Accounts without MFA | Whether identity controls actually cover everyone |
+| Standing production access count | Whether privilege is shrinking or creeping back |
+| Median age of open high-priority vulnerabilities | Whether the remediation loop is keeping up |
+| Releases that bypassed review | Whether release controls are real |
+| Days since last restore test | Whether recovery is still proven |
+| Suppliers overdue for review | Whether the register is being maintained |
+| External promises not matched by controls | Whether customers are being told the truth |
+
+### Decide on the risks you are not fixing yet
+
+Some risks will remain open at day 90. That is normal. What matters is that each one has an owner, a written description, the controls already in place, and a decision by the accountable executive to accept it for a stated period, reduce it, or fund a fix. A risk nobody decided on is a risk the company is carrying without knowing it.
+
+> **Worksheet 12 · in the companion pack**
+>
+> **Risk decision record.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
+
+### Run a light internal check
+
+Ask someone who did not do the work, such as another engineer, an adviser, or an outside assessor, to pick five controls and ask for the evidence. The questions they ask are the questions a customer or auditor will ask next quarter.
+
+### Write the next-quarter plan
+
+The plan for days 91 to 180 should come from what you observed, not from a generic list. Typical candidates include a first independent penetration test, readiness work for a SOC 2 or ISO/IEC 27001 audit if customers require one, broader device management, logging and alerting improvements, and the remediation backlog. Estimate effort, name owners, and get the executive to fund it.
+
+> **Worksheet 13 · in the companion pack**
+>
+> **Ninety-day control board and next-quarter backlog.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
+
+**Before you move on**
+
+- [ ] Each charter outcome is marked met or not met, with evidence.
+- [ ] The seven measures above have current values.
+- [ ] Every open high risk has a decision from the accountable executive.
+- [ ] The next-quarter plan is owned, estimated, and funded.
+
+---
+
+**CHAPTER 10 · CUSTOMERS, REVIEW, AND THE NEXT QUARTER**
+
+<a id="ch10"></a>
+
+## Worked example: ParcelPilot’s first ninety days
+
+*A fictional 24-person logistics SaaS company with no security employee and its first enterprise prospect.*
+
+ParcelPilot sells shipment-tracking software to mid-sized retailers. It has 24 employees, 15 of them engineers, and runs on one cloud provider in one region. In September a large retailer asked for a security questionnaire and an annual penetration test as a condition of a three-year contract. The CTO, Arjun, became the accountable executive. A senior backend engineer, Mei, became the operating owner, with one day a week protected for the work.
+
+| Starting point | ParcelPilot in September |
+|---|---|
+| Company | 24 people, 15 engineers, shipment-tracking SaaS for mid-sized retailers |
+| Hosting | One cloud provider, one region |
+| Trigger | A three-year enterprise contract conditional on a questionnaire and an annual penetration test |
+| Owners | Arjun, CTO, accountable executive. Mei, senior backend engineer, operating owner with one protected day a week |
+
+### Days 1–10: what the inventory found
+
+Mei’s inventory turned up four cloud accounts instead of the expected two. One had been created for a 2024 hackathon and still held a copy of production data from that year. Two former contractors retained write access to the main repository. A database password appeared in a pinned chat message. The domain registrar account was in the name of a co-founder who had left the year before.
+
+She rotated the database password and moved it to the secret manager on day 3. She removed the contractors on day 4, deleted the hackathon account’s data copy after confirming nobody needed it on day 6, and started the registrar’s ownership transfer process on day 7. Each fix went into the evidence file with a date.
+
+### Days 11–30: identity and data
+
+The company already used a workforce identity provider, but MFA was optional and seven people had not enrolled. Mei made it mandatory with a one-week warning. The four people with cloud administrator rights received hardware security keys and separate administrator accounts. Standing production database access dropped from nine people to two, with on-request access for the rest.
+
+The data map surprised everyone. The error-tracking service was capturing full request bodies, including recipient addresses and phone numbers. Mei configured scrubbing for those fields, added the service to the supplier register as a processor of Restricted data, and set a 30-day retention on its events. Shipment history had no retention limit at all. Arjun agreed with the head of customer success on 24 months, with longer retention as a contract option.
+
+### Days 31–60: operations
+
+Dependency scanning on the main repositories produced 312 findings on the first run. Mei did not try to fix them all. She filtered to internet-facing services and cross-checked against CISA’s known-exploited catalog, which left 11 items. Nine were fixed within two weeks. Two required a framework upgrade and were scheduled with a recorded risk decision. The team adopted priority targets based on what it measured over that first month.
+
+The release review found that two engineers could still deploy from their laptops with long-lived credentials. Those credentials were revoked, and deploys moved to the pipeline. Branch protection was turned on for the three repositories that could reach production.
+
+### Days 61–70: incident and recovery
+
+The tabletop exercise used the scenario of a leaked API key being used to export customer shipment data. It revealed that nobody knew how to contact the cyber insurer, and that the support team had no way to reach engineering outside business hours. Both went into the incident quick card. The restore test of the primary database took 3 hours 40 minutes, longer than anyone had assumed, because the restore role lacked a permission. That was fixed, and a second test took 1 hour 50 minutes.
+
+### Days 71–90: customers and the next quarter
+
+The supplier register listed 14 suppliers, six of which handled customer data. The review of external promises found that the website claimed data was “encrypted end to end”, which was not accurate for the product’s architecture. The page was rewritten to describe encryption in transit and at rest precisely. The security overview was written in four pages and sent to the retailer with the questionnaire.
+
+At day 90, four of the five charter outcomes were met. The fifth, a timed restore for every customer-data store, was met for the primary database but not yet for the search index. Arjun accepted that gap for 45 days with a named owner. The next-quarter plan funded an independent penetration test of the web application and API before the retailer’s contract start date, device management for all laptops, and the framework upgrade.
+
+> **What made the difference**
+>
+> Not tools. ParcelPilot added only a secret manager and hardware keys. What made the difference was a protected day each week, an inventory that was finished before fixes started, and an executive who made decisions on the risks that could not be fixed yet.
+
+---
+
+**TOOLS · COMPANION DOWNLOAD**
+
+<a id="worksheets"></a>
+
+# The companion worksheet pack
+
+*The 13 worksheets referred to in this guide are a separate download, so you can print them, fill them in, and share them with your team without copying pages out of the book.*
+
+Download the pack from the same page as this guide in the Sthuthi Securities resource library at [sthuthi-tech.com](https://sthuthi-tech.com). It comes in three formats:
+
+- **Printable PDF.** Each worksheet starts on a new A4 page, with lined fields for writing by hand.
+- **Editable Word document.** The same worksheets as fill-in tables you can type into.
+- **Excel workbook.** One tab per worksheet, with registers set up as working trackers.
+
+| # | Worksheet | Use with |
+|---|---|---|
+| 01 | Security charter and ownership | Chapter 1 |
+| 02 | Asset and account inventory | Chapter 2 |
+| 03 | Emergency contact sheet | Chapter 2 |
+| 04 | Identity and administrator access review | Chapter 3 |
+| 05 | Data classification map | Chapter 4 |
+| 06 | Retention schedule | Chapter 4 |
+| 07 | Vulnerability targets and backlog tracker | Chapter 5 |
+| 08 | Release control checklist | Chapter 6 |
+| 09 | Incident response quick card | Chapter 7 |
+| 10 | Restore test record | Chapter 7 |
+| 11 | Supplier register | Chapter 8 |
+| 12 | Risk decision record | Chapter 9 |
+| 13 | Ninety-day control board and next-quarter backlog | Chapter 9 |
+
+---
+
+**APPENDIX A · REFERENCE**
+
+<a id="appendix-a"></a>
+
+# Starter metrics and review cadence
+
+*A small set of measures to carry into the second quarter.*
+
+| Measure | How to collect it | Review |
+|---|---|---|
+| Workforce accounts without MFA | Identity-provider report | Monthly |
+| People with standing production access | Cloud and database role export | Monthly |
+| Open high-priority vulnerabilities and median age | Vulnerability tracker | Fortnightly |
+| Known-exploited vulnerabilities on exposed assets | Tracker filtered against the CISA catalog | Weekly |
+| Releases without required review | Code-host audit log | Monthly |
+| Days since last restore test, per critical store | Restore test record | Quarterly |
+| Suppliers overdue for review | Supplier register | Quarterly |
+| Open risks past their decision date | Risk register | Monthly |
+| External promises not matched by controls | Promise list from chapter 8 | Quarterly |
+
+---
+
+**APPENDIX B · REFERENCE**
+
+<a id="appendix-b"></a>
+
+# Policy starter set
+
+*Short policies that describe what the company actually does. Keep each to one or two pages.*
+
+Write policies after the controls exist, so they describe real practice. Each should name an owner, an approval date, and a review date. A starter set for a company at day 90:
+
+| Policy | What it should cover |
+|---|---|
+| Information security policy | Scope, roles, the charter outcomes, and how exceptions are approved |
+| Access control | SSO, MFA, administrator accounts, production access, joiners, movers, leavers, and reviews |
+| Acceptable use | Device baseline, handling of company and customer data, and reporting concerns |
+| Data classification and retention | The levels, handling rules, and retention schedule from chapter 4 |
+| Vulnerability management | Sources, priority rules, targets, verification, and exceptions |
+| Secure development and change | Review, automated checks, environment separation, and release controls |
+| Incident response | The plan from chapter 7, roles, severity, and communication |
+| Business continuity and backup | Backup scope, restore testing, and recovery objectives |
+| Supplier management | The register, review expectations, and onboarding of new processors |
+
+---
+
+**SOURCES · REFERENCE**
+
+<a id="sources"></a>
+
+# Sources
+
+Sources were checked in November 2026. Recommendations in this guide are Sthuthi Securities guidance, not requirements of any framework listed here unless the text says so.
+
+1. **NIST.** The NIST Cybersecurity Framework (CSF) 2.0. [https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20](https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20)
+2. **Center for Internet Security.** CIS Critical Security Controls Version 8.1. [https://www.cisecurity.org/controls/v8-1](https://www.cisecurity.org/controls/v8-1)
+3. **NIST.** SP 800-63B-4, Digital Identity Guidelines: Authentication and Authenticator Management, 2025. [https://csrc.nist.gov/pubs/sp/800/63/b/4/final](https://csrc.nist.gov/pubs/sp/800/63/b/4/final)
+4. **CISA.** Known Exploited Vulnerabilities Catalog. [https://www.cisa.gov/known-exploited-vulnerabilities-catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
+5. **NIST.** SP 800-218, Secure Software Development Framework (SSDF) Version 1.1. [https://csrc.nist.gov/pubs/sp/800/218/final](https://csrc.nist.gov/pubs/sp/800/218/final)
+6. **NIST.** SP 800-61 Rev. 3, Incident Response Recommendations and Considerations for Cybersecurity Risk Management: A CSF 2.0 Community Profile, April 2025. [https://csrc.nist.gov/news/2025/nist-revises-sp-800-61](https://csrc.nist.gov/news/2025/nist-revises-sp-800-61)
+7. **U.S. Federal Trade Commission.** Start with Security: A Guide for Business. [https://www.ftc.gov/business-guidance/resources/start-security-guide-business](https://www.ftc.gov/business-guidance/resources/start-security-guide-business)
+8. **CISA.** Secure by Design. [https://www.cisa.gov/securebydesign](https://www.cisa.gov/securebydesign)
+9. **FIRST.** Common Vulnerability Scoring System version 4.0. [https://www.first.org/cvss/v4-0/](https://www.first.org/cvss/v4-0/)
+10. **IETF.** RFC 9116, A File Format to Aid in Security Vulnerability Disclosure (security.txt). [https://www.rfc-editor.org/rfc/rfc9116](https://www.rfc-editor.org/rfc/rfc9116)
+
+---
+
+**ABOUT · STHUTHI SECURITIES**
+
+<a id="about"></a>
+
+# About the author
+
+**Shalini Tomar** is the CEO of Sthuthi Technologies, LLC, and leads its cybersecurity practice, Sthuthi Securities. She works with SaaS teams that need to show enterprise buyers clear, scoped, and current evidence of how their products are secured.
 
 # About Sthuthi Securities
 
-Sthuthi Securities is the cybersecurity practice of Sthuthi Technologies, LLC. It provides scoped penetration testing, AI security assessment, security remediation support, retesting, and evidence-focused guidance for teams that need clear technical findings and controlled proof.
+Sthuthi Securities is the cybersecurity practice of Sthuthi Technologies, LLC. It tests web applications, APIs, cloud systems, and AI agents, then helps teams fix and retest what it finds. Engagements are scoped in writing and authorized by the system owner, and they end with findings and evidence a buyer’s reviewer can use.
 
-Internal links: [Sthuthi Securities services](/services) · [Security knowledge base](/blog) · [Sample penetration-test report](/sample-report) · [Resource library](/resources)
+Penetration testing
+
+Web application, API, and cloud testing with clear scope and safe rules of engagement.
+
+AI security assessment
+
+Tool permissions, tenant isolation, and prompt-injection testing for AI agents.
+
+Remediation support
+
+Working with your engineers to fix the cause, not just the symptom.
+
+Retesting and evidence
+
+Independent verification and summary letters you can share with buyers.
+
+More field guides at sthuthi-tech.com
+
+Passing enterprise security reviews · Scoping a web app and API penetration test · Preparing for a customer audit · Repeatable security testing · AI security for support agents · Security proof for enterprise deals
+
+---

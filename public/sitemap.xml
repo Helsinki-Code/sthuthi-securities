@@ -20,12 +20,24 @@
   <url><loc>/services/ongoing-security-testing</loc></url>
   <url><loc>/services/incident-response-planning</loc></url>
   <url><loc>/services/fractional-security-lead</loc></url>
-  <url><loc>/blog/does-soc-2-require-a-penetration-test</loc></url>
-  <url><loc>/blog/how-to-scope-web-application-penetration-test</loc></url>
-  <url><loc>/blog/api-pentest-vs-web-application-pentest</loc></url>
-  <url><loc>/blog/ai-security-assessment-vs-web-application-pentest</loc></url>
-  <url><loc>/blog/security-questionnaire-evidence-checklist</loc></url>
-  <url><loc>/blog/ai-jailbreak-vs-security-finding</loc></url>
-  <url><loc>/blog/test-ai-agent-tool-permissions</loc></url>
-  <url><loc>/blog/what-a-penetration-test-report-should-contain</loc></url>
+  <url><loc>/blog/agentic-ai-security</loc></url>
+  <url><loc>/blog/ai-penetration-testing-companies</loc></url>
+  <url><loc>/blog/ai-pentesting-tools</loc></url>
+  <url><loc>/blog/ai-red-teaming-companies</loc></url>
+  <url><loc>/blog/ai-red-teaming-vs-penetration-testing</loc></url>
+  <url><loc>/blog/ai-security-assessment-cost</loc></url>
+  <url><loc>/blog/best-ai-security-companies</loc></url>
+  <url><loc>/blog/chatbot-security-testing</loc></url>
+  <url><loc>/blog/hipaa-security-assessment</loc></url>
+  <url><loc>/blog/iso-27001-penetration-testing</loc></url>
+  <url><loc>/blog/llm-penetration-testing</loc></url>
+  <url><loc>/blog/llm-security-companies</loc></url>
+  <url><loc>/blog/mcp-server-security</loc></url>
+  <url><loc>/blog/owasp-llm-top-10</loc></url>
+  <url><loc>/blog/prompt-injection-testing</loc></url>
+  <url><loc>/blog/saas-cloud-security-assessment</loc></url>
+  <url><loc>/blog/security-questionnaire-help</loc></url>
+  <url><loc>/blog/soc2-penetration-test</loc></url>
+  <url><loc>/blog/web-application-penetration-testing</loc></url>
+  <url><loc>/blog/what-is-ai-penetration-testing</loc></url>
 </urlset>

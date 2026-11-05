@@ -1,42 +1,150 @@
+![How to Scope a Web Application and API Penetration Test cover](assets/cover.jpg)
+
 # How to Scope a Web Application and API Penetration Test
 
-![How to Scope a Web Application and API Penetration Test cover](assets/cover.png)
+*Define targets, roles, tenants, workflows, safety rules, evidence, and retesting before testing begins*
 
-## Define targets, roles, tenants, workflows, safety rules, evidence, and retesting before testing begins
-
-**A Sthuthi Securities field guide**  
-Published by Sthuthi Technologies, LLC  
-Edition 1.0 — 4 November 2026
+**Shalini Tomar**, CEO, Sthuthi Technologies, LLC  
+Sthuthi Securities · Field Guide 02 · Edition 2.0 · November 2026
 
 ---
 
-## Who this guide is for
+**How to Scope a Web Application and API Penetration Test**  
+Edition 2.0, November 2026.
 
-This guide is written for security leads, engineering managers, product owners, procurement teams, and assessors planning an authorized test. Its purpose is to turn an ambiguous request for a penetration test into a comparable, lawful, safe, and technically meaningful scope.
+© 2026 Sthuthi Technologies, LLC. All rights reserved. No part of this publication may be reproduced or distributed for commercial purposes without written permission from the publisher. You may copy the companion worksheets for internal use within your own organization.
 
-This is educational material, not legal advice, an audit opinion, a certification, or authorization to test a system. Penetration testing and security assessment require written permission from the system owner. Contract, privacy, employment, sector, and regional requirements should be reviewed with qualified advisers.
+This guide is educational material. It is not legal advice, an audit opinion, a certification, or authorization to test any system. Security testing requires written permission from the system owner. Contract, privacy, employment, sector, and regional obligations should be reviewed with qualified advisers.
+
+Example Support App and every other organization in the worked examples are fictional. Examples show a method; they are not a scope that fits every system.
+
+OWASP, AWS, Microsoft Azure, Google Cloud, PCI SSC, and NIST names are used for identification only and imply no endorsement.
+
+Framework versions, provider policies, and publication dates were checked against primary sources in November 2026. Requirements change; confirm the current edition before relying on a specific clause.
+
+---
+
+<a id="part3"></a>
+
+# Contents
+
+[**Before you start**](#intro)
+
+**PART I · DEFINE THE ASSESSMENT**
+
+[**01   Start with the decision the test must support**](#ch1)
+
+[**02   Name the systems and assets**](#ch2)
+
+[**03   Map users, roles, tenants, and critical workflows**](#ch3)
+
+**PART II · DESCRIBE THE TEST SURFACE**
+
+[**04   Choose coverage by application type**](#ch4)
+
+[**05   Select environments, data, and dependencies**](#ch5)
+
+[**06   Define reconnaissance and discovery boundaries**](#ch6)
+
+**PART III · MAKE THE ENGAGEMENT LAWFUL AND SAFE**
+
+[**07   Write authorization and rules of engagement**](#ch7)
+
+[**08   Prepare accounts, access, and monitoring**](#ch8)
+
+[**09   State exclusions, limits, and unknowns**](#ch9)
+
+**PART IV · AGREE ON THE OUTPUT**
+
+[**10   Set evidence and reporting requirements**](#ch10)
+
+[**11   Define remediation and retesting**](#ch11)
+
+[**12   Fix the schedule and responsibilities**](#ch12)
+
+**PART V · ISSUE THE SCOPE**
+
+[**13   Assemble the statement of work**](#ch13)
+
+[**14   Worked example: a multi-tenant SaaS platform**](#ch14)
+
+**TOOLS AND REFERENCE**
+
+[**W   Companion worksheet pack**](#worksheets)
+
+[**A   Master pre-test checklist**](#appendix-a)
+
+[**B   Vendor proposal comparison scorecard**](#appendix-b)
+
+[**C   Glossary**](#appendix-c)
+
+[**S   Sources**](#sources)
+
+---
+
+**INTRODUCTION**
+
+<a id="intro"></a>
+
+# Before you start
+
+*A useful scope tells a tester what may be tested, what behavior matters, how far testing may go, when it must stop, and what evidence is expected at the end.*
+
+A list of domain names is not a scope. Neither is “test our platform.” Both leave the tester guessing about which accounts matter, which records are sensitive, which actions are allowed, and what the report has to prove. The result is a report that is hard to compare, hard to rely on, and sometimes unsafe to have produced.
+
+This guide turns a request for a penetration test into a scope that is specific, lawful, safe, and comparable across providers. It is written for security leads, engineering managers, product owners, procurement teams, and assessors planning an authorized test of a web application and its APIs.
+
+## Who should be in the room
+
+Complete the scope with the people who own the product, operate the environment, understand customer data, and can grant written authority. Engineering knows the system. Product knows the critical workflows. Security knows the test controls. Legal or procurement may need to confirm third-party rights and contract terms. In a small company one person may hold several of these roles, but each decision still needs a named owner.
 
 ## How to use it
 
-Read the operating model first. Complete the worksheets against one real product or customer request. Then use the technical field modules to challenge the scope and evidence. Keep dated copies of decisions and artifacts. Replace examples with facts from your own system.
+Work through the chapters in order for a first assessment. For a repeat test, start from the previous scope and mark every changed system, role, workflow, integration, environment, or rule. Do not carry an old scope silently into a materially different release.
 
-The guide distinguishes an observation from an inference and a recommendation. A source can state what a framework contains. It cannot prove that a company operates a control. That proof must come from the company’s own records and testing.
+Each chapter points to a worksheet in the companion pack, which is a separate download. A completed set produces five outputs:
 
-# Core workbook
+1. A decision brief explaining why the assessment exists.
+2. A system boundary with named targets and owners.
+3. A coverage plan tied to roles, tenants, and critical workflows.
+4. Rules of engagement signed by an authorized owner.
+5. Report and retest acceptance criteria.
 
-![Penetration Test Scoping Workbook cover](assets/cover.png)
+![Figure 1. Scope starts with the decision the assessment must support, then works backward into the systems, behavior, test rules, and required output.](assets/fig-1.jpg)
 
-# Part I Define the assessment
+*Figure 1. Scope starts with the decision the assessment must support, then works backward into the systems, behavior, test rules, and required output.*
 
-# 1 Start with the decision the test must support
+> **Before any testing**
+>
+> This guide supports planning. It does not authorize testing, grant rights over a system, replace a signed contract, or prove compliance. Never put passwords, API keys, customer records, or production secrets in a scope document that will be shared by ordinary email.
+
+---
+
+**PART I · CHAPTERS 1–3**
+
+<a id="part4"></a>
+
+# Define the assessment
+
+*Start from the decision the test must support, then name the systems and the people, roles, and tenants that use them.*
+
+---
+
+**CHAPTER 01 · DEFINE THE ASSESSMENT**
+
+<a id="ch1"></a>
+
+## Start with the decision the test must support
+
+*A penetration test is only useful if someone knows what question it was meant to answer.*
 
 Penetration tests are bought for different reasons. A customer may require an annual report. An auditor may ask how a control was tested. A product team may be preparing a release. A board may want assurance after a major acquisition. Those are different decisions and may require different targets, timing, evidence, and report language.
 
 Write the decision before naming tools or test cases. “Test our platform” gives no way to judge whether the result is useful. “Determine whether a customer user can access or change another customer’s records before the enterprise launch” gives the assessor a system rule, a role boundary, an impact, and a deadline.
 
-NIST SP 800-115 treats planning as part of the assessment process, not administrative work that happens after the technical plan is set. It describes rules of engagement as detailed constraints established before testing and as the basis for authority to perform the defined activities.[1] OWASP likewise describes its testing material as a set of techniques that must be adapted to the application’s architecture, threat model, data, and business context.[2]
+NIST SP 800-115 treats planning as part of the assessment process, not administrative work that happens after the technical plan is set. It describes rules of engagement as detailed constraints established before testing and as the basis for authority to perform the defined activities.<sup>[1]</sup> OWASP likewise describes its testing material as a set of techniques that must be adapted to the application’s architecture, threat model, data, and business context.<sup>[2]</sup>
 
-## Write one primary decision
+### Write one primary decision
 
 Choose one sentence that the report must help someone answer. Examples:
 
@@ -48,13 +156,13 @@ Choose one sentence that the report must help someone answer. Examples:
 
 Secondary goals can be recorded, but they should not crowd out the primary decision. If the company needs an application test, cloud-configuration review, source-code review, phishing exercise, and recovery exercise, it probably needs several workstreams rather than one vague “full security test.”
 
-## Identify the relying audience
+### Identify the relying audience
 
 The same technical finding is presented differently to an engineer, a customer security team, an auditor, and a board. Record the people who will rely on the output and what they expect to receive. Do not promise a certification, compliance conclusion, or audit opinion when the assessor is only performing technical testing.
 
 An auditor may want scope dates, methodology, tester independence, findings, remediation, and retest evidence. Engineering needs exact reproduction steps, affected components, and a specific fix. Procurement may need a short executive summary and proof that the report can be shared under controlled terms. The statement of work should name these outputs before testing begins.
 
-## Define success without promising zero findings
+### Define success without promising zero findings
 
 “No vulnerabilities found” is not a sensible success condition. A test can be well executed and still identify serious weaknesses. Use conditions the engagement can control:
 
@@ -65,25 +173,11 @@ An auditor may want scope dates, methodology, tester independence, findings, rem
 - The report is delivered by the required date.
 - Retesting uses the recorded scenario against the corrected release.
 
-## Worksheet 1 Assessment decision brief
+> **Worksheet 01 · in the companion pack**
+>
+> **Assessment decision brief.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| Field | Response |
-|---|---|
-| Engagement name |  |
-| Primary business decision |  |
-| Trigger for the assessment |  |
-| Deadline and reason for it |  |
-| People or organizations relying on the output |  |
-| Required report or evidence format |  |
-| Primary security concern |  |
-| Critical data or action at risk |  |
-| What a successful engagement must complete |  |
-| What the engagement must not claim |  |
-| Executive owner |  |
-| Technical owner |  |
-| Scope version and date |  |
-
-## Decision quality check
+**Decision quality check**
 
 - [ ] The decision names a system or product boundary.
 - [ ] The decision names the behavior or security rule under review.
@@ -93,17 +187,25 @@ An auditor may want scope dates, methodology, tester independence, findings, rem
 - [ ] Success does not depend on finding zero vulnerabilities.
 - [ ] The test is not being described as an audit or certification unless it actually is one.
 
-# 2 Name the systems and assets
+---
+
+**CHAPTER 02 · DEFINE THE ASSESSMENT**
+
+<a id="ch2"></a>
+
+## Name the systems and assets
+
+*A tester cannot test what the scope does not name, and must not test what the client does not own.*
 
 The assessor cannot test an unnamed system. Start with the product as the user experiences it, then trace the components that accept requests, make decisions, store data, or call another service.
 
-For a modern SaaS application, one “website” may include a browser application, public API, internal API, identity provider, file store, background workers, administrative console, payment provider, customer-support tooling, cloud infrastructure, and an AI model or retrieval system. The scope must distinguish client-owned components from third-party services. OWASP’s architecture-mapping guidance specifically calls for understanding technologies and components and recognizing that connected third-party systems are usually outside a tester’s authority unless separately included.[3]
+For a modern SaaS application, one “website” may include a browser application, public API, internal API, identity provider, file store, background workers, administrative console, payment provider, customer-support tooling, cloud infrastructure, and an AI model or retrieval system. The scope must distinguish client-owned components from third-party services. OWASP’s architecture-mapping guidance specifically calls for understanding technologies and components and recognizing that connected third-party systems are usually outside a tester’s authority unless separately included.<sup>[3]</sup>
 
-![System boundary map showing users, client-controlled components, data, and a third party](assets/system-boundary-map.png)
+![Figure 2. A connection does not create authority. Third-party services need their own permission, or a test plan that stops at the client-controlled integration boundary.](assets/fig-2.jpg)
 
-*Figure 2. A connection does not create authority. Third-party services require their own permission or a test plan that stops at the client-controlled integration boundary.*
+*Figure 2. A connection does not create authority. Third-party services need their own permission, or a test plan that stops at the client-controlled integration boundary.*
 
-## Record targets at the level the tester can identify
+### Record targets at the level the tester can identify
 
 Use exact identifiers where possible:
 
@@ -117,9 +219,9 @@ Use exact identifiers where possible:
 - Webhook destinations and callback sources
 - AI model, orchestration service, retrieval index, and enabled tools
 
-Avoid “all company infrastructure” unless the company can produce a defensible inventory and truly intends to authorize that breadth. Avoid wildcard scope such as `*.example.com` without stating whether discovery is allowed, which host classes are included, and what happens when a third-party or abandoned service is found.
+Avoid “all company infrastructure” unless the company can produce a defensible inventory and truly intends to authorize that breadth. Avoid wildcard scope such as *.example.com without stating whether discovery is allowed, which host classes are included, and what happens when a third-party or abandoned service is found.
 
-## Separate scope states
+### Separate scope states
 
 Give each asset one state:
 
@@ -131,29 +233,17 @@ Give each asset one state:
 
 These states prevent a common error: treating every system discovered under a company domain as client-owned. DNS, content-delivery networks, hosted support pages, payment services, and acquisition-era systems can belong to another party.
 
-## Worksheet 2 Asset register
+> **Worksheet 02 · in the companion pack**
+>
+> **Asset register.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| ID | Asset or component | Exact identifier | Owner | Environment | Scope state | Allowed test class | Notes |
-|---|---|---|---|---|---|---|---|
-| A-01 |  |  |  |  |  |  |  |
-| A-02 |  |  |  |  |  |  |  |
-| A-03 |  |  |  |  |  |  |  |
-| A-04 |  |  |  |  |  |  |  |
-| A-05 |  |  |  |  |  |  |  |
-| A-06 |  |  |  |  |  |  |  |
-
-## Worksheet 3 Ownership and authority record
-
-| Asset ID | Legal or operational owner | Evidence of control | Third-party terms checked | Person granting authority | Status |
-|---|---|---|---|---|---|
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
+> **Worksheet 03 · in the companion pack**
+>
+> **Ownership and authority record.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
 Acceptable evidence depends on the system. It may include cloud-console ownership, a domain record, a contract, a service account controlled by the client, or a written permission chain from the actual owner. The assessor should not decide that a client owns a target merely because the target contains the client’s name.
 
-## Boundary review questions
+### Boundary review questions
 
 - Which components enforce identity and authorization?
 - Which component makes the final business decision?
@@ -166,19 +256,27 @@ Acceptable evidence depends on the system. It may include cloud-console ownershi
 - Which systems cannot tolerate active testing?
 - Which systems are being retired but remain reachable?
 
-# 3 Map users roles tenants and critical workflows
+---
+
+**CHAPTER 03 · DEFINE THE ASSESSMENT**
+
+<a id="ch3"></a>
+
+## Map users, roles, tenants, and critical workflows
+
+*Authorization flaws hide between accounts. The scope has to describe those accounts before testing starts.*
 
 Authorization testing needs more than one test account. The scope should describe who can act, which records they can reach, which operations they can perform, and how those rules change across tenants, teams, subscriptions, or lifecycle states.
 
-OWASP’s authorization testing guidance separates unauthenticated access, horizontal access between equivalent users, and vertical access into higher-privilege functions.[4] A useful role matrix turns those categories into the product’s actual rules.
+OWASP’s authorization testing guidance separates unauthenticated access, horizontal access between equivalent users, and vertical access into higher-privilege functions.<sup>[4]</sup> A useful role matrix turns those categories into the product’s actual rules.
 
-## Inventory identities before permissions
+### Inventory identities before permissions
 
 List human users, service identities, API clients, background workers, integration tokens, and emergency accounts. Record how each identity authenticates and where its permissions are enforced. A user may sign in through an identity provider but receive product permissions from a separate application database. An API key may belong to an organization rather than a person. A background worker may carry authority far beyond the user who triggered it.
 
 Include lifecycle states. Newly invited, suspended, deleted, password-reset, trial, past-due, and former-employee accounts can behave differently from normal active users. A test that uses only the happy-path customer account misses these transitions.
 
-## Map tenant boundaries explicitly
+### Map tenant boundaries explicitly
 
 For a multi-tenant product, create at least two test tenants with distinct users and records. If resellers, parent organizations, workspaces, projects, or regions create nested boundaries, include those relationships. Give every test record a visible synthetic owner so cross-tenant evidence can be interpreted without exposing customer data.
 
@@ -191,7 +289,7 @@ The matrix should support tests such as:
 - A former member reuses a token after removal.
 - A user changes a tenant identifier in a file, export, webhook, or background-job reference.
 
-## Define critical workflows as state changes
+### Define critical workflows as state changes
 
 “Test account management” is too broad. Write each workflow as a sequence with an expected rule:
 
@@ -204,36 +302,19 @@ The matrix should support tests such as:
 
 For example: “A customer administrator invites a new member to its own tenant. A standard customer must not invite members. No user from another tenant may accept or alter the invitation.” This description exposes role, tenant, state, and object boundaries.
 
-## Worksheet 4 Identity and role matrix
+> **Worksheet 04 · in the companion pack**
+>
+> **Identity and role matrix.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| Role or identity | Authentication method | Tenant scope | May read | May change | May administer | Test account available |
-|---|---|---|---|---|---|---|
-| Anonymous | None | None |  |  |  | N/A |
-| Standard customer |  |  |  |  |  |  |
-| Customer administrator |  |  |  |  |  |  |
-| Support user |  |  |  |  |  |  |
-| Platform administrator |  |  |  |  |  |  |
-| Service identity |  |  |  |  |  |  |
+> **Worksheet 05 · in the companion pack**
+>
+> **Tenant test design.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-## Worksheet 5 Tenant test design
+> **Worksheet 06 · in the companion pack**
+>
+> **Critical workflow inventory.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| Tenant | Synthetic users | Synthetic records | Subscription or state | Special relationship | Reset method |
-|---|---|---|---|---|---|
-| Tenant A |  |  |  |  |  |
-| Tenant B |  |  |  |  |  |
-| Parent or reseller |  |  |  |  |  |
-
-## Worksheet 6 Critical workflow inventory
-
-| ID | Workflow | Starting role | Sensitive object or action | Expected rule | Failure impact | Priority |
-|---|---|---|---|---|---|---|
-| W-01 |  |  |  |  |  |  |
-| W-02 |  |  |  |  |  |  |
-| W-03 |  |  |  |  |  |  |
-| W-04 |  |  |  |  |  |  |
-| W-05 |  |  |  |  |  |  |
-
-## Minimum role coverage
+**Minimum role coverage**
 
 - [ ] Anonymous or signed-out behavior
 - [ ] Lowest-privilege authenticated user
@@ -244,15 +325,31 @@ For example: “A customer administrator invites a new member to its own tenant.
 - [ ] Service or integration identity
 - [ ] Suspended, removed, expired, or otherwise changed identity
 
-# Part II Describe the test surface
+---
 
-# 4 Choose coverage by application type
+**PART II · CHAPTERS 4–6**
+
+<a id="part5"></a>
+
+# Describe the test surface
+
+*Choose coverage by application type, pick the environment and data, and set the limits of discovery.*
+
+---
+
+**CHAPTER 04 · DESCRIBE THE TEST SURFACE**
+
+<a id="ch4"></a>
+
+## Choose coverage by application type
+
+*Web, API, mobile, cloud, integrations, and AI features each expose a different part of the system.*
 
 The scope should name coverage modules rather than claiming that one method covers everything. A browser test, API test, mobile test, cloud review, and AI-agent assessment can overlap, but each exposes a different part of the system.
 
-OWASP WSTG organizes web testing across information gathering, configuration, identity, authentication, authorization, session management, input handling, error handling, cryptography, business logic, client behavior, and APIs.[2] The guide also warns that no fixed checklist can cover every application. Select the relevant techniques and tie them to the system rules recorded in this workbook.
+OWASP WSTG organizes web testing across information gathering, configuration, identity, authentication, authorization, session management, input handling, error handling, cryptography, business logic, client behavior, and APIs.<sup>[2]</sup> The guide also warns that no fixed checklist can cover every application. Select the relevant techniques and tie them to the system rules recorded in this workbook.
 
-## Web application coverage
+### Web application coverage
 
 Record all browser-accessible roles, routes, critical forms, upload and download functions, administrative interfaces, and client-side storage. Include authentication entry points, password recovery, invitations, federation, MFA enrollment, and session termination.
 
@@ -271,11 +368,11 @@ Typical coverage areas include:
 - Error handling and sensitive-data exposure
 - Security headers and transport configuration
 
-## API coverage
+### API coverage
 
 An API scope needs the specification and the observed endpoints. They may differ. Record base URLs, versions, methods, object types, authentication schemes, webhook behavior, bulk operations, GraphQL operations, and administrative functions.
 
-The OWASP API Security Top 10 highlights object-level authorization, authentication, object-property authorization, resource consumption, function-level authorization, sensitive business flows, server-side request forgery, configuration, inventory, and unsafe consumption of third-party APIs.[5] Use it as a risk prompt, not a claim that every relevant API test fits into ten labels.
+The OWASP API Security Top 10 highlights object-level authorization, authentication, object-property authorization, resource consumption, function-level authorization, sensitive business flows, server-side request forgery, configuration, inventory, and unsafe consumption of third-party APIs.<sup>[5]</sup> Use it as a risk prompt, not a claim that every relevant API test fits into ten labels.
 
 API test planning should answer:
 
@@ -287,15 +384,15 @@ API test planning should answer:
 - Do webhooks verify source, freshness, and replay resistance?
 - Does the application trust unsafe data returned by a supplier API?
 
-## Mobile application coverage
+### Mobile application coverage
 
 Identify the exact iOS or Android build, distribution channel, supported operating-system versions, backend environment, and whether anti-tamper or certificate-pinning controls may affect testing. Mobile coverage can include local storage, logs, backups, inter-process communication, deep links, transport, authentication, runtime behavior, and backend APIs.
 
 Do not treat the mobile binary and backend API as one unnamed target. A mobile assessment may need separate permission to analyze the application package, instrument the running app, bypass test-environment protections, and call the API outside the app.
 
-## Cloud coverage
+### Cloud coverage
 
-Cloud testing needs account-level identifiers and provider-specific rules. AWS currently allows customer testing of listed services without prior approval, but prohibits testing AWS infrastructure itself and requires prior approval for command-and-control activity.[6] Microsoft Azure allows testing of resources the customer owns or is authorized to test, subject to its published rules, and prohibits denial-of-service testing and access to other tenants.[7] Google Cloud does not require notice for testing a customer project, but the activity must follow its acceptable-use terms and affect only the customer’s projects.[8]
+Cloud testing needs account-level identifiers and provider-specific rules. AWS currently allows customer testing of listed services without prior approval, but prohibits testing AWS infrastructure itself and requires prior approval for command-and-control activity.<sup>[6]</sup> Microsoft Azure allows testing of resources the customer owns or is authorized to test, subject to its published rules, and prohibits denial-of-service testing and access to other tenants.<sup>[7]</sup> Google Cloud does not require notice for testing a customer project, but the activity must follow its acceptable-use terms and affect only the customer’s projects.<sup>[8]</sup>
 
 Record the current provider policy URL in the engagement file. Policies can change. The rules checked during scoping are part of the evidence for why a planned action was allowed.
 
@@ -310,42 +407,37 @@ Cloud coverage may include:
 - Container, serverless, and managed-service configuration
 - Cross-account, cross-subscription, or cross-project trust
 
-## Connected SaaS and OAuth coverage
+### Connected SaaS and OAuth coverage
 
 List the integration, granted scopes, installation owner, token storage, refresh behavior, revocation behavior, and actions that remain possible after a user leaves. Define whether the assessor may install a test integration, change scopes, replay callbacks, or test only the client-owned portion.
 
-## AI-enabled workflow coverage
+### AI-enabled workflow coverage
 
 An AI feature may connect user input to retrieved documents, memory, external tools, and real business actions. The scope should name the model or service, orchestration layer, retrieval sources, available tools, tool identities, approval requirements, and actions whose effects must be observed.
 
 Prompt output alone does not establish impact. The evidence plan should capture the system’s deterministic decision, tool request, downstream authorization response, and resulting data access or state change. An AI assessment may include direct and indirect prompt injection, retrieval-boundary tests, tool-argument manipulation, cross-tenant context, memory behavior, sensitive-output handling, and approval bypass.
 
-## Worksheet 7 Coverage module selection
+> **Worksheet 07 · in the companion pack**
+>
+> **Coverage module selection.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| Module | Included | Named targets | Required inputs | Highest-priority rule | Material limitation |
-|---|---|---|---|---|---|
-| Web application |  |  |  |  |  |
-| API |  |  |  |  |  |
-| Mobile application |  |  |  |  |  |
-| Cloud configuration |  |  |  |  |  |
-| Connected SaaS or OAuth |  |  |  |  |  |
-| AI-enabled workflow |  |  |  |  |  |
-| Source-code review |  |  |  |  |  |
-| Network or infrastructure |  |  |  |  |  |
+> **Worksheet 08 · in the companion pack**
+>
+> **API inventory.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-## Worksheet 8 API inventory
+---
 
-| API or version | Base URL | Specification | Authentication | Roles | Object types | Webhooks or callbacks | Scope state |
-|---|---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |  |
+**CHAPTER 05 · DESCRIBE THE TEST SURFACE**
 
-# 5 Select environments data and dependencies
+<a id="ch5"></a>
+
+## Select environments, data, and dependencies
+
+*Production is faithful and risky. Staging is safer and different. Write down the differences.*
 
 Production provides the most faithful behavior and the highest operational risk. Staging is safer but may differ in data, integrations, identity, configuration, or release version. Record those differences instead of describing one environment as “production-like.”
 
-## Compare environments before choosing
+### Compare environments before choosing
 
 | Question | Production | Test environment |
 |---|---|---|
@@ -360,52 +452,41 @@ Production provides the most faithful behavior and the highest operational risk.
 
 If the test runs in production, identify safe synthetic accounts and records. If it runs in staging, state which findings may require a limited production confirmation and who can approve it. Never copy production customer data into a test environment merely to make the test realistic.
 
-## Minimize sensitive data
+### Minimize sensitive data
 
 The tester usually needs representative object relationships, not real customer content. Build synthetic records that show tenant, owner, state, and sensitivity without reproducing personal information. Record how test data is created, marked, reset, exported, and deleted.
 
 Define evidence sanitization before testing. Screenshots, HTTP traces, logs, database results, model context, and files can contain tokens or customer data. State where raw evidence is stored, who can access it, how client-visible evidence is redacted, and when it is deleted.
 
-## Map dependencies and failure paths
+### Map dependencies and failure paths
 
 A workflow can depend on email, payment, identity, file processing, queues, analytics, model providers, or customer-managed endpoints. For each dependency, determine whether the tester may interact with the real service, a sandbox, a stub, or only the client-controlled integration code.
 
 Do not send test emails, refunds, support messages, or webhooks to real recipients without explicit permission and controls. For a workflow that changes money or account access, define a synthetic or reversible path and a person who can stop or undo it.
 
-## Worksheet 9 Environment and data plan
+> **Worksheet 09 · in the companion pack**
+>
+> **Environment and data plan.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| Field | Response |
-|---|---|
-| Primary test environment |  |
-| Exact release or build |  |
-| Known differences from production |  |
-| Production confirmation allowed |  |
-| Synthetic tenants and records |  |
-| Prohibited data classes |  |
-| Evidence storage location |  |
-| Client-visible redaction rule |  |
-| Raw evidence retention period |  |
-| Test data deletion owner and date |  |
-| Reset or rollback method |  |
+> **Worksheet 10 · in the companion pack**
+>
+> **Dependency boundary.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-## Worksheet 10 Dependency boundary
+---
 
-| Dependency | Purpose | Owner | Test mode | Allowed interaction | Prohibited interaction | Contact |
-|---|---|---|---|---|---|---|
-| Identity provider |  |  |  |  |  |  |
-| Email or messaging |  |  |  |  |  |  |
-| Payment service |  |  |  |  |  |  |
-| File processing |  |  |  |  |  |  |
-| Model or AI service |  |  |  |  |  |  |
-| Customer webhook |  |  |  |  |  |  |
+**CHAPTER 06 · DESCRIBE THE TEST SURFACE**
 
-# 6 Define reconnaissance and discovery boundaries
+<a id="ch6"></a>
+
+## Define reconnaissance and discovery boundaries
+
+*Finding an asset is not the same as being allowed to test it.*
 
 Testing a known URL and discovering the broader attack surface are different tasks. State which one the engagement includes.
 
-OWASP’s attack-surface guidance explains that applications can exist on non-obvious hosts or paths and that the rules of engagement determine whether discovery should extend beyond the listed URL.[9] Discovery can find forgotten assets, but it can also reach third-party systems or targets the client is not prepared to test.
+OWASP’s attack-surface guidance explains that applications can exist on non-obvious hosts or paths and that the rules of engagement determine whether discovery should extend beyond the listed URL.<sup>[9]</sup> Discovery can find forgotten assets, but it can also reach third-party systems or targets the client is not prepared to test.
 
-## Choose the discovery model
+### Choose the discovery model
 
 - **Closed list:** only the exact listed targets may be contacted.
 - **Passive discovery:** public records, certificates, DNS data, and archives may be reviewed without active requests to discovered targets.
@@ -414,7 +495,7 @@ OWASP’s attack-surface guidance explains that applications can exist on non-ob
 
 Define whether subdomains, virtual hosts, IP addresses, alternate ports, archived URLs, JavaScript-referenced APIs, mobile backend hosts, and cloud endpoints may be collected. Then state which can receive active requests.
 
-## Handle newly discovered assets
+### Handle newly discovered assets
 
 Discovery never automatically expands authority. Use one of three outcomes:
 
@@ -422,31 +503,39 @@ Discovery never automatically expands authority. Use one of three outcomes:
 2. Ask the owner to prove authority and issue a written scope change.
 3. Stop and escalate if the asset appears sensitive, unstable, or owned by another party.
 
-## Worksheet 11 Discovery rules
+> **Worksheet 11 · in the companion pack**
+>
+> **Discovery rules.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| Discovery activity | Allowed | Boundary | Active requests allowed | Rate limit | New-target action |
-|---|---|---|---|---|---|
-| Certificate and public-record review |  |  | N/A | N/A |  |
-| DNS and subdomain enumeration |  |  |  |  |  |
-| Host and port identification |  |  |  |  |  |
-| Content and route discovery |  |  |  |  |  |
-| JavaScript and mobile endpoint review |  |  |  |  |  |
-| Cloud resource discovery |  |  |  |  |  |
-| API inventory comparison |  |  |  |  |  |
+---
 
-# Part III Make the engagement lawful and safe
+**PART III · CHAPTERS 7–9**
 
-# 7 Write authorization and rules of engagement
+<a id="part6"></a>
 
-The rules of engagement turn the scope into permission and operating constraints. NIST defines them as detailed guidelines established before testing that give the test team authority to conduct the defined activities.[10] They should be approved by someone who can speak for the owner of every target.
+# Make the engagement lawful and safe
+
+*Written authority, rules of engagement, accounts and monitoring, and an honest list of what the test will not cover.*
+
+---
+
+**CHAPTER 07 · MAKE THE ENGAGEMENT LAWFUL AND SAFE**
+
+<a id="ch7"></a>
+
+## Write authorization and rules of engagement
+
+*Testing stays locked until ownership, scope, timing, and constraints agree in writing.*
+
+The rules of engagement turn the scope into permission and operating constraints. NIST defines them as detailed guidelines established before testing that give the test team authority to conduct the defined activities.<sup>[10]</sup> They should be approved by someone who can speak for the owner of every target.
 
 An assessment request, purchase order, email introduction, or access credential is not automatically sufficient authority. The signed record should connect the legal parties, target identifiers, owner, allowed techniques, test window, and limits. If a customer wants a provider to test a system owned by its client, parent company, cloud customer, or integration partner, the permission chain must reach that owner.
 
-![Authorization gate requiring ownership, scope, window, and constraints](assets/authorization-gate.png)
+![Figure 3. Testing stays locked until the four authorization conditions agree and a signed record is on file.](assets/fig-3.jpg)
 
 *Figure 3. Testing stays locked until the four authorization conditions agree and a signed record is on file.*
 
-## Name the authorizing parties
+### Name the authorizing parties
 
 Record:
 
@@ -459,7 +548,7 @@ Record:
 
 If the owner is not the contracting client, attach the separate permission rather than summarizing it as “approved.”
 
-## Define allowed actions by class
+### Define allowed actions by class
 
 Do not rely on “standard penetration testing.” Mark which activities are allowed:
 
@@ -480,7 +569,7 @@ Do not rely on “standard penetration testing.” Mark which activities are all
 
 For actions that could change data, send messages, move money, affect availability, trigger fraud controls, or reach another tenant, record the safe method and approval condition.
 
-## Write prohibited actions plainly
+### Write prohibited actions plainly
 
 Common exclusions include:
 
@@ -496,15 +585,15 @@ Common exclusions include:
 - Lateral movement outside the named boundary
 - Contacting real customers or suppliers
 
-Cloud-provider rules may prohibit actions even when the client requests them. Azure’s current rules, for example, prohibit denial-of-service testing and testing another tenant. AWS requires prior approval for command-and-control activity and prohibits testing AWS services themselves.[6][7] The engagement record should preserve the policy version or access date used during planning.
+Cloud-provider rules may prohibit actions even when the client requests them. Azure’s current rules, for example, prohibit denial-of-service testing and testing another tenant. AWS requires prior approval for command-and-control activity and prohibits testing AWS services themselves.<sup>[6]</sup><sup>[7]</sup> The engagement record should preserve the policy version or access date used during planning.
 
-## Set time and traffic controls
+### Set time and traffic controls
 
 State the time zone, start, end, maintenance windows, blackout periods, and whether passive work may continue outside the active window. Record assessor source IP addresses or other identifiers when monitoring teams need them. Define concurrency, requests per second, scanner intensity, file size, test-account limits, and budgets for paid APIs or AI model calls.
 
 Rate limits should match the weakest in-scope dependency, not the fastest endpoint. A login, search, export, payment, or model workflow may have different safe rates.
 
-## Establish stop conditions
+### Establish stop conditions
 
 Testing should pause when:
 
@@ -519,33 +608,11 @@ Testing should pause when:
 
 Record who can stop the engagement, how they contact the test lead, and what evidence is preserved after a stop. A pause should not be treated as a failed test. It is a controlled response to a condition named in advance.
 
-## Worksheet 12 Rules of engagement
+> **Worksheet 12 · in the companion pack**
+>
+> **Rules of engagement.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| Field | Agreed value |
-|---|---|
-| Contracting client |  |
-| Target owner or owners |  |
-| Person granting authority |  |
-| Testing provider and test lead |  |
-| Scope version incorporated by reference |  |
-| Active testing start |  |
-| Active testing end |  |
-| Time zone |  |
-| Blackout periods |  |
-| Source addresses or identifiers |  |
-| Maximum request rate or concurrency |  |
-| Allowed automated tools or classes |  |
-| Allowed data-changing actions |  |
-| Prohibited actions |  |
-| Stop conditions |  |
-| Emergency client contact |  |
-| Emergency assessor contact |  |
-| Evidence and data-handling terms |  |
-| Provider policies checked |  |
-| Client approval and date |  |
-| Assessor acceptance and date |  |
-
-## Authorization release check
+**Authorization release check**
 
 - [ ] Every active target has a proved owner.
 - [ ] The approver can grant authority for those targets.
@@ -556,54 +623,57 @@ Record who can stop the engagement, how they contact the test lead, and what evi
 - [ ] Stop contacts and conditions are tested or confirmed.
 - [ ] The signed authorization references the same scope version the assessor will use.
 
-# 8 Prepare accounts access and monitoring
+---
+
+**CHAPTER 08 · MAKE THE ENGAGEMENT LAWFUL AND SAFE**
+
+<a id="ch8"></a>
+
+## Prepare accounts, access, and monitoring
+
+*Most first-week delays come from missing accounts and blocked access, not from the testing itself.*
 
 Access should be sufficient to test the intended roles without granting unrelated power. Create dedicated test accounts. Do not reuse employee credentials or send passwords through the workbook.
 
-## Build the account set from the role matrix
+### Build the account set from the role matrix
 
 Each required role should have a test identity with known ownership and synthetic data. For tenant testing, maintain equivalent users in at least two tenants. Record any account that carries global, support, billing, or infrastructure permissions separately.
 
 If MFA, federation, device trust, IP allowlisting, or invitation workflows apply, decide whether the test evaluates those controls or uses an approved bypass. A bypass that is necessary for access becomes a report limitation if it prevents the assessor from testing the real control.
 
-## Separate credential delivery
+### Separate credential delivery
 
 Record account names and required roles in the scope. Deliver passwords, recovery codes, private keys, and tokens through the agreed secret channel after authorization. Set an owner and expiry for every testing secret. Revoke or rotate them when the engagement closes.
 
-## Prepare monitoring without hiding the test
+### Prepare monitoring without hiding the test
 
 The operations team should know the test window and stop procedure. Whether defenders know the exact actions depends on the engagement goal. A normal application assessment usually favors safe coordination. A detection exercise may intentionally limit foreknowledge, but that choice belongs in the rules of engagement.
 
 Record the logs and alerts expected during testing. If a critical action cannot be tied to an identity and timestamp, the engagement may reveal an evidence gap even when the action itself was authorized.
 
-## Worksheet 13 Access readiness checklist
+> **Worksheet 13 · in the companion pack**
+>
+> **Access readiness checklist.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| Item | Owner | Ready | Secure delivery method | Expiry or reset | Notes |
-|---|---|---|---|---|---|
-| Tenant A standard user |  |  |  |  |  |
-| Tenant A administrator |  |  |  |  |  |
-| Tenant B standard user |  |  |  |  |  |
-| Tenant B administrator |  |  |  |  |  |
-| Internal support role |  |  |  |  |  |
-| API client or key |  |  |  |  |  |
-| Mobile test build |  |  |  |  |  |
-| Cloud read access |  |  |  |  |  |
-| Architecture and data flow |  |  |  |  |  |
-| API specification |  |  |  |  |  |
-| Logging and alert contact |  |  |  |  |  |
-| Reset and cleanup process |  |  |  |  |  |
+---
 
-# 9 State exclusions limits and unknowns
+**CHAPTER 09 · MAKE THE ENGAGEMENT LAWFUL AND SAFE**
+
+<a id="ch9"></a>
+
+## State exclusions, limits, and unknowns
+
+*A specific limitation helps the reader. A generic disclaimer does not.*
 
 Every assessment has limits. Hiding them makes the report look broader than the work.
 
-## Distinguish an exclusion from a limitation
+### Distinguish an exclusion from a limitation
 
 An **exclusion** is a deliberate boundary: a third-party payment service is not tested. A **limitation** reduces coverage inside the intended boundary: the client could not provide an administrator account, so administrator-only workflows were not tested. An **unknown** has not been resolved: ownership of an old subdomain remains unclear.
 
 Record all three. State the likely effect on assurance. “Mobile application excluded” is clear. “The backend API was tested through browser-observed calls only; unreferenced endpoints may remain untested” explains residual uncertainty.
 
-## Avoid generic disclaimers
+### Avoid generic disclaimers
 
 “No test can find every issue” is true but not specific enough. Useful limits name the missing access, unavailable environment, untested role, blocked technique, time constraint, or system difference.
 
@@ -615,24 +685,35 @@ Examples:
 - The client supplied one customer role; support and administrator workflows were not tested.
 - Third-party model infrastructure was outside the client’s authority; testing stopped at the client-controlled API boundary.
 
-## Worksheet 14 Exclusion limitation and unknown register
+> **Worksheet 14 · in the companion pack**
+>
+> **Exclusion, limitation, and unknown register.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| ID | Type | Description | Reason | Coverage effect | Decision owner | Resolution or report wording |
-|---|---|---|---|---|---|---|
-| L-01 |  |  |  |  |  |  |
-| L-02 |  |  |  |  |  |  |
-| L-03 |  |  |  |  |  |  |
-| L-04 |  |  |  |  |  |  |
+---
 
-# Part IV Agree on the output
+**PART IV · CHAPTERS 10–12**
 
-# 10 Set evidence and reporting requirements
+<a id="part7"></a>
+
+# Agree on the output
+
+*What a finding must contain, how fixes are retested, and who is responsible for each decision.*
+
+---
+
+**CHAPTER 10 · AGREE ON THE OUTPUT**
+
+<a id="ch10"></a>
+
+## Set evidence and reporting requirements
+
+*Agree what a finding must contain before anyone writes one.*
 
 A report should prove what was observed, connect the observation to a broken rule, explain material impact, and give the owner a specific correction. Tool output without validation is not a finding.
 
-OWASP’s current testing introduction describes useful reporting as reproducible, actionable, severity-ranked, and understandable to technical and business readers.[2] NIST SP 800-115 also connects testing to analysis and mitigation rather than stopping at discovery.[1]
+OWASP’s current testing introduction describes useful reporting as reproducible, actionable, severity-ranked, and understandable to technical and business readers.<sup>[2]</sup> NIST SP 800-115 also connects testing to analysis and mitigation rather than stopping at discovery.<sup>[1]</sup>
 
-## Define the evidence unit
+### Define the evidence unit
 
 For each confirmed finding, require:
 
@@ -651,19 +732,19 @@ For each confirmed finding, require:
 
 Evidence should prove the server-side or downstream result. A browser message may not prove a record changed. A model response may not prove a tool ran. A scanner alert may not prove exploitability. Capture the authoritative state where the system made or recorded the decision.
 
-## Agree on severity language
+### Agree on severity language
 
-Decide whether the report uses qualitative ratings, CVSS, a client risk matrix, or a combination. FIRST’s CVSS specification provides a standardized way to describe vulnerability severity, but business priority can still depend on asset value, exposure, data, and compensating controls.[11] Do not promise that one numeric score will settle every remediation decision.
+Decide whether the report uses qualitative ratings, CVSS, a client risk matrix, or a combination. FIRST’s CVSS specification provides a standardized way to describe vulnerability severity, but business priority can still depend on asset value, exposure, data, and compensating controls.<sup>[11]</sup> Do not promise that one numeric score will settle every remediation decision.
 
 Record who can change a severity rating and what evidence is required. Separate technical severity from remediation priority when the client’s business context calls for it.
 
-## Protect sensitive evidence
+### Protect sensitive evidence
 
 Require redaction of passwords, session tokens, private keys, customer content, and unnecessary personal data. Decide whether raw evidence stays only in the assessor’s restricted store, whether the client receives a sanitized version, and how long both copies remain available.
 
 Reports should carry a classification and an authorized distribution list. If customers will receive a summary, define whether it is a separate redacted report, an executive letter, or a controlled portal copy. Do not assume a full technical report can be forwarded without restriction.
 
-## Define report versions and acceptance
+### Define report versions and acceptance
 
 Typical versions are:
 
@@ -673,51 +754,35 @@ Typical versions are:
 
 The client may correct factual errors, target names, owners, or reproduction details. It should not remove a supported finding merely because the fix is inconvenient. Record the dispute and review process before it is needed.
 
-## Worksheet 15 Finding acceptance criteria
+> **Worksheet 15 · in the companion pack**
+>
+> **Finding acceptance criteria.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| Requirement | Mandatory | Report location or format | Reviewer |
-|---|---|---|---|
-| Plain-language title |  |  |  |
-| Affected target and release |  |  |  |
-| Expected rule |  |  |  |
-| Reproduction steps |  |  |  |
-| Sanitized evidence |  |  |  |
-| Material impact |  |  |  |
-| Severity and rationale |  |  |  |
-| Recommended correction |  |  |  |
-| Owner and state |  |  |  |
-| Retest evidence |  |  |  |
+> **Worksheet 16 · in the companion pack**
+>
+> **Report acceptance criteria.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-## Worksheet 16 Report acceptance criteria
+---
 
-| Field | Agreed value |
-|---|---|
-| Report audiences |  |
-| Required executive summary |  |
-| Technical detail level |  |
-| Severity method |  |
-| Required compliance or framework mapping |  |
-| Evidence sanitization rule |  |
-| Report classification |  |
-| Authorized recipients |  |
-| Draft review period |  |
-| Final delivery date and format |  |
-| Customer-shareable output |  |
-| Report retention and deletion |  |
+**CHAPTER 11 · AGREE ON THE OUTPUT**
 
-# 11 Define remediation and retesting
+<a id="ch11"></a>
+
+## Define remediation and retesting
+
+*“Ready for retest” and “fixed and verified” are different states with different evidence.*
 
 Client remediation and assessor verification are different events. A development team can report that a change was deployed. Only a retest shows how the corrected system behaved under the recorded scenario.
 
-![Finding lifecycle from confirmation through verified retest](assets/finding-lifecycle.png)
+![Figure 4. “Ready for retest” means the client believes the fix is deployed. “Verified” requires new assessor evidence.](assets/fig-4.jpg)
 
-*Figure 4. Ready for retest means the client believes the correction is deployed. Fixed and verified requires new assessor evidence.*
+*Figure 4. “Ready for retest” means the client believes the fix is deployed. “Verified” requires new assessor evidence.*
 
-## Keep review and remediation states separate
+### Keep review and remediation states separate
 
 Finding review states can include Draft, Needs Review, Confirmed, and Rejected. Remediation states can include Open, In Progress, Ready for Retest, Fixed and Verified, Risk Accepted, and Not Reproducible. Mixing them creates false closure. A confirmed finding can still be open. A rejected result is not a fixed vulnerability.
 
-## Define the retest unit
+### Define the retest unit
 
 The retest should name:
 
@@ -732,32 +797,27 @@ The retest should name:
 
 A narrow retest confirms the agreed correction. It is not automatically a new full assessment. If the fix changes architecture, permissions, workflows, or dependencies, the parties may need a revised scope.
 
-## Set commercial and timing terms
+### Set commercial and timing terms
 
 State how many retest rounds are included, how long they remain available, expected scheduling notice, and what counts as a new finding or new scope. Record whether the client must resolve all findings before the retest or may submit them in groups.
 
-## Worksheet 17 Retest agreement
+> **Worksheet 17 · in the companion pack**
+>
+> **Retest agreement.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| Field | Agreed value |
-|---|---|
-| Included retest rounds |  |
-| Retest availability period |  |
-| Required notice |  |
-| Client evidence required before scheduling |  |
-| Corrected release identifier |  |
-| Environment |  |
-| Original scenarios to repeat |  |
-| Regression checks included |  |
-| Treatment of partial fixes |  |
-| Treatment of new findings |  |
-| Verification approver |  |
-| Updated report format |  |
+---
 
-# 12 Fix the schedule and responsibilities
+**CHAPTER 12 · AGREE ON THE OUTPUT**
+
+<a id="ch12"></a>
+
+## Fix the schedule and responsibilities
+
+*Name a person for every decision that could stop the test.*
 
 Most engagement delays come from access, authorization, unavailable owners, unstable environments, and late factual review. The operating plan should make those dependencies visible.
 
-## Name contacts by responsibility
+### Name contacts by responsibility
 
 Use roles, names, and backup contacts for:
 
@@ -772,36 +832,41 @@ Use roles, names, and backup contacts for:
 - Assessor reviewer
 - Emergency stop contact
 
-## Set decision points
+### Set decision points
 
 Recommended milestones include scope approval, signed authorization, access verification, test start, midpoint review, urgent-finding notification, testing end, draft report, factual review close, final report, remediation submission, and retest.
 
 Define the channel for routine updates and a separate channel for critical issues or stop instructions. Record whether a critical finding is reported immediately and who may receive it.
 
-## Worksheet 18 Engagement operating plan
+> **Worksheet 18 · in the companion pack**
+>
+> **Engagement operating plan.** Use the printable or editable version from the [companion worksheet pack](#worksheets).
 
-| Milestone or responsibility | Owner | Backup | Date or service target | Channel | Acceptance evidence |
-|---|---|---|---|---|---|
-| Scope approval |  |  |  |  |  |
-| Authorization complete |  |  |  |  |  |
-| Access verification |  |  |  |  |  |
-| Testing start |  |  |  |  |  |
-| Routine status update |  |  |  |  |  |
-| Critical issue escalation |  |  |  |  |  |
-| Draft report |  |  |  |  |  |
-| Factual review close |  |  |  |  |  |
-| Final report |  |  |  |  |  |
-| Retest request |  |  |  |  |  |
+---
 
-# Part V Issue the scope
+**PART V · CHAPTERS 13–14**
 
-# 13 Assemble the statement of work
+<a id="part8"></a>
+
+# Issue the scope
+
+*Assemble the statement of work, then follow one complete scope for a multi-tenant SaaS platform.*
+
+---
+
+**CHAPTER 13 · ISSUE THE SCOPE**
+
+<a id="ch13"></a>
+
+## Assemble the statement of work
+
+*Turn the worksheets into a one-page scope brief and a change-control rule.*
 
 The completed workbook is planning material. The statement of work and signed rules of engagement are the controlling engagement records. Transfer the final decisions without reducing them to a vague paragraph.
 
-## One page scope brief
+### One page scope brief
 
-### Assessment identity
+#### Assessment identity
 
 | Field | Final value |
 |---|---|
@@ -812,7 +877,7 @@ The completed workbook is planning material. The statement of work and signed ru
 | Test window and time zone |  |
 | Assessor |  |
 
-### In-scope targets
+#### In-scope targets
 
 | Target ID | Exact identifier | Environment | Coverage module | Owner |
 |---|---|---|---|---|
@@ -820,7 +885,7 @@ The completed workbook is planning material. The statement of work and signed ru
 |  |  |  |  |  |
 |  |  |  |  |  |
 
-### Critical coverage
+#### Critical coverage
 
 | Workflow or rule | Roles and tenants | Required test outcome | Priority |
 |---|---|---|---|
@@ -828,7 +893,7 @@ The completed workbook is planning material. The statement of work and signed ru
 |  |  |  |  |
 |  |  |  |  |
 
-### Boundaries
+#### Boundaries
 
 | Item | Final value |
 |---|---|
@@ -840,7 +905,7 @@ The completed workbook is planning material. The statement of work and signed ru
 | Stop conditions |  |
 | Material exclusions |  |
 
-### Deliverables
+#### Deliverables
 
 | Deliverable | Format | Due | Acceptance owner |
 |---|---|---|---|
@@ -849,7 +914,7 @@ The completed workbook is planning material. The statement of work and signed ru
 | Customer-shareable summary |  |  |  |
 | Retest output |  |  |  |
 
-## Scope change control
+### Scope change control
 
 Define how changes are proposed, approved, priced, and added to the authorization. A new hostname, environment, tenant, workflow, or test technique may change effort and risk. The assessor should not test it first and seek approval later.
 
@@ -864,7 +929,7 @@ A scope change record should contain:
 - Updated scope version
 - Named client and assessor approvals
 
-## Final issue checklist
+**Final issue checklist**
 
 - [ ] The scope brief matches the detailed workbook.
 - [ ] Exact target identifiers are included.
@@ -878,17 +943,25 @@ A scope change record should contain:
 - [ ] Exclusions and limitations will appear in the report.
 - [ ] The client and assessor approved the same version.
 
-# 14 Worked example for a multi tenant SaaS platform
+---
+
+**CHAPTER 14 · ISSUE THE SCOPE**
+
+<a id="ch14"></a>
+
+## Worked example: a multi-tenant SaaS platform
+
+*A complete scope for Example Support App, a fictional platform with a customer portal, public API, support console, and AI support agent.*
 
 This example uses a fictional support platform. No client systems or customer data are represented.
 
-## Product description
+### Product description
 
 Example Support App lets a company’s customers view orders and request refunds through a browser portal. Each customer belongs to one tenant. Customer administrators can invite team members. Internal support staff can search assigned customers. An AI support agent can look up orders through the same API and can prepare, but not approve, refund requests.
 
 The application is preparing for an enterprise launch. The buyer requested a current penetration-test report. Engineering also wants proof that the AI agent cannot cross tenant boundaries or issue a refund without approval.
 
-## Completed decision brief
+### Completed decision brief
 
 | Field | Example response |
 |---|---|
@@ -900,18 +973,18 @@ The application is preparing for an enterprise launch. The buyer requested a cur
 | Success | Agreed web, API, role, tenant, and AI tool workflows tested; limitations stated; verified retest recorded. |
 | Non-claim | The engagement does not issue a SOC 2 opinion or certify the product. |
 
-## Completed asset register
+### Completed asset register
 
 | ID | Asset | Identifier | Owner | Environment | State | Coverage |
 |---|---|---|---|---|---|---|
-| A-01 | Customer web portal | `https://app.example.test` | Example Support App | Staging | In scope | Web application |
-| A-02 | Public product API | `https://api.example.test/v1` | Example Support App | Staging | In scope | API |
-| A-03 | Administration console | `https://admin.example.test` | Example Support App | Staging | Conditional | Support role only |
-| A-04 | AI orchestration service | `https://agent.example.test` | Example Support App | Staging | In scope | AI workflow |
+| A-01 | Customer web portal | https://app.example.test | Example Support App | Staging | In scope | Web application |
+| A-02 | Public product API | https://api.example.test/v1 | Example Support App | Staging | In scope | API |
+| A-03 | Administration console | https://admin.example.test | Example Support App | Staging | Conditional | Support role only |
+| A-04 | AI orchestration service | https://agent.example.test | Example Support App | Staging | In scope | AI workflow |
 | A-05 | Payment sandbox | Provider sandbox account | Payment provider | Sandbox | Boundary only | Client integration calls only |
-| A-06 | Production application | `https://app.example.com` | Example Support App | Production | Out of scope | No active testing |
+| A-06 | Production application | https://app.example.com | Example Support App | Production | Out of scope | No active testing |
 
-## Completed role and tenant plan
+### Completed role and tenant plan
 
 | Role | Tenant | Allowed behavior | Prohibited behavior | Test account |
 |---|---|---|---|---|
@@ -921,9 +994,9 @@ The application is preparing for an enterprise launch. The buyer requested a cur
 | Support user | Assigned tenants | Search assigned customers | Search unassigned customer | Ready |
 | AI support agent | Calling user context | Look up caller-owned order | Cross-tenant lookup or direct refund approval | Ready |
 
-Synthetic orders are named `ORDER-A-101`, `ORDER-A-102`, and `ORDER-B-204`. The names make ownership visible in evidence. No real addresses, names, or payment details are used.
+Synthetic orders are named ORDER-A-101, ORDER-A-102, and ORDER-B-204. The names make ownership visible in evidence. No real addresses, names, or payment details are used.
 
-## Completed critical workflows
+### Completed critical workflows
 
 | ID | Workflow | Expected rule | Priority |
 |---|---|---|---|
@@ -934,7 +1007,7 @@ Synthetic orders are named `ORDER-A-101`, `ORDER-A-102`, and `ORDER-B-204`. The 
 | W-05 | AI order lookup | Agent carries the caller’s identity and cannot substitute another tenant’s order ID. | Critical |
 | W-06 | Refund request | Agent may prepare a request; server requires customer confirmation and staff approval before execution. | Critical |
 
-## Completed rules of engagement summary
+### Completed rules of engagement summary
 
 | Field | Example agreement |
 |---|---|
@@ -947,19 +1020,66 @@ Synthetic orders are named `ORDER-A-101`, `ORDER-A-102`, and `ORDER-B-204`. The 
 | Stop conditions | Real customer data, unexpected production traffic, staging error rate above agreed threshold, third-party boundary crossed |
 | Escalation | Dedicated client and assessor channel; critical confirmed findings reported immediately |
 
-## Example finding acceptance criteria
+### Example finding acceptance criteria
 
 A cross-tenant order finding must show the calling identity, requested order, expected tenant rule, sanitized request, server response, and proof that another tenant’s record was returned. A model statement such as “I found the order” is insufficient unless the downstream API response or state proves access.
 
 For a refund finding, evidence must show whether a refund record was created, which identity authorized it, whether approval was required, and whether the payment sandbox received a request. The test stops at the client-controlled sandbox integration boundary.
 
-## Example retest
+### Example retest
 
-The initial test records HTTP 200 when Customer A requests `ORDER-B-204`. Engineering adds an order-ownership check and deploys release `2026.12.12-rc2`. The retest repeats the same authenticated request and records HTTP 403 with no order data in the response or application logs. A reviewer signs the new evidence and changes the remediation state to Fixed and Verified. The original finding and evidence remain in report history.
+The initial test records HTTP 200 when Customer A requests ORDER-B-204. Engineering adds an order-ownership check and deploys release 2026.12.12-rc2. The retest repeats the same authenticated request and records HTTP 403 with no order data in the response or application logs. A reviewer signs the new evidence and changes the remediation state to Fixed and Verified. The original finding and evidence remain in report history.
 
-# Appendix A Master pre test checklist
+---
 
-## Decision and scope
+**TOOLS · COMPANION DOWNLOAD**
+
+<a id="worksheets"></a>
+
+# The companion worksheet pack
+
+*The 20 worksheets referred to in this guide are a separate download, so you can print them, fill them in, and share them with your team without copying pages out of the book.*
+
+Download the pack from the same page as this guide in the Sthuthi Securities resource library at [sthuthi-tech.com](https://sthuthi-tech.com). It comes in three formats:
+
+- **Printable PDF.** Each worksheet starts on a new A4 page, with lined fields for writing by hand.
+- **Editable Word document.** The same worksheets as fill-in tables you can type into.
+- **Excel workbook.** One tab per worksheet, with registers set up as working trackers.
+
+| # | Worksheet | Use with |
+|---|---|---|
+| 01 | Assessment decision brief | Chapter 1 |
+| 02 | Asset register | Chapter 2 |
+| 03 | Ownership and authority record | Chapter 2 |
+| 04 | Identity and role matrix | Chapter 3 |
+| 05 | Tenant test design | Chapter 3 |
+| 06 | Critical workflow inventory | Chapter 3 |
+| 07 | Coverage module selection | Chapter 4 |
+| 08 | API inventory | Chapter 4 |
+| 09 | Environment and data plan | Chapter 5 |
+| 10 | Dependency boundary | Chapter 5 |
+| 11 | Discovery rules | Chapter 6 |
+| 12 | Rules of engagement | Chapter 7 |
+| 13 | Access readiness checklist | Chapter 8 |
+| 14 | Exclusion, limitation, and unknown register | Chapter 9 |
+| 15 | Finding acceptance criteria | Chapter 10 |
+| 16 | Report acceptance criteria | Chapter 10 |
+| 17 | Retest agreement | Chapter 11 |
+| 18 | Engagement operating plan | Chapter 12 |
+| 19 | Vendor proposal scorecard | Appendix B |
+| 20 | Scope completion record | Chapter 13 |
+
+---
+
+**APPENDIX A · REFERENCE**
+
+<a id="appendix-a"></a>
+
+# Master pre-test checklist
+
+*Run this list the day before active testing begins.*
+
+**Decision and scope**
 
 - [ ] Primary decision written
 - [ ] Deadline and relying audience named
@@ -969,7 +1089,7 @@ The initial test records HTTP 200 when Customer A requests `ORDER-B-204`. Engine
 - [ ] Coverage modules selected
 - [ ] Critical workflows prioritized
 
-## Roles and access
+**Roles and access**
 
 - [ ] Required roles inventoried
 - [ ] Two test tenants prepared where applicable
@@ -978,7 +1098,7 @@ The initial test records HTTP 200 when Customer A requests `ORDER-B-204`. Engine
 - [ ] Credentials have a secure delivery path
 - [ ] Secrets have expiry and cleanup owners
 
-## Safety and authority
+**Safety and authority**
 
 - [ ] Written authorization signed
 - [ ] Third-party permissions checked
@@ -988,7 +1108,7 @@ The initial test records HTTP 200 when Customer A requests `ORDER-B-204`. Engine
 - [ ] Prohibited actions recorded
 - [ ] Stop contacts and conditions confirmed
 
-## Evidence and delivery
+**Evidence and delivery**
 
 - [ ] Evidence fields agreed
 - [ ] Redaction and retention agreed
@@ -998,12 +1118,20 @@ The initial test records HTTP 200 when Customer A requests `ORDER-B-204`. Engine
 - [ ] Retest rounds and timing agreed
 - [ ] Limitations will be stated in the report
 
-# Appendix B Vendor proposal comparison scorecard
+---
+
+**APPENDIX B · REFERENCE**
+
+<a id="appendix-b"></a>
+
+# Vendor proposal comparison scorecard
+
+*Compare proposals on what they will actually test, not on page count.*
 
 Score each item from 0 to 3: 0 absent, 1 weak, 2 acceptable, 3 strong. Multiply the score by the weight. Do not select a provider from the total alone; unresolved authority, data-handling, or tester-quality concerns can disqualify a proposal.
 
 | Criterion | Weight | Vendor A | Vendor B | Vendor C | Evidence or concern |
-|---|---:|---:|---:|---:|---|
+|---|---|---|---|---|---|
 | Scope reflects named systems and workflows | 5 |  |  |  |  |
 | Manual authorization and business-logic testing | 5 |  |  |  |  |
 | Qualified named test lead and reviewer | 4 |  |  |  |  |
@@ -1017,7 +1145,15 @@ Score each item from 0 to 3: 0 absent, 1 weak, 2 acceptable, 3 strong. Multiply 
 | Price and change-control terms | 3 |  |  |  |  |
 | Relevant application or industry experience | 3 |  |  |  |  |
 
-# Appendix C Glossary
+---
+
+**APPENDIX C · REFERENCE**
+
+<a id="appendix-c"></a>
+
+# Glossary
+
+*Terms as they are used in this guide.*
 
 **Active testing:** Requests or actions sent to a target to evaluate security behavior.
 
@@ -1057,350 +1193,63 @@ Score each item from 0 to 3: 0 absent, 1 weak, 2 acceptable, 3 strong. Multiply 
 
 **Vertical authorization:** Access from a lower-privilege identity into a higher-privilege function or record.
 
-# Sources
+---
 
-1. National Institute of Standards and Technology. *Technical Guide to Information Security Testing and Assessment, NIST SP 800-115.* https://csrc.nist.gov/pubs/sp/800/115/final
-2. OWASP Foundation. *Web Security Testing Guide.* https://wstg.owasp.org/
-3. OWASP Foundation. *Map Application Architecture, WSTG-INFO-10.* https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/01-Information_Gathering/10-Map_Application_Architecture/
-4. OWASP Foundation. *Bypassing Authorization Schema, WSTG-ATHZ-02.* https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/05-Authorization/02-Bypassing_Authorization_Schema/
-5. OWASP Foundation. *OWASP API Security Top 10 2023.* https://api-security.owasp.org/
-6. Amazon Web Services. *AWS Customer Support Policy for Penetration Testing.* https://aws.amazon.com/security/penetration-testing/
-7. Microsoft. *Penetration testing on Azure.* https://learn.microsoft.com/en-us/azure/security/fundamentals/pen-testing
-8. Google Cloud. *Cloud Security FAQ, penetration testing.* https://support.google.com/cloud/answer/6262505
-9. OWASP Foundation. *Attack Surface Identification.* https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/01-Information_Gathering/04-Attack_Surface_Identification/
-10. National Institute of Standards and Technology. *Rules of Engagement glossary definition.* https://csrc.nist.gov/glossary/term/Rules_of_Engagement
-11. Forum of Incident Response and Security Teams. *Common Vulnerability Scoring System version 4.0 specification.* https://www.first.org/cvss/v4.0/specification-document
-12. OWASP Foundation. *Application Security Verification Standard.* https://asvs.owasp.org/
-13. OWASP Foundation. *Mobile Application Security Verification Standard.* https://mas.owasp.org/MASVS/
-14. PCI Security Standards Council. *Document Library.* https://www.pcisecuritystandards.org/document_library/
+**SOURCES · REFERENCE**
+
+<a id="sources"></a>
+
+# Sources
 
 Sources were accessed in November 2026. Provider rules and standards can change. Recheck the current controlling document during each engagement.
 
-# About Sthuthi Securities
-
-Sthuthi Securities is the cybersecurity testing and remediation service from Sthuthi Technologies, LLC. It provides authorized penetration testing, AI security assessments, SaaS and cloud reviews, compliance-readiness support, remediation, and verified retesting.
-
-The team’s assessment model connects scope, authorization, evidence, human review, specific corrections, and retesting. Testing begins only after ownership, targets, allowed actions, and the test window are recorded.
-
-Website: https://sthuthi-tech.com  
-Security application: use the assessment request page in Sthuthi Securities  
-
-## Workbook completion record
-
-| Field | Final value |
-|---|---|
-| Organization |  |
-| Product or system |  |
-| Scope version |  |
-| Prepared by |  |
-| Reviewed by |  |
-| Approved by |  |
-| Authorization reference |  |
-| Date issued |  |
-| Next review date |  |
-
-# Part IV — Technical and evidence field modules
-
-These modules answer recurring questions that appear across customer reviews, program design, penetration-test planning, and AI-agent assessment. Use only the modules that match the product and decision in scope.
-
-## Field module 1: How to Scope a Web Application Penetration Test
-
-*Primary keyword: web application penetration test scope. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A useful web application penetration-test scope names the application, backing APIs, environments, authenticated roles, tenant boundaries, sensitive workflows, allowed testing actions, exclusions, dates, deliverables, and retest terms.** If one of those is missing, quotes will not be comparable and coverage will be ambiguous.
-
-Good scoping is not administrative overhead. It controls safety, cost, testing depth, and the meaning of the final report. “Test our web app” can describe a three-day unauthenticated review or weeks of authenticated business-logic work. The tester needs enough detail to estimate effort without collecting secrets or customer records during sales.
-
-#### Start with the decision the report must support
-
-Write one sentence that explains why the assessment exists. Examples:
-
-- An enterprise customer requires an independent application test before contract signature.
-
-- An auditor asked for evidence that authenticated access controls were tested.
-
-- The product now supports refunds and administrators want the approval flow tested.
-
-- A new multi-tenant architecture needs an independent check before migration.
-
-The decision determines the evidence. A launch review may prioritize high-risk workflows and release blockers. A customer-requested report may need an executive summary and defined remediation status. A regulated scope may need particular systems, tester qualifications, or dates.
-
-#### 1. Name the application boundary
-
-List the exact hosts, application names, and environment. Include alternate domains used for authentication, file delivery, administration, or regional deployments. State which systems are owned by your organization and which are operated by third parties.
-
-The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) covers configuration, identity, authentication, authorization, sessions, input validation, error handling, cryptography, business logic, client-side behavior, and APIs. That breadth is useful, but the guide is not a substitute for naming your specific product boundary.
-
-> **Do not use a wildcard as the scope.** “Everything under example.com” can include marketing systems, vendors, abandoned hosts, and services the client is not authorized to test.
-
-#### 2. Decide whether the backing API is included
-
-A web application test normally exercises the endpoints used by the browser. That does not automatically cover every API endpoint, mobile route, partner API, service credential, GraphQL operation, or deprecated version. If the API is a product in its own right, give it a separate inventory and role matrix.
-
-Read [API pentest versus web application pentest](/blog/api-pentest-vs-web-application-pentest) before combining the scopes. The [OWASP API Security Top 10](https://api-security.owasp.org/) highlights broken object and function authorization, unrestricted resource consumption, sensitive business flows, inventory problems, and unsafe third-party API use. Those risks often require endpoint and role coverage beyond the browser's normal path.
-
-#### 3. Map roles, accounts, and tenants
-
-Provide a role matrix showing what each account should be allowed to view and do. Common roles include unauthenticated user, customer member, customer administrator, support agent, finance operator, partner, and internal administrator. Add two test tenants when customer isolation matters.
-
-| Role | Expected access | High-risk actions |
-| --- | --- | --- |
-| Customer member | Own tenant records | Export, file access, API tokens |
-| Customer admin | Own tenant users and settings | Invite, role change, integration setup |
-| Support agent | Assigned customer cases | Impersonation, resets, private records |
-| Finance operator | Approved billing workflows | Refunds, payout details, credits |
-
-Do not send passwords in the scoping form or ordinary email. Record the account types first, then arrange a controlled credential handoff after the scope and authorization are agreed. Sthuthi's [security and data-handling page](/security) explains this boundary.
-
-#### 4. Identify the workflows where failure has material impact
-
-Page count is a weak estimate of application complexity. A six-page product may contain payments, file imports, account recovery, administrative impersonation, and cross-tenant search. A hundred-page documentation portal may have little authenticated logic.
-
-List the workflows that can expose data, change authority, move money, execute code, publish content, or connect another system. For each workflow, state the expected rule. A tester can then check whether the server enforces it rather than merely recording that the interface hides a button.
-
-#### 5. Choose the access model
-
-#### Black-box testing
-
-The tester begins with public information and no authenticated context. This can model an outside attacker, but it may spend time rediscovering facts the team already knows and may provide shallow coverage of authenticated controls.
-
-#### Gray-box testing
-
-The tester receives representative accounts, architecture context, and agreed test data. For most authenticated SaaS products, this produces better coverage per testing hour because the assessor can compare roles and tenants directly.
-
-#### Source-assisted testing
-
-The tester can inspect selected source, configuration, or API definitions to target complex controls. This can be valuable for authorization middleware, cryptographic use, or unusual workflows. It should not be described as a complete secure-code review unless the scope and effort support that claim.
-
-[NIST SP 800-115](https://csrc.nist.gov/pubs/sp/800/115/final) describes several testing and examination techniques and their limitations. Choose the access model based on the objective, not on which label sounds more adversarial.
-
-#### 6. Define the environment and test data
-
-A test environment should represent production controls closely enough for the result to matter. Confirm authentication, authorization, feature flags, integrations, and data shape. Use representative fake data where possible. If production testing is necessary, identify sensitive operations that require notice or approval.
-
-State whether emails, webhooks, SMS messages, payments, refunds, deletion, file processing, third-party API calls, and background jobs are safe to trigger. Provide sandbox credentials for payment or messaging providers when those workflows are in scope.
-
-#### 7. Write allowed actions, exclusions, and stop conditions
-
-Written authorization should name the target, owner, test window, source addresses where relevant, allowed techniques, request limits, contacts, and stop conditions. Explicitly address denial-of-service testing, social engineering, persistence, destructive actions, data export, cloud metadata access, and third-party systems.
-
-Cloud rules may add constraints. Review the provider's policy, such as the [AWS penetration-testing policy](https://aws.amazon.com/security/penetration-testing/), before fieldwork. Client authorization does not grant permission to attack a vendor's independent service.
-
-#### 8. Define deliverables before testing starts
-
-A strong report should include:
-
-- scope, dates, targets, versions, roles, and exclusions;
-
-- methodology and completed coverage;
-
-- executive summary written for the decision maker;
-
-- finding title, affected workflow, evidence, reproduction, and impact;
-
-- severity rationale and recommended change;
-
-- limitations and remaining untested areas;
-
-- report version and reviewer;
-
-- retest result tied to new evidence.
-
-Ask for a redacted sample. Our [sample report](/sample-report) shows the minimum chain from observation to fix and retest. The [OWASP Application Security Verification Standard](https://owasp.org/www-project-application-security-verification-standard/) can help teams describe security requirements, while the WSTG provides testing techniques. Neither should be pasted into a report as proof that every check was completed.
-
-#### 9. Agree on retesting
-
-Define how long the included retest remains available, which findings it covers, whether design changes create a new scope, and what evidence marks a finding verified. Retesting should repeat the relevant scenario against the corrected version and record the observed result. “Developer says fixed” is a remediation status, not verification.
-
-#### Scoping checklist
-
-- Business reason and deadline
-
-- Named application, domains, and environment
-
-- Included API endpoints or inventory
-
-- Roles, test accounts, and tenant pairs
-
-- Critical workflows and expected rules
-
-- Third-party services and ownership
-
-- Allowed actions and explicit exclusions
-
-- Request limits, contacts, and stop conditions
-
-- Report recipients and required format
-
-- Retest window and acceptance evidence
-
-#### Frequently asked questions
-
-#### How long does a web application penetration test take?
-
-It depends on roles, workflows, APIs, integrations, and reporting needs. Sthuthi's standard launch scope is roughly ten business days after access and authorization are ready, but the written scope controls the estimate.
-
-#### How many test accounts should we provide?
-
-Provide at least one account for each material role and two representative tenants when isolation matters. More accounts may be needed for invitation, approval, support, or payment workflows.
-
-#### Should the API be a separate test?
-
-Use a separate API scope when it has endpoints, clients, credentials, roles, or business flows that the web application does not exercise.
-
-#### Can the tester use production customer data?
-
-Avoid it. Use representative fake data where possible. If production evidence is unavoidable, define collection, redaction, access, retention, and deletion before testing.
-
-## Field module 2: API Pentest vs Web Application Pentest: What Each Scope Covers
-
-*Primary keyword: API pentest vs web application pentest. Originally prepared for the Sthuthi Securities knowledge base; revised here as a book module.*
-
-**A web application penetration test follows user-facing workflows through the browser and the application behind them. An API penetration test works from the API inventory, credentials, roles, objects, and business operations directly.** They overlap, but a web test does not automatically cover every API endpoint or client.
-
-The correct scope depends on how the product is built and sold. If one browser application is the only API client, a combined test may be efficient. If mobile apps, partners, service accounts, and customer integrations use the same API, the API needs its own coverage plan.
-
-#### The practical difference
-
-| Area | Web application pentest | API pentest |
-| --- | --- | --- |
-| Starting point | User journeys and browser behavior | Endpoint inventory and API operations |
-| Identity | Login, sessions, recovery, browser tokens | API keys, OAuth, service credentials, bearer tokens |
-| Authorization | Roles and actions visible through the app | Object and function rules across every included operation |
-| Business logic | Multi-step UI workflows | Direct calls, sequence changes, automation, bulk operations |
-| Input surface | Forms, files, URLs, client-rendered content | Parameters, bodies, headers, schemas, GraphQL operations |
-| Coverage risk | May miss unused or partner endpoints | May miss browser-only behavior and client-side failures |
-
-#### What a web application penetration test covers
-
-A web application test examines the system as a user and attacker encounter it through the browser. The assessor reviews public entry points, authentication, sessions, account recovery, role changes, tenant boundaries, file handling, input processing, client-side behavior, and application-specific workflows.
-
-The [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide) organizes these areas into practical testing domains. Its business-logic section matters because high-impact failures often follow valid requests in the wrong order, with the wrong identity, or against another customer's object.
-
-During a web test, the assessor will also see API requests made by the browser. Those requests should be tested. The limit is inventory: the browser reveals the endpoints used by the tested workflows, not necessarily every endpoint the API exposes.
-
-#### What an API penetration test covers
-
-An API test begins with a defined inventory: hosts, versions, protocols, operations, schemas, authentication methods, roles, object types, and sensitive business flows. The tester sends requests directly rather than relying on the interface to generate them.
-
-The [OWASP API Security Top 10](https://api-security.owasp.org/) puts broken object-level authorization first. The question is simple: if Account A changes an identifier to one owned by Account B, does the server reject it? The same discipline applies to function-level authorization: can a lower-privilege identity call an administrative operation directly?
-
-An API scope may also cover:
-
-- REST, GraphQL, gRPC, SOAP, or event-driven interfaces where supported;
-
-- API keys, OAuth clients, machine identities, and service-to-service credentials;
-
-- mass assignment and object-property authorization;
-
-- rate limits, resource consumption, and cost-amplifying requests;
-
-- bulk operations, exports, imports, and automation;
-
-- versioning, deprecated endpoints, and undocumented operations;
-
-- unsafe trust in third-party API responses.
-
-#### The largest overlap is authorization
-
-Both scopes should test authentication and authorization, but they approach coverage differently. The web test asks whether a user can misuse the product's workflows. The API test asks whether each included operation enforces the identity, role, tenant, object, and state rules the product depends on.
-
-Suppose a support application lets an agent search orders. The web test may manipulate the order reference inside the normal search flow. The API test should also enumerate related endpoints: order detail, export, refund, note history, attachments, and bulk search. A secure browser route does not compensate for an unprotected export endpoint.
-
-#### When a web test is enough
-
-A web application scope may be enough when:
-
-- the browser application is the only meaningful API client;
-
-- the included workflows exercise the sensitive endpoints;
-
-- there are few roles and no separate machine identities;
-
-- the report need concerns the product rather than the complete API platform;
-
-- the scope clearly states which API behavior was and was not tested.
-
-Do not describe this as a complete API penetration test. State that the backing endpoints used by the included web workflows were assessed.
-
-#### When the API needs its own scope
-
-Create a separate or combined API scope when:
-
-- customers or partners integrate directly;
-
-- mobile, desktop, or IoT clients use endpoints the browser does not;
-
-- service accounts or OAuth clients have distinct permissions;
-
-- GraphQL exposes a broad schema;
-
-- deprecated versions remain reachable;
-
-- bulk operations or sensitive business flows can be called directly;
-
-- the auditor or customer explicitly asked for API testing.
-
-#### How to scope a combined assessment
-
-Use one written system map. List the browser workflows, API operations, roles, tenants, and credentials. Mark which endpoints each client uses. Identify the expected authorization rule for sensitive objects and functions. Then allocate testing time to both workflow abuse and endpoint coverage.
-
-Our [web application penetration-test scoping guide](/blog/how-to-scope-web-application-penetration-test) provides the complete checklist. The [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/) can help define application security requirements, while the API Top 10 highlights recurring API risks. Neither replaces a product-specific threat model and role matrix.
-
-#### What the report should say
-
-The report must separate completed web and API coverage. It should list the application, hosts, API versions, operations or collections, roles, tenants, and excluded clients. Findings should name the affected workflow and endpoint, show the sanitized request and response, explain the expected rule, and record the server's observed decision.
-
-Read [what a useful penetration-test report contains](/blog/what-a-penetration-test-report-should-contain) before reviewing proposals. A list of generic vulnerability names is not enough to prove which product rules were tested.
-
-#### Frequently asked questions
-
-#### Does a web application penetration test include APIs?
-
-It normally tests API calls used by the included browser workflows. It does not automatically cover every endpoint, API version, client, or service credential.
-
-#### Is API testing only automated?
-
-No. Tools help enumerate and replay requests, but authorization, workflow, and business-impact testing require human reasoning and product context.
-
-#### Do we need to provide an OpenAPI specification?
-
-It helps establish inventory, but it may be incomplete. Provide the specification, collections, GraphQL schema, authentication details, role matrix, and known undocumented or deprecated routes.
-
-#### Should mobile APIs be included in a web test?
-
-Only when the written scope includes them. A mobile client may use different endpoints, tokens, device assumptions, or versions and often deserves explicit coverage.
-
-# Sources and further reading
-
-Sources were checked on 4 November 2026. Version facts are stated where material. Recommendations in this guide are Sthuthi guidance, not attributed requirements.
-
-- [NIST Cybersecurity Framework 2.0](https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20)
-- [NIST SP 800-115 Technical Guide to Information Security Testing and Assessment](https://csrc.nist.gov/pubs/sp/800/115/final)
-- [NIST SP 800-218 Secure Software Development Framework](https://csrc.nist.gov/pubs/sp/800/218/final)
-- [CIS Controls v8.1](https://www.cisecurity.org/controls/v8-1)
-- [FTC Start with Security](https://www.ftc.gov/business-guidance/resources/start-security-guide-business)
-- [OWASP Web Security Testing Guide](https://owasp.org/projects/web-security-testing-guide)
-- [OWASP API Security Project](https://owasp.org/projects/api-security-project)
-- [OWASP Software Assurance Maturity Model](https://owasp.org/projects/samm)
-- [Cloud Security Alliance CCM and CAIQ v4.1](https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4-1)
-- [AICPA System and Organization Controls resources](https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services/)
-- [CISA Secure by Design](https://www.cisa.gov/securebydesign)
-
-# Completion record
-
-| Record | Entry |
-|---|---|
-| Product or program |  |
-| Scope owner |  |
-| Executive approver |  |
-| Version reviewed |  |
-| Review completed |  |
-| Open exceptions |  |
-| Next review |  |
+1. National Institute of Standards and Technology. *Technical Guide to Information Security Testing and Assessment, NIST SP 800-115.* [https://csrc.nist.gov/pubs/sp/800/115/final](https://csrc.nist.gov/pubs/sp/800/115/final)
+2. OWASP Foundation. *Web Security Testing Guide.* [https://wstg.owasp.org/](https://wstg.owasp.org/)
+3. OWASP Foundation. *Map Application Architecture, WSTG-INFO-10.* [https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/01-Information_Gathering/10-Map_Application_Architecture/](https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/01-Information_Gathering/10-Map_Application_Architecture/)
+4. OWASP Foundation. *Bypassing Authorization Schema, WSTG-ATHZ-02.* [https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/05-Authorization/02-Bypassing_Authorization_Schema/](https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/05-Authorization/02-Bypassing_Authorization_Schema/)
+5. OWASP Foundation. *OWASP API Security Top 10 2023.* [https://api-security.owasp.org/](https://api-security.owasp.org/)
+6. Amazon Web Services. *AWS Customer Support Policy for Penetration Testing.* [https://aws.amazon.com/security/penetration-testing/](https://aws.amazon.com/security/penetration-testing/)
+7. Microsoft. *Penetration testing on Azure.* [https://learn.microsoft.com/en-us/azure/security/fundamentals/pen-testing](https://learn.microsoft.com/en-us/azure/security/fundamentals/pen-testing)
+8. Google Cloud. *Cloud Security FAQ, penetration testing.* [https://support.google.com/cloud/answer/6262505](https://support.google.com/cloud/answer/6262505)
+9. OWASP Foundation. *Attack Surface Identification.* [https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/01-Information_Gathering/04-Attack_Surface_Identification/](https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/01-Information_Gathering/04-Attack_Surface_Identification/)
+10. National Institute of Standards and Technology. *Rules of Engagement glossary definition.* [https://csrc.nist.gov/glossary/term/Rules_of_Engagement](https://csrc.nist.gov/glossary/term/Rules_of_Engagement)
+11. Forum of Incident Response and Security Teams. *Common Vulnerability Scoring System version 4.0 specification.* [https://www.first.org/cvss/v4.0/specification-document](https://www.first.org/cvss/v4.0/specification-document)
+12. OWASP Foundation. *Application Security Verification Standard.* [https://asvs.owasp.org/](https://asvs.owasp.org/)
+13. OWASP Foundation. *Mobile Application Security Verification Standard.* [https://mas.owasp.org/MASVS/](https://mas.owasp.org/MASVS/)
+14. PCI Security Standards Council. *Document Library.* [https://www.pcisecuritystandards.org/document_library/](https://www.pcisecuritystandards.org/document_library/)
+
+---
+
+**ABOUT · STHUTHI SECURITIES**
+
+<a id="about"></a>
+
+# About the author
+
+**Shalini Tomar** is the CEO of Sthuthi Technologies, LLC, and leads its cybersecurity practice, Sthuthi Securities. She works with SaaS teams that need to show enterprise buyers clear, scoped, and current evidence of how their products are secured.
 
 # About Sthuthi Securities
 
-Sthuthi Securities is the cybersecurity practice of Sthuthi Technologies, LLC. It provides scoped penetration testing, AI security assessment, security remediation support, retesting, and evidence-focused guidance for teams that need clear technical findings and controlled proof.
+Sthuthi Securities is the cybersecurity practice of Sthuthi Technologies, LLC. It tests web applications, APIs, cloud systems, and AI agents, then helps teams fix and retest what it finds. Engagements are scoped in writing and authorized by the system owner, and they end with findings and evidence a buyer’s reviewer can use.
 
-Internal links: [Sthuthi Securities services](/services) · [Security knowledge base](/blog) · [Sample penetration-test report](/sample-report) · [Resource library](/resources)
+Penetration testing
+
+Web application, API, and cloud testing with clear scope and safe rules of engagement.
+
+AI security assessment
+
+Tool permissions, tenant isolation, and prompt-injection testing for AI agents.
+
+Remediation support
+
+Working with your engineers to fix the cause, not just the symptom.
+
+Retesting and evidence
+
+Independent verification and summary letters you can share with buyers.
+
+More field guides at sthuthi-tech.com
+
+Passing enterprise security reviews · The first 90 days of a security program · Preparing for a customer audit · Repeatable testing · AI security for support agents · Security proof for enterprise deals
+
+---

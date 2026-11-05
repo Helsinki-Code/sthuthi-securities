@@ -75,7 +75,7 @@ const server = http.createServer(async (req, res) => {
     try {
       const body = await fs.readFile(candidate);
       const ext = path.extname(candidate);
-      const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml', '.xml': 'application/xml', '.txt': 'text/plain' };
+      const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.xml': 'application/xml', '.txt': 'text/plain' };
       res.writeHead(200, { 'content-type': types[ext] || 'application/octet-stream' });
       return res.end(body);
     } catch {

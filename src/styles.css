@@ -208,11 +208,15 @@ textarea { resize: vertical; }
 .resource-library-heading > p { color: var(--muted); font-size: 1.05rem; }
 .resource-library-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.4rem, 2.5vw, 2.2rem); align-items: stretch; }
 .resource-guide-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); box-shadow: 6px 7px 0 rgba(31, 61, 79, .09); min-width: 0; overflow: hidden; }
-.resource-guide-card > img { display: block; width: 100%; aspect-ratio: 3 / 4; height: auto; object-fit: cover; object-position: center; background: var(--paper-2); border-bottom: 1px solid var(--line); }
+.resource-guide-card > img { display: block; width: 100%; aspect-ratio: 1500 / 2098; height: auto; object-fit: contain; object-position: center; background: var(--paper-2); border-bottom: 1px solid var(--line); }
 .resource-guide-copy { padding: clamp(1.2rem, 2vw, 1.6rem); display: flex; flex: 1; flex-direction: column; min-width: 0; }
 .resource-guide-copy h3 { margin: .55rem 0 .8rem; font-size: clamp(1.35rem, 1.8vw, 1.85rem); line-height: 1.04; overflow-wrap: anywhere; }
 .resource-guide-copy > p:not(.kicker) { color: var(--muted); font-size: .91rem; }
 .resource-word-count { margin: auto 0 1rem; padding-top: 1rem; color: var(--nav-2); font: 700 .7rem 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .04em; }
+.resource-download-group { border-top: 1px solid var(--line); padding-top: 1rem; margin-top: 1rem; }
+.resource-download-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .65rem; }
+.resource-download-heading h4 { margin: 0; font-size: .93rem; }
+.resource-download-heading span { color: var(--muted); font: 600 .61rem 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .04em; }
 .resource-guide-downloads { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
 .resource-guide-downloads a { display: flex; align-items: center; gap: .5rem; min-width: 0; padding: .65rem; background: var(--paper); border: 1px solid var(--line); transition: border-color .15s, transform .15s; }
 .resource-guide-downloads a:hover { border-color: var(--coral); transform: translateY(-1px); }

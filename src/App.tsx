@@ -14,13 +14,6 @@ const situations = [
   'A security questionnaire is holding up a deal.', 'You need to get SOC 2 ready.',
 ];
 
-const workbookFormats = [
-  { format: 'pdf', label: 'Download PDF', detail: 'Print-ready · 1.6 MB', file: 'Penetration-Test-Scoping-Workbook.pdf', primary: true },
-  { format: 'docx', label: 'Download DOCX', detail: 'Editable · 3.8 MB', file: 'Penetration-Test-Scoping-Workbook.docx' },
-  { format: 'epub', label: 'Download EPUB', detail: 'E-reader · 2.9 MB', file: 'Penetration-Test-Scoping-Workbook.epub' },
-  { format: 'md', label: 'Download Markdown', detail: 'Plain source · 60 KB', file: 'Penetration-Test-Scoping-Workbook.md' },
-];
-
 const resourceGuides = [
   { slug: 'saas-founders-enterprise-security-reviews', file: 'The-SaaS-Founders-Guide-to-Passing-Enterprise-Security-Reviews', category: 'Enterprise security', title: 'The SaaS Founder’s Guide to Passing Enterprise Security Reviews', description: 'Build one truthful evidence system for questionnaires, customer calls, audits, renewals, and enterprise deals.', words: '12,403' },
   { slug: 'scope-web-app-api-penetration-test', file: 'How-to-Scope-a-Web-Application-and-API-Penetration-Test', category: 'Penetration testing', title: 'How to Scope a Web Application and API Penetration Test', description: 'Define targets, roles, tenants, workflows, safety rules, evidence, reporting, and retesting before testing begins.', words: '10,322' },
@@ -32,10 +25,16 @@ const resourceGuides = [
 ];
 
 const guideFormats = [
-  { format: 'pdf', label: 'PDF', detail: 'Print-ready' },
-  { format: 'docx', label: 'DOCX', detail: 'Editable' },
-  { format: 'epub', label: 'EPUB', detail: 'E-reader' },
-  { format: 'md', label: 'Markdown', detail: 'Source' },
+  { key: 'guide-pdf', extension: 'pdf', label: 'PDF', detail: 'Print-ready guide' },
+  { key: 'guide-docx', extension: 'docx', label: 'DOCX', detail: 'Editable guide' },
+  { key: 'guide-epub', extension: 'epub', label: 'EPUB', detail: 'E-reader guide' },
+  { key: 'guide-md', extension: 'md', label: 'Markdown', detail: 'Plain-text source' },
+];
+
+const worksheetFormats = [
+  { key: 'worksheet-pdf', extension: 'pdf', label: 'PDF', detail: 'Printable worksheets' },
+  { key: 'worksheet-docx', extension: 'docx', label: 'DOCX', detail: 'Editable worksheets' },
+  { key: 'worksheet-xlsx', extension: 'xlsx', label: 'XLSX', detail: 'Working spreadsheet' },
 ];
 
 function useDocumentMeta() {
@@ -372,7 +371,7 @@ function formatArticleDate(value: string) {
 
 function ArticleCard({ article }: { article: Article }) {
   return <article className="article-card">
-    <Link className="article-card-image" to={`/blog/${article.slug}`} tabIndex={-1} aria-hidden="true"><img src={article.featuredImage} alt="" loading="lazy" /></Link>
+    <Link className="article-card-image" to={`/blog/${article.slug}`} tabIndex={-1} aria-hidden="true"><img src={article.featuredImage} alt={article.featuredAlt} loading="lazy" /></Link>
     <div className="article-card-copy">
       <p className="kicker">{article.category}</p>
       <h2><Link to={`/blog/${article.slug}`}>{article.title}</Link></h2>
@@ -393,6 +392,23 @@ function BlogIndex() {
   </Layout>;
 }
 
+function ResourceDownloadGroup({ guide, worksheet = false }: { guide: (typeof resourceGuides)[number]; worksheet?: boolean }) {
+  const formats = worksheet ? worksheetFormats : guideFormats;
+  const groupLabel = worksheet ? 'Worksheet pack' : 'Complete guide';
+  const fileBase = worksheet ? `${guide.file}-Worksheet-Pack` : guide.file;
+  return <div className="resource-download-group">
+    <div className="resource-download-heading"><h4>{groupLabel}</h4><span>{formats.length} formats</span></div>
+    <div className="resource-guide-downloads" aria-label={`Download the ${groupLabel.toLowerCase()} for ${guide.title}`}>
+      {formats.map(item => <a
+        className={item.key === 'guide-pdf' || item.key === 'worksheet-xlsx' ? 'primary' : ''}
+        href={`/api/resources/${guide.slug}/download?format=${item.key}`}
+        download={`${fileBase}.${item.extension}`}
+        key={item.key}
+      ><Download /><span><strong>{item.label}</strong><small>{item.detail}</small></span></a>)}
+    </div>
+  </div>;
+}
+
 function ResourcesPage() {
   useEffect(() => {
     const script = document.createElement('script');
@@ -400,61 +416,46 @@ function ResourcesPage() {
     script.id = 'resource-structured-data';
     script.text = JSON.stringify({
       '@context': 'https://schema.org', '@type': 'ItemList', name: 'Sthuthi Securities resource library',
-      itemListElement: [
-        { '@type': 'DigitalDocument', position: 1, name: 'Penetration Test Scoping Workbook' },
-        ...resourceGuides.map((guide, index) => ({ '@type': 'DigitalDocument', position: index + 2, name: guide.title, description: guide.description })),
-      ].map(item => ({ ...item, author: { '@type': 'Organization', name: 'Sthuthi Securities' }, publisher: { '@type': 'Organization', name: 'Sthuthi Technologies, LLC' }, datePublished: '2026-11-04', inLanguage: 'en', isAccessibleForFree: true })),
+      itemListElement: resourceGuides.map((guide, index) => ({
+        '@type': 'DigitalDocument', position: index + 1, name: guide.title, description: guide.description,
+        author: { '@type': 'Organization', name: 'Sthuthi Securities' },
+        publisher: { '@type': 'Organization', name: 'Sthuthi Technologies, LLC' },
+        datePublished: '2026-11-04', inLanguage: 'en', isAccessibleForFree: true,
+        hasPart: [
+          { '@type': 'DigitalDocument', name: `${guide.title} guide`, encodingFormat: ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/epub+zip', 'text/markdown'] },
+          { '@type': 'DigitalDocument', name: `${guide.title} worksheet pack`, encodingFormat: ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'] },
+        ],
+      })),
     });
     document.head.querySelector('#resource-structured-data')?.remove();
     document.head.appendChild(script);
     return () => script.remove();
   }, []);
   return <Layout>
-    <PageHero kicker="Free security field guides" title="Eight practical resources for security work that cannot stay vague." body="Use the scoping workbook and seven long-form guides to prepare evidence, plan authorized testing, build a startup security program, secure AI support agents, and move enterprise reviews forward. Every edition is available without an email gate." aside={<img className="mascot page-mascot" src="/art/sthuthi-guide-planning.png" alt="Sthuthi guide planning a security assessment" />} />
-    <section className="resource-feature section-shell" aria-labelledby="scoping-workbook-title">
-      <div className="resource-cover-wrap">
-        <img className="resource-cover" src="/resources/penetration-test-scoping-workbook/assets/cover.png" alt="Cover of the Penetration Test Scoping Workbook" />
-        <span className="resource-free">Free download</span>
-      </div>
-      <div className="resource-copy">
-        <p className="kicker">Penetration testing · Workbook</p>
-        <h2 id="scoping-workbook-title">Penetration Test Scoping Workbook</h2>
-        <p className="resource-intro">Define the targets, roles, test rules, evidence, reporting, and retesting before an authorized assessment. The workbook turns a loose request into a reviewable scope and rules-of-engagement record.</p>
-        <div className="resource-facts" aria-label="Workbook details">
-          <span><strong>44</strong> rendered pages</span><span><strong>31</strong> editable tables</span><span><strong>14</strong> chapters</span><span><strong>4</strong> file formats</span>
-        </div>
-        <div className="download-grid" aria-label="Download the workbook">
-          {workbookFormats.map(item => <a className={`download-option${item.primary ? ' primary' : ''}`} href={`/resources/penetration-test-scoping-workbook/${item.file}`} download={item.file} key={item.format}>
-            <Download /><span><strong>{item.label}</strong><small>{item.detail}</small></span>
-          </a>)}
-        </div>
-        <p className="resource-download-note"><ShieldCheck /> Files are served directly from Sthuthi Securities with fixed filenames and file-type checks.</p>
-      </div>
-    </section>
+    <PageHero kicker="Free security field guides and worksheets" title="Seven complete working resources for high-stakes security decisions." body="Each resource includes the full guide in PDF, DOCX, EPUB, and Markdown, plus a separate worksheet pack in PDF, DOCX, and XLSX. Download only the formats your team can actually use. No email gate." aside={<img className="mascot page-mascot" src="/art/sthuthi-guide-planning.png" alt="Sthuthi guide organizing security guides and worksheet packs" />} />
     <section className="section-shell resource-library" aria-labelledby="guide-library-title">
-      <div className="resource-library-heading"><div><p className="kicker">Seven complete field guides</p><h2 id="guide-library-title">Choose the guide that matches the decision in front of you.</h2></div><p>These are 10,000–13,000-word working guides, not short checklists. Each includes a source ledger, an operating model, worksheets, a worked case, technical field modules, and direct links to primary references.</p></div>
+      <div className="resource-library-heading"><div><p className="kicker">Seven guides · seven worksheet packs</p><h2 id="guide-library-title">Choose the resource that matches the work in front of you.</h2></div><p>Read the guide for the operating model, examples, and source-backed guidance. Use the separate worksheets to assign owners, capture decisions, collect evidence, and turn the guidance into repeatable work.</p></div>
       <div className="resource-library-grid">
         {resourceGuides.map(guide => <article className="resource-guide-card" key={guide.slug}>
-          <img src={`/resources/${guide.slug}/assets/cover.png`} alt={`Cover of ${guide.title}`} loading="lazy" />
+          <img src={`/resources/${guide.slug}/assets/cover.jpg`} alt={`Cover of ${guide.title} by Sthuthi Securities`} loading="lazy" />
           <div className="resource-guide-copy">
-            <p className="kicker">{guide.category} · Field guide</p>
+            <p className="kicker">{guide.category} · Guide + worksheets</p>
             <h3>{guide.title}</h3>
             <p>{guide.description}</p>
-            <span className="resource-word-count">{guide.words} words · 4 formats</span>
-            <div className="resource-guide-downloads" aria-label={`Download ${guide.title}`}>
-              {guideFormats.map(item => <a className={item.format === 'pdf' ? 'primary' : ''} href={`/resources/${guide.slug}/${guide.file}.${item.format}`} download={`${guide.file}.${item.format}`} key={item.format}><Download /><span><strong>{item.label}</strong><small>{item.detail}</small></span></a>)}
-            </div>
+            <span className="resource-word-count">{guide.words} guide words · 7 downloadable files</span>
+            <ResourceDownloadGroup guide={guide} />
+            <ResourceDownloadGroup guide={guide} worksheet />
           </div>
         </article>)}
       </div>
-      <p className="resource-download-note"><ShieldCheck /> Every button points to a published file with a fixed filename. The same links work on static hosting and the Sthuthi application server.</p>
+      <p className="resource-download-note"><ShieldCheck /> Every download is checked against a server-side allowlist and served with its real filename and file type.</p>
     </section>
     <section className="resource-chooser">
       <div className="section-shell">
         <div className="resource-chooser-heading"><p className="kicker">Start with the business problem</p><h2>Use the smallest set of resources that answers the real question.</h2><p>Do not begin with a framework name or a document request. Begin with the decision, system boundary, evidence audience, and action that follows.</p></div>
         <div className="resource-chooser-grid">
           <article><span>01</span><h3>An enterprise deal is blocked</h3><p>Use the founder’s review guide, the customer-audit guide, and the security-proof guide to build consistent claims and a controlled evidence package.</p></article>
-          <article><span>02</span><h3>You need to buy a penetration test</h3><p>Complete the scoping workbook, then use the web-and-API scoping guide to define roles, tenants, workflows, authorization, reporting, and retesting.</p></article>
+          <article><span>02</span><h3>You need to buy a penetration test</h3><p>Use the web-and-API scoping guide and its worksheets to define roles, tenants, workflows, authorization, reporting, and retesting before requesting proposals.</p></article>
           <article><span>03</span><h3>Your security program is becoming repeatable</h3><p>Start with the first-90-days guide, then use the testing-program guide to connect asset risk, assessment triggers, remediation, verification, and measures.</p></article>
           <article><span>04</span><h3>An AI support agent can take action</h3><p>Use the AI security guide to map identity, tenant boundaries, retrieval, memory, tools, approval gates, logs, evaluation fixtures, and containment.</p></article>
         </div>
@@ -462,13 +463,13 @@ function ResourcesPage() {
     </section>
     <section className="resource-details">
       <div className="section-shell resource-detail-grid">
-        <div><p className="kicker">What is inside</p><h2>A usable scope, not a blank asset list.</h2><p>The workbook covers application, API, mobile, cloud, SaaS, AI, third-party, data, and environment boundaries. It includes role and tenant matrices, authorization checks, stop conditions, evidence requirements, a vendor scorecard, and a completed multi-tenant SaaS example.</p></div>
+        <div><p className="kicker">What each package gives you</p><h2>Guidance for the decision. Worksheets for the work.</h2><p>The guide explains the operating model, risks, evidence standards, examples, and source material. The worksheet pack separates the working documents so teams can edit them directly, print them for a workshop, or manage structured data in a spreadsheet.</p></div>
         <ul className="resource-checks">
-          {['Assessment decision brief', 'Asset and authority register', 'Role, tenant, and workflow matrices', 'Rules of engagement and stop conditions', 'Evidence and report acceptance criteria', 'Remediation and retest agreement', 'One-page scope brief', 'Complete SaaS worked example'].map(item => <li key={item}><Check />{item}</li>)}
+          {['Print-ready PDF guide', 'Editable DOCX guide', 'EPUB for e-readers', 'Markdown source', 'Printable PDF worksheets', 'Editable DOCX worksheets', 'Structured XLSX worksheets', 'Fixed, verified download filenames'].map(item => <li key={item}><Check />{item}</li>)}
         </ul>
       </div>
     </section>
-    <section className="section-shell resource-use"><div><p className="kicker">Use it safely</p><h2>The workbook supports planning. It does not grant authority.</h2></div><p>Confirm ownership, third-party permissions, cloud-provider rules, privacy obligations, and applicable law before testing. Written authorization must identify the actual targets, allowed actions, test window, contacts, and stop conditions.</p><Link className="text-link" to="/how-it-works">See the assessment process <ArrowRight /></Link></section>
+    <section className="section-shell resource-use"><div><p className="kicker">Use the testing resources safely</p><h2>A guide supports planning. It does not grant authority to test a system.</h2></div><p>Confirm ownership, third-party permissions, cloud-provider rules, privacy obligations, and applicable law before testing. Written authorization must identify the actual targets, allowed actions, test window, contacts, and stop conditions.</p><Link className="text-link" to="/how-it-works">See the assessment process <ArrowRight /></Link></section>
     <RequestPanel service="penetration-testing" />
   </Layout>;
 }
@@ -481,18 +482,35 @@ function ArticlePage() {
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.id = 'article-structured-data';
-    script.text = JSON.stringify({
-      '@context': 'https://schema.org', '@type': 'Article', headline: article.title,
+    const articleSchema = {
+      '@type': 'Article', headline: article.title,
       description: article.description, datePublished: article.published, dateModified: article.updated,
-      image: article.featuredImage, author: { '@type': 'Organization', name: 'Sthuthi Securities' },
+      image: article.featuredImage,
+      author: {
+        '@type': 'Person', name: 'Shalini Tomar', jobTitle: 'CEO',
+        worksFor: { '@type': 'Organization', name: 'Sthuthi Technologies, LLC' },
+      },
       publisher: { '@type': 'Organization', name: 'Sthuthi Technologies, LLC' },
+    };
+    script.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': article.faqs.length ? [articleSchema, {
+        '@type': 'FAQPage',
+        mainEntity: article.faqs.map(faq => ({
+          '@type': 'Question', name: faq.question,
+          acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+        })),
+      }] : [articleSchema],
     });
     document.head.querySelector('#article-structured-data')?.remove();
     document.head.appendChild(script);
     return () => script.remove();
   }, [article]);
   if (!article) return <NotFound />;
-  const related = articles.filter(item => item.slug !== article.slug).slice(0, 3);
+  const related = articles
+    .filter(item => item.slug !== article.slug)
+    .sort((a, b) => Number(b.category === article.category) - Number(a.category === article.category))
+    .slice(0, 3);
   return <Layout>
     <article className="article-page">
       <header className="article-hero grid-bg">
@@ -500,7 +518,7 @@ function ArticlePage() {
           <p className="eyebrow"><span />{article.category}</p>
           <h1>{article.title}</h1>
           <p className="lede">{article.description}</p>
-          <div className="article-byline"><span>By Sthuthi Securities</span><time dateTime={article.published}>{formatArticleDate(article.published)}</time><span>{article.readTime}</span></div>
+          <div className="article-byline"><span>By Shalini Tomar, CEO</span><time dateTime={article.published}>{formatArticleDate(article.published)}</time><span>{article.readTime}</span></div>
         </div>
         <img className="article-featured" src={article.featuredImage} alt={article.featuredAlt} />
       </header>

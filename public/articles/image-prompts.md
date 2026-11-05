@@ -1,59 +1,39 @@
-# Sthuthi Securities article image prompts
+# Sthuthi Securities article image prompt set
 
-All images were generated with the built-in image generator and the same three visual references:
+Generated with the built-in image generator on 5 November 2026. The Sthuthi mascot reference was `/art/sthuthi-guide-planning.png`.
 
-- `/art/sthuthi-guide-planning.png`
-- `/art/sthuthi-guide-laptop.png`
-- `/brand/logo-mark-round.png`
+## Shared art direction
 
-Every prompt requested the Sthuthi palette, warm paper texture, navy ink, coral and muted-gold accents, the orange Sthuthi mascot, the wordmark, high-contrast type, exact spelling, and no text beyond the copy listed below.
+> Create a professional, minimal editorial cybersecurity illustration in a 4:3 landscape format. Preserve the supplied Sthuthi mascot's exact orange character design while giving it a distinct pose and task relevant to this article. Use only the established Sthuthi palette: deep navy `#173651`, orange-coral `#DF6845`, off-white `#F4F7F8`, charcoal `#15202B`, and pale grey. No cyan, royal blue, purple, gradients, glossy 3D effects, stock-photo styling, fake logos, or footer color bars. Use a clean off-white background, disciplined spacing, crisp vector shapes, professional security diagrams, and large perfectly spelled explainer text. Keep all text inside safe margins. Do not include an author name or title.
 
-## Featured images
+Each article uses two variants:
 
-1. `soc-2-penetration-test-featured.png`
-   - Headline: `SOC 2 NEEDS PROOF.`
-   - Labels: `AUDITOR REQUEST` · `TEST SCOPE` · `REPORT + RETEST`
-2. `web-app-pentest-scope-featured.png`
-   - Headline: `SCOPE BEFORE TEST.`
-   - Labels: `APP + API` · `ROLES + TENANTS` · `RULES + WINDOW`
-3. `api-vs-web-pentest-featured.png`
-   - Headline: `UI FLOW. API RULES.`
-   - Labels: `WEB APP` · `API` · `COMBINED SCOPE`
-4. `ai-security-vs-web-pentest-featured.png`
-   - Headline: `TWO SURFACES. ONE SYSTEM.`
-   - Labels: `APP + API` · `MODEL + RAG` · `TOOLS + ACTIONS`
-5. `security-questionnaire-evidence-featured.png`
-   - Headline: `ANSWER WITH EVIDENCE.`
-   - Labels: `QUESTION` · `APPROVED ANSWER` · `PROOF + OWNER`
-6. `jailbreak-vs-security-finding-featured.png`
-   - Headline: `OUTPUT ISN'T IMPACT.`
-   - Labels: `BROKEN RULE` · `REPRODUCIBLE` · `MATERIAL IMPACT`
-7. `ai-agent-tool-permissions-featured.png`
-   - Headline: `CHECK EVERY ACTION.`
-   - Labels: `IDENTITY` · `APPROVAL` · `LOG + ROLLBACK`
-8. `penetration-test-report-featured.png`
-   - Headline: `SHOW WHAT HAPPENED.`
-   - Labels: `EVIDENCE` · `FIX + OWNER` · `RETEST`
+1. A featured editorial scene with a short headline and three concise explanatory labels.
+2. An in-article explainer diagram that teaches the article's core mechanism, process, comparison, or decision.
 
-## Inline explainers
+## Article-specific subjects
 
-1. `pentest-evidence-chain.png`
-   - Headline: `SCOPE TO VERIFIED FIX.`
-   - Labels: `SCOPE` · `AUTHORIZE` · `TEST` · `REPORT + RETEST`
-   - Support line: `A defensible test connects permission, evidence, remediation, and verification.`
-2. `web-api-boundary.png`
-   - Headline: `FOLLOW THE REQUEST.`
-   - Labels: `BROWSER` · `API CHECK` · `TENANT DATA` · `BUSINESS IMPACT`
-   - Support line: `Test the full path, not just the visible screen.`
-3. `ai-action-chain.png`
-   - Headline: `TRACE THE ACTION.`
-   - Labels: `INPUT` · `RETRIEVED CONTEXT` · `TOOL CALL` · `BUSINESS IMPACT`
-   - Support line: `AI risk becomes concrete when a model can change real systems.`
-4. `questionnaire-proof-chain.png`
-   - Headline: `PROVE EVERY ANSWER.`
-   - Labels: `CLAIM` · `EVIDENCE` · `OWNER` · `REVIEW DATE`
-   - Support line: `A questionnaire answer is useful only when the proof stays current.`
-5. `agent-action-controls.png`
-   - Headline: `CONTROL THE ACTION.`
-   - Labels: `IDENTITY` · `PERMISSION` · `APPROVAL` · `LOG + ROLLBACK`
-   - Support line: `Every agent action needs a known actor, a limit, and a recovery path.`
+| Slug | Featured subject | In-article explainer |
+|---|---|---|
+| `agentic-ai-security` | Agent stopped before an unauthorized money movement | Manipulation × permissions = impact |
+| `ai-penetration-testing-companies` | Vendor evaluation desk | Scope, human testing, proof, remediation, retest scorecard |
+| `ai-pentesting-tools` | Layered AI testing toolkit | Automated probes → human validation → reproducible evidence |
+| `ai-red-teaming-companies` | Red-team provider selection | Objective → attack path → verified impact → retest |
+| `ai-red-teaming-vs-penetration-testing` | Two testing paths compared | Scope, question, maturity, time, and cost decision guide |
+| `ai-security-assessment-cost` | Assessment scope estimator | Complexity, depth, evidence, and retesting cost drivers |
+| `best-ai-security-companies` | AI security market map | Testing, runtime, posture, and GRC selection matrix |
+| `chatbot-security-testing` | Chatbot attack and control review | Prompt, retrieval, authorization, tool, and output layers |
+| `hipaa-security-assessment` | ePHI system review | Risk → system → control → test → owner → proof |
+| `iso-27001-penetration-testing` | ISMS evidence review | Scope → authorize → test → remediate → retest → audit |
+| `llm-penetration-testing` | LLM application attack path | Input → retrieval → model → tools → verified impact |
+| `llm-security-companies` | Provider capability comparison | Runtime guardrails vs independent testing |
+| `mcp-server-security` | MCP tools and credentials inspection | User → agent → policy check → tool → audit record |
+| `owasp-llm-top-10` | OWASP risks arranged around an AI system | Inputs, model, retrieval, tools, data, and operations |
+| `prompt-injection-testing` | Malicious instruction blocked before action | Direct prompts, web, documents, email, memory, tool output |
+| `saas-cloud-security-assessment` | SaaS identity and data-boundary review | Identities → services → tenant data → evidence |
+| `security-questionnaire-help` | Buyer questionnaire turned into proof | Question → owner → evidence → approved answer → review date |
+| `soc2-penetration-test` | SOC 2 evidence package | Scope → method → findings → remediation → verified retest |
+| `web-application-penetration-testing` | Web roles, tenants, APIs, and logic tested | Role × tenant × workflow authorization matrix |
+| `what-is-ai-penetration-testing` | AI attack traced to system impact | Scope → attack → server verification → evidence → retest |
+
+The final files are named `/articles/{slug}-featured.png` and `/articles/{slug}-explainer.png`.
