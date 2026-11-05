@@ -1,7 +1,11 @@
 User-agent: *
 Allow: /
 Disallow: /workspace
+Disallow: /demo-workspace
 Disallow: /internal
+Disallow: /sign-in
 Disallow: /invite
+Disallow: /privacy
+Disallow: /terms
 
 Sitemap: /sitemap.xml

@@ -14,6 +14,12 @@ npm start
 
 Open `http://localhost:4173`. The production-style server serves the built app and the local API. Use `npm run dev` for UI work; form persistence and synthetic runs require `npm start` after a build.
 
+## Sitemap generation
+
+`npm run build` regenerates `public/sitemap.xml` and `public/robots.txt` before copying public assets into the production bundle. The generator discovers public static routes from `src/App.tsx`, service routes from `src/catalog.mjs`, and article routes and modification dates from `src/articles.ts`. Demo, authentication, private-workspace, legal-draft, and duplicate alias routes are excluded.
+
+Run `npm run generate:sitemap` when you only need to refresh the crawler files. Do not edit `public/sitemap.xml` manually. Set `CANONICAL_ORIGIN` to the verified production HTTPS origin during deployment so the generated sitemap uses absolute URLs.
+
 Assessment requests are stored in `data/requests.json` with owner-only file permissions. This file is ignored and is not a production database. Do not put passwords, tokens, or customer records in a request.
 
 ## Important routes
@@ -38,6 +44,6 @@ See [docs/architecture.md](docs/architecture.md), [docs/capability-matrix.md](do
 3. Configure an established identity provider with MFA and server-verified organization roles.
 4. Configure private object storage, short-lived downloads, upload validation, and quarantine.
 5. Configure secret management, notifications, and payment only after webhook verification and idempotency are implemented.
-6. Set `CANONICAL_ORIGIN` only after the owner controls the deployed origin, then generate absolute sitemap locations in the deployment pipeline.
+6. Set `CANONICAL_ORIGIN` only after the owner controls the deployed origin. The build will then generate absolute sitemap locations automatically.
 
 The build is a coherent first release and a working local vertical slice. It is not labeled production-ready.

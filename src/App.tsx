@@ -75,10 +75,22 @@ function useDocumentMeta() {
       node.content = content;
     };
     setMeta('meta[name="description"]', 'name', 'description', description);
+    const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '');
+    const canonicalPath = normalizedPath === '/process' ? '/how-it-works' : normalizedPath;
+    const canonicalUrl = `${window.location.origin}${canonicalPath}`;
+    const socialImage = `${window.location.origin}${article?.featuredImage || '/brand/logo-mark-round.png'}`;
+    let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+    canonical.href = canonicalUrl;
     setMeta('meta[property="og:title"]', 'property', 'og:title', title);
     setMeta('meta[property="og:description"]', 'property', 'og:description', description);
     setMeta('meta[property="og:type"]', 'property', 'og:type', article ? 'article' : 'website');
-    setMeta('meta[property="og:image"]', 'property', 'og:image', article?.featuredImage || '/brand/og-image.png');
+    setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
+    setMeta('meta[property="og:image"]', 'property', 'og:image', socialImage);
+    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
+    setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
+    setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
+    setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', socialImage);
     const noIndex = ['/workspace', '/demo-workspace', '/internal', '/sign-in', '/invite', '/privacy', '/terms'].includes(pathname);
     setMeta('meta[name="robots"]', 'name', 'robots', noIndex ? 'noindex, nofollow' : 'index, follow');
     window.scrollTo({ top: 0 });

@@ -2,6 +2,9 @@ import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import { build } from 'vite';
+import { generateSitemap } from './generate-sitemap.mjs';
+
+await generateSitemap();
 
 const result = await build({
   configFile: false,
